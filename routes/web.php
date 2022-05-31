@@ -18,12 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/api/test', function () {
-    return [
-        'test1',
-        'test2'
-    ];
-});
+// Route::get('/api/test', function () {
+//     return [
+//         'test1',
+//         'test2'
+//     ];
+// });
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

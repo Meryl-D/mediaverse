@@ -11,7 +11,7 @@
     <script>
         const data = <?php echo json_encode('hello from php') ?>
     </script>
-	<div id="app"></div>
+	<div id="exemple"></div>
 
 	<script src="{{ asset('js/app.js') }}"></script>
 </body>
