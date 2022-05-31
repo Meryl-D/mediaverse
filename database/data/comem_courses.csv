@@ -1,0 +1,70 @@
+﻿Acronym;Description;Name;Total_periods;Weight;ModuleId
+MéthOut;;Outils et méthodes de travail;44;46;1
+ComHum; ;Bases de la communication humaine;76;74;1
+ComVisuel;;Communication visuelle et sémiologie graphique;44;52;2
+EcrireWeb;;Ecriture pour le digital;36;52;2
+ProdConMé1;;Production de contenu média 1;68;76;2
+MarkDévProd;;Marketing et développement de produit;24;38;3
+RechAnPub;;Rech. et analyse clients et publics-cibles;24;36;3
+MarkDig1;;Marketing digital 1;44;48;3
+AnalysMar;;Analyse de marché;32;60;4
+MarkDig2;;Marketing digital 2;32;50;4
+EvolMétMéd;;Evolution et métiers des médias;32;180;5
+Droit1;;Droit des médias 1;32;43;5
+MedSerGam;;Media Serious Game;32;1;6
+PilotFin;;Pilotage financier;20;33;7
+GesBudget;;Gestion budgétaire;44;49;7
+BaseMath1;;Bases des mathématiques 1;44;50;8
+BaseProg1;;Bases de programmation 1;60;68;8
+DeDonàInf1;;De la donnée à l'information 1;40;45;8
+FondMédias;;Fondamentaux des médias numériques;32;36;8
+DocWeb;;Document web;64;75;9
+ProtoEnv;;Protocoles et environnement Internet;44;52;9
+BaseMath2;;Bases des mathématiques 2;60;78;10
+BaseProg2;;Bases de programmation 2;32;41;10
+DeDonAInf2;;De la donnée à l'information 2;24;13;10
+InfraDon1;;Infrastructure de données 1;60;63;11
+ProgServ1;;Programmation serveur 1;30;32;11
+Ang1;;Anglais 1;48;60;12
+Ang2;;Anglais 2;48;90;12
+TechAV;;Techniques audio-visuelles;48;49;13
+ProdConMé2;;Production de contenu média 2;52;71;13
+EcoPrint;;Ecosystème des médias imprimés;32;35;13
+UXDesign;;Expérience utilisateur;36;50;14
+ConceptUI;;Processus de conception d'interface utilisateur;36;50;14
+Ecomm;;E-commerce  ;32;63;15
+StratMarq;;Stratégie de marque;32;57;15
+VenteProj;;Du besoin à la vente du projet média;56;1;16
+ArchiDép;;Architecture et déploiement d'application;48;77;17
+ProgWeb;;Programmation web;76;123;17
+WebMobUI;;Web & mobile UI;76;84;18
+VisualDon;;Visualisation de données;60;66;18
+InfraDon2;;Infrastructure de données 2;48;55;19
+WebDon;;Web des données;40;45;19
+DévProdMéd;;Développement de produit média;48;1;20
+GesProj;;Gestion de projet;56;1;21
+PropVal;;Modèles d'affaires;48;1;22
+Socio;;Sociologie des médias;24;60;23
+Droit1;;Droit des médias 1;32;43;23
+Droit2;;Droit des médias 2;32;1;24
+MétRecher;;Méthodologie de recherche;24;1;25
+LabVeilSoc;;Laboratoire de veille sociétale;20;1;26
+ProjArt;;Projet d'articulation;24;1;27
+ArchiOWeb;;Architecture orientée web;48;75;28
+DévMobil;;Développement mobile;48;75;28
+EvalOptPro;;Evaluation et optimisation de produit/processus méd.;64;1;29
+BusPlan;;Business plan;20;36;30
+Startup;;Mise en œuvre d'une Startup;24;42;30
+SysComplex;;Systémique et complexité;24;42;30
+ArchInfoUX;;Architecture de l'information et analyse ergonomique;56;81;31
+UXLab;;Laboratoire expérience utilisateur;48;80;31
+VeillTech;;Laboratoire de veille technologique;20;1;32
+ApproMédia;;Approfondissement média;20;87;33
+OPT-VR;;Option : Réalité Virtuelle;64;114;33
+OPT-Tmark;;Option : Technologies Marketing;64;114;33
+OPT-Tmark;;Option : Objets connectés avec Arduino;64;114;33
+ProfilPro;;Profil professionnel;56;1;34
+CRUNCH;;Innovation Crunch Time;0;1;35
+ProjInt;;Projet Transmédia;32;1;36
+Stage;;Stage professionnel;0;1;37
+TB;;Travail de Bachelor;0;1;38
