@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class NotificationController extends Controller
 {
@@ -13,7 +15,13 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        //
+        // if (!Gate::allows('isStudent')) {
+        //     abort(403,"[̲̅\$̲̅(̲̅5̲̅)̲̅\$̲̅] tu paies combien ?");
+        // }
+
+        $notifications = Auth::user()->receiverNotifications()->orderBy('created_at', 'desc')->get()->toArray();
+
+        return $notifications;
     }
 
     /**
@@ -21,7 +29,7 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
         //
     }

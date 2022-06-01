@@ -10,17 +10,14 @@ class Notification extends Model
 {
     use HasFactory;
 
-    public $timestamps = false;
-
     protected $fillable = [
         'title',
         'message',
-        'date',
         'sender_id'
     ];
 
     public function sender() {
-        return $this->belongsTo(User::class, 'sender_id');
+        return $this->belongsTo(User::class);
     }
 
     public function receivers() {

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,7 +26,8 @@ Route::get('/', function () {
 //     ];
 // });
 
-Route::get('/horaire', [ScheduleController::class, 'index']);
+Route::resource('/notifications', NotificationController::class);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
