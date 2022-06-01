@@ -2,11 +2,9 @@
 
 namespace Database\Seeders;
 
-use App\Models\Lesson;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CourseUserTableSeeder extends Seeder
 {
@@ -35,7 +33,7 @@ class CourseUserTableSeeder extends Seeder
             unset($courseIds[$notCourseKey]);
 
         }
-    
+
         // $output->writeln($courseIds);
 
         foreach ($courseIds as $key => $value) {
@@ -43,18 +41,35 @@ class CourseUserTableSeeder extends Seeder
             DB::table('course_user')->insert([
                 'course_id' => $value,
                 'user_id' => 1,
-            ]);  
+            ]);
         }
 
         $data = [
             [
                 'course_id' => 39,
-                'user_id' => 2
+                'user_id' => 2,
             ],
             [
                 'course_id' => 62,
-                'user_id' => 2
-            ]
+                'user_id' => 2,
+            ],
+        ];
+
+        DB::table('course_user')->insert($data);
+
+        $data = [
+            [
+                'course_id' => 25,
+                'user_id' => 4,
+            ],
+            [
+                'course_id' => 41,
+                'user_id' => 4,
+            ],
+            [
+                'course_id' => 51,
+                'user_id' => 4,
+            ],
         ];
 
         DB::table('course_user')->insert($data);
