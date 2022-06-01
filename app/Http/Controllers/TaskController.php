@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaskRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -11,74 +14,51 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    // all tasks
     public function index()
     {
-        //
+        $tasks = (Task::where('user_id', Auth::id())
+                ->orderBy('date', 'asc'))
+            ->get()
+            ->toArray();
+        return $tasks;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    // add task
+    public function add(TaskRequest $request)
     {
-        //
+        $task = new Task([
+            'name' => $request->input('name'),
+            'date'=>$request->input('date'),
+            'description' => $request->input('description'),
+        ]);
+        $task->save();
+
+        return response()->json('Tâche ajoutée avec succès');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    // edit task
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        return response()->json($task);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    // update task
+    public function update($id, TaskRequest $request)
     {
-        //
+        $task = Task::find($id);
+        $task->update($request->all());
+
+        return response()->json('Tâche modifiée avec succès');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    // delete task
+    public function delete($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        return response()->json('Tâche supprimée avec succès');
     }
 }

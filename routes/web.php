@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ResultController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,10 +27,10 @@ Route::get('/', function () {
 //         'test2'
 //     ];
 // });
-
+Route::get('review', [ReviewController::class, 'index']);
+Route::get('/horaire', [ScheduleController::class, 'index']);
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::resource('resultats', ResultController::class);
-
+Route::get('/tasks', [TaskController::class, 'index']);

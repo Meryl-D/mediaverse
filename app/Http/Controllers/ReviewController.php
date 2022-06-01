@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
@@ -13,7 +14,11 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $reviews = Review::with('user')
+            ->orderBy('articles.created_at', 'desc')
+            ->paginate($this->nbArticlesParPage);
+        $links = $reviews->render();
+        return view('view_articles', compact('articles', 'links'));
     }
 
     /**
