@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use DateTime;
+use DateInterval;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,8 +28,8 @@ class LessonsTableSeeder extends Seeder
             $course_id = DB::table('courses')->where('acronym', $value['label'])->value('id');
             
             DB::table('lessons')->insert([
-                'date_start' => DateTime::createFromFormat(DateTime::ATOM, $value['start']),
-                'date_end' => DateTime::createFromFormat(DateTime::ATOM, $value['end']),
+                'date_start' => (DateTime::createFromFormat(DateTime::ATOM, $value['start']))->add(new DateInterval('PT02H')),
+                'date_end' => (DateTime::createFromFormat(DateTime::ATOM, $value['end']))->add(new DateInterval('PT02H')),
                 'class' => substr($value['class'], 1),
                 'room' => $value['room'],
                 'course_id' => $course_id

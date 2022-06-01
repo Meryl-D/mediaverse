@@ -14,7 +14,7 @@
 
 <template>
     <h1>
-        {{message}}
+        {{ message }}
     </h1>
     <!-- <h2>
          {{message2}}
