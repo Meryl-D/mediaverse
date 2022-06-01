@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+
+    // protected $nbReviewParPage = 10;
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,11 +18,13 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::with('user')
-            ->orderBy('articles.created_at', 'desc')
-            ->paginate($this->nbArticlesParPage);
-        $links = $reviews->render();
-        return view('view_articles', compact('articles', 'links'));
+        
+        $reviews = Review::orderBy('created_at', 'desc')->get()->toArray();
+        // ->paginate($this->nbReviewParPage);
+       
+        dd($reviews);
+        // $links = $reviews->render();
+        // return view('view_articles', compact('articles', 'links'));
     }
 
     /**
