@@ -16,9 +16,9 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $courseIds = (Auth::user()->courses()->pluck('course_id'))->toArray();
+        $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
 
-        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get();
+        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get()->toArray();
 
         return $lessons;
     }
