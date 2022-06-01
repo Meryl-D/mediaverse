@@ -34,7 +34,7 @@ class TaskController extends Controller
         ]);
         $task->save();
 
-        return response()->json('The task successfully added');
+        return response()->json('Tâche ajoutée avec succès');
     }
 
     // edit task
@@ -50,7 +50,7 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->update($request->all());
 
-        return response()->json('The task successfully updated');
+        return response()->json('Tâche modifiée avec succès');
     }
 
     // delete task
@@ -59,6 +59,6 @@ class TaskController extends Controller
         $task = Task::find($id);
         $task->delete();
 
-        return response()->json('The task successfully deleted');
+        return response()->json('Tâche supprimée avec succès');
     }
 }
