@@ -9,10 +9,11 @@ use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ScheduleController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Retourne tous les cours d'un utilisateur
+     * 
+     * @return array
      */
     public function index()
     {

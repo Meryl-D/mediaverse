@@ -21,6 +21,6 @@ class Notification extends Model
     }
 
     public function receivers() {
-        return $this->belongsToMany(User::class, 'receiver_id');
+        return $this->belongsToMany(User::class);
     }
 }
