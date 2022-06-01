@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Course;
+use App\Http\Requests\ReviewRequest;
 
 class ReviewController extends Controller
 {
-
-    // protected $nbReviewParPage = 10;
 
 
     /**
@@ -19,12 +20,22 @@ class ReviewController extends Controller
     public function index()
     {
         
-        $reviews = Review::orderBy('created_at', 'desc')->get()->toArray();
-        // ->paginate($this->nbReviewParPage);
-       
-        dd($reviews);
-        // $links = $reviews->render();
-        // return view('view_articles', compact('articles', 'links'));
+        $listCourses= Auth::user()->courses()->pluck('course_id')->toArray();
+        //dd($listCourses);
+        $reviews = Review::where('course_id', $listCourses)->with('course')->orderBy('created_at', 'desc')->get()->toArray();
+        //dd($reviews);
+        return $reviews;
+    }
+
+    public function add(ReviewRequest $request)
+    {
+        $review = new Review([
+            'rating' => $request->input('rating'),
+            'feedback'=>$request->input('feedback')
+        ]);
+        $review->save();
+
+        return response()->json('Review ajoutée avec succès');
     }
 
     /**
@@ -37,59 +48,4 @@ class ReviewController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

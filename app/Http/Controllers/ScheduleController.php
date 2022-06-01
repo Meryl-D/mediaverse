@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Lesson;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Symfony\Component\Console\Output\ConsoleOutput;
 
 class ScheduleController extends Controller
 {
@@ -13,7 +13,7 @@ class ScheduleController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
-     */
+     */ 
     public function index()
     {
         $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
