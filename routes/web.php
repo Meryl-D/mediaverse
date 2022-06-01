@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +29,7 @@ Route::get('/', function () {
 //         'test2'
 //     ];
 // });
-
+Route::get('review', [ReviewController::class, 'index']);
 Route::get('/horaire', [ScheduleController::class, 'index']);
 Auth::routes();
 

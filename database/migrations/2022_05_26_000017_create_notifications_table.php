@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('title');
             $table->string('message');
-            $table->dateTime('date');
+            $table->timestamps();
             $table->integer('sender_id')->unsigned()->nullable();
 
             $table->foreign('sender_id')->references('id')->on('users')
