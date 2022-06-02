@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Absence;
+use DateTime;
+use App\Models\User;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\User;
-use DateTime;
+use App\Models\Absence;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
