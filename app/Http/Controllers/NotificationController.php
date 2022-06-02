@@ -12,7 +12,7 @@ class NotificationController extends Controller
 {
 
     /**
-     * Retourne les notifications d'un utilisateurs
+     * Return the authentified user notifications.
      * 
      * @return array
      */
@@ -28,6 +28,8 @@ class NotificationController extends Controller
     }
 
     /**
+     * Add a notification to the database.
+     * 
      * @param array $notifToAdd
      * 
      * @return void

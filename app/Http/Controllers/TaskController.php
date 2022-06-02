@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the tasks.
      *
      * @return \Illuminate\Http\Response
      */
-    // all tasks
+    /**
+     * @return [array]
+     */
     public function index()
     {
         $tasks = (Task::where('user_id', Auth::id())
@@ -24,6 +26,11 @@ class TaskController extends Controller
     }
 
     // add task
+    /**
+     * @param TaskRequest $request
+     * 
+     * @return json
+     */
     public function add(TaskRequest $request)
     {
         $task = new Task([
@@ -37,6 +44,11 @@ class TaskController extends Controller
     }
 
     // edit task
+    /**
+     * @param int $id
+     * 
+     * @return json
+     */
     public function edit($id)
     {
         $task = Task::find($id);
@@ -44,6 +56,12 @@ class TaskController extends Controller
     }
 
     // update task
+    /**
+     * @param int $id
+     * @param TaskRequest $request
+     * 
+     * @return json
+     */
     public function update($id, TaskRequest $request)
     {
         $task = Task::find($id);
@@ -53,6 +71,11 @@ class TaskController extends Controller
     }
 
     // delete task
+    /**
+     * @param int $id
+     * 
+     * @return json
+     */
     public function delete($id)
     {
         $task = Task::find($id);

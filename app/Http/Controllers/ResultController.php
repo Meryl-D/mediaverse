@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Gate;
 class ResultController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * If authentified as a teacher : returns a list of his courses, students, classes and sectors. 
+     * If authentified as a student : returns the students results and the related courses, modules and semesters.
+     * 
+     * @return array
      */
-
     public function index()
     {
         //check the role of the user
@@ -38,7 +38,7 @@ class ResultController extends Controller
             })->get();
 
             $listeSector = Auth::user()->sector()->pluck('name')->toArray();
-            //dd($listeSector);
+
             $dataResultTeacher = [
                 "listeCourse" => $listeCourses,
                 "listeClasses" => $listeClasses,
@@ -71,21 +71,13 @@ class ResultController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Add a result to the database.
      *
-     * @return \Illuminate\Http\Response
+     * @return json
      */
 
     public function add(Request $request)
     {
-
-        //validation
-        $this->validate($request, [
-            'users.*.user_grade' => 'required|float|min:1|max:6',
-            'users.*.weight' => 'required|float',
-            'users.*.type' => 'required|string',
-            'users.*.date_examen' => '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$',
-        ]);
 
         foreach ($request->get('users') as $userData) {
             $result = new Result;
