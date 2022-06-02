@@ -25,7 +25,7 @@ class ReviewRequest extends FormRequest
     {
         return [
             'rating' => 'numeric|required',
-            'feedback' => 'alpha|required'
+            'feedback' => 'alpha'
         ];
     }
 }
