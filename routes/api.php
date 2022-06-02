@@ -50,7 +50,7 @@ Route::group(['prefix' => 'reviews', 'middleware' => 'auth:sanctum'], function (
 
 });
 
-Route::group(['prefix' => 'schedule', 'middleware' => 'auth:sanctum'], function () {
+Route::group(['prefix' => 'lessons', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [ScheduleController::class, 'index']);
 
 });

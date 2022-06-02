@@ -17,7 +17,7 @@ return new class extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->integer('rating');
-            $table->string('feedback');
+            $table->string('feedback')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('course_id')->unsigned();
             
