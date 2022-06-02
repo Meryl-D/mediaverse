@@ -2,12 +2,10 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-<<<<<<< HEAD
-use App\Http\Controllers\NotificationController;
-=======
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ScheduleController;
->>>>>>> f66fe67a5c9965fc402d8a2f513dfcb77c48536d
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +29,7 @@ Route::get('/', function () {
 //     ];
 // });
 
-Route::resource('/notifications', NotificationController::class);
+Route::get('/user', [UserController::class, 'index']);
 
 Auth::routes();
 

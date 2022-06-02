@@ -16,9 +16,9 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        // if (!Gate::allows('isStudent')) {
-        //     abort(403,"[̲̅\$̲̅(̲̅5̲̅)̲̅\$̲̅] tu paies combien ?");
-        // }
+        if (!Gate::allows('isStudent')) {
+            abort(403,"Vous n'avez pas les droits pour accéder à cette page");
+        }
 
         $notifications = Auth::user()->receiverNotifications()->orderBy('created_at', 'desc')->get()->toArray();
 
