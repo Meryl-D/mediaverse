@@ -48,7 +48,7 @@ class UsersTableSeeder extends Seeder
                 [
                     'first_name' => 'Claude',
                     'last_name' => 'Philipona',
-                    'email' => 'claude@heig-vd.ch',
+                    'email' => 'claude.philipona@heig-vd.ch',
                     'password' => Hash::make('claude'),
                     'picture' => '',
                     'sector_id' => 5,

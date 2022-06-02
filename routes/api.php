@@ -18,10 +18,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['prefix' => 'books', 'middleware' => 'auth:sanctum'], function () {
-    Route::get('/', [BookController::class, 'index']);
-    Route::post('add', [BookController::class, 'add']);
-    Route::get('edit/{id}', [BookController::class, 'edit']);
-    Route::post('update/{id}', [BookController::class, 'update']);
-    Route::delete('delete/{id}', [BookController::class, 'delete']);
+Route::group(['prefix' => 'absences', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [AbsenceController::class, 'index']);
+    Route::post('add', [AbsenceController::class, 'add']);
+
+});
+
+Route::group(['prefix' => 'notifications', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [AbsenceController::class, 'index']);
+    Route::post('add', [AbsenceController::class, 'add']);
+
 });

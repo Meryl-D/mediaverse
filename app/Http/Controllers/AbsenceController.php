@@ -28,11 +28,15 @@ class AbsenceController extends Controller
             ->where('date_start', '<=', $dateNow)
             ->where('date_end', '>=', $dateNow)->get()->toArray();
 
-        $participants = [];
-        foreach ($courseIds as $key => $courseId) {
-            $participants[] = Course::find($courseId)->users()->get();
-        }
-        $students = User::where('id',$participants)->where('role_id',3)->get();
+        // $students = User::where('role_id', '=', 3)->whereHas('courses', function ($query) {
+        //         return $query->whereIn('course.id', $courseIds);
+        //     })->get();
+
+        // $participants = [];
+        // foreach ($courseIds as $key => $courseId) {
+        //     $participants[] = Course::find($courseId)->users()->get();
+        // }
+        // $students = User::where('id',$participants)->where('role_id',3)->get();
         // foreach ($lessons as $key => $lesson) {
         //     $classes[] = $lesson['class'];
         // }
@@ -46,7 +50,7 @@ class AbsenceController extends Controller
 
         //$students = User::all()->classes()->whereIn('id', $classes);
 
-        return $students;
+        return $lessons;
     }
 
     /**
