@@ -14,7 +14,7 @@ class ReviewController extends Controller
 
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the reviews for the teachers.
      *
      * @return \Illuminate\Http\Response
      */
@@ -30,6 +30,9 @@ class ReviewController extends Controller
         }
     }
 
+    /** Display a listing of courses to review for the students
+     * @return [type]
+     */
     public function create()
     {
         //check the role of the user
@@ -39,6 +42,11 @@ class ReviewController extends Controller
         }
     }
 
+    /**
+     * @param ReviewRequest $request
+     * Display a form to enter a review for the students 
+     * @return json
+     */
     public function add(ReviewRequest $request)
     {
             $review = new Review([

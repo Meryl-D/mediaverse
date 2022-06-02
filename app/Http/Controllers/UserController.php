@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+    /**show user
+     * @return [array]
+     */
     public function index()
     {
         $user = Auth::user();

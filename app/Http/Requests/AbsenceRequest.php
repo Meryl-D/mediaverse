@@ -13,7 +13,7 @@ class AbsenceRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,8 +24,7 @@ class AbsenceRequest extends FormRequest
     public function rules()
     {
         return [
-            'state' => 'required|boolean',
-            
+            'state' => 'required|boolean',           
         ];
     }
 }

@@ -79,14 +79,6 @@ class ResultController extends Controller
     public function add(Request $request)
     {
 
-        //validation
-        $this->validate($request, [
-            'users.*.user_grade' => 'required|float|min:1|max:6',
-            'users.*.weight' => 'required|float',
-            'users.*.type' => 'required|string',
-            'users.*.date_examen' => '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$',
-        ]);
-
         foreach ($request->get('users') as $userData) {
             $result = new Result;
             $result->grade = $userData['grade'];

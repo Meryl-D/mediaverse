@@ -11,10 +11,13 @@ class ScheduleController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the lessons.
      *
      * @return \Illuminate\Http\Response
      */ 
+    /**
+     * @return array
+     */
     public function index()
     {
         $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
@@ -24,14 +27,4 @@ class ScheduleController extends Controller
         return $lessons;
     }
 
-    // /**
-    //  * Display the specified resource.
-    //  *
-    //  * @param  int  $id
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function show($id)
-    // {
-    //     //
-    // }
 }
