@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
+<<<<<<< HEAD
 use App\Http\Controllers\ResultController;
+=======
+use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\ScheduleController;
+>>>>>>> 86eac9b2fb908111621fa5a79d3e1a11b46ecf99
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ScheduleController;
 
@@ -36,3 +42,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/tasks', [TaskController::class, 'index']);
+Route::get('/absence', [AbsenceController::class, 'index']);
