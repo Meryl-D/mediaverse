@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use DateTime;
+use App\Models\User;
+use App\Models\Classe;
+use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AbsenceController extends Controller
 {
@@ -13,7 +20,33 @@ class AbsenceController extends Controller
      */
     public function index()
     {
-        //
+        $classes = [];
+
+        $dateNow = new DateTime();
+        $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
+        $lessons = Lesson::whereIn('course_id', $courseIds)
+            ->where('date_start', '<=', $dateNow)
+            ->where('date_end', '>=', $dateNow)->get()->toArray();
+
+        $participants = [];
+        foreach ($courseIds as $key => $courseId) {
+            $participants[] = Course::find($courseId)->users()->get();
+        }
+        $students = User::where('id',$participants)->where('role_id',3)->get();
+        // foreach ($lessons as $key => $lesson) {
+        //     $classes[] = $lesson['class'];
+        // }
+
+        // $classIds = Classe::whereIn('name', $classes)->pluck('id');
+
+        // $students = [];
+        // foreach ($classIds as $key => $classId) {
+        //     $students[] = Classe::find($classId)->users()->get();
+        // }
+
+        //$students = User::all()->classes()->whereIn('id', $classes);
+
+        return $students;
     }
 
     /**
@@ -23,7 +56,7 @@ class AbsenceController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use App\Http\Requests\ReviewRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,76 +20,42 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        $reviews = Review::with('user')
-            ->orderBy('articles.created_at', 'desc')
-            ->paginate($this->nbArticlesParPage);
-        $links = $reviews->render();
-        return view('view_articles', compact('articles', 'links'));
+        //check the role of the user
+        if (Gate::allows('isTeacher')) {
+            $listCourses = Auth::user()->courses()->pluck('course_id')->toArray();
+            //dd($listCourses);
+            $reviews = Review::where('course_id', $listCourses)->with('course')->orderBy('created_at', 'desc')->get()->toArray();
+            //dd($reviews);
+            return $reviews;
+        }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+
+        //check the role of the user
+        if (Gate::allows('isStudent')) {
+
+            $listCourses = Auth::user()->courses()->pluck('course_id')->toArray();
+            return $listCourses;
+
+
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function add(ReviewRequest $request)
     {
-        //
+            $review = new Review([
+                'rating' => $request->input('rating'),
+                'feedback' => $request->input('feedback'),
+                'user_id' => Auth::id(),
+                'course_id' => $request->input('course_id')
+            ]);
+            $review->save();
+
+            return response()->json('Review ajoutée avec succès');
+        
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
