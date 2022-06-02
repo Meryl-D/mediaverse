@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
-use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -29,7 +28,7 @@ class TaskController extends Controller
     {
         $task = new Task([
             'name' => $request->input('name'),
-            'date'=>$request->input('date'),
+            'date' => $request->input('date'),
             'description' => $request->input('description'),
         ]);
         $task->save();

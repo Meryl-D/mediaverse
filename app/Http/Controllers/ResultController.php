@@ -67,6 +67,7 @@ class ResultController extends Controller
     public function add(Request $request)
     {
 
+<<<<<<< HEAD
         //validation
         $this->validate($request, [
             'users.*.user_grade' => 'required|float|min:1|max:6',
@@ -74,6 +75,8 @@ class ResultController extends Controller
             'users.*.type' => 'required|string',
             'users.*.date_examen' => '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$',
         ]);
+=======
+>>>>>>> 6401be638b042152671c763df2cfd57352b5ce16
 
         foreach ($request->get('users') as $userData) {
             $result = new Result;

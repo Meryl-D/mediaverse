@@ -21,6 +21,11 @@ class Lesson extends Model
         'course_id'
     ];
 
+    protected $dates = [
+        'date_start',
+        'date_end',
+    ];
+
     public function course() {
         return $this->belongsTo(Course::class);
     }
