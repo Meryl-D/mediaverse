@@ -22,11 +22,15 @@ class AbsenceController extends Controller
         $classes = [];
         $dateNow = new DateTime();
         $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
+
         $lessonsCourseIds = Lesson::whereIn('course_id', $courseIds)
             ->where('date_start', '<=', $dateNow)
-            ->where('date_end', '>=', $dateNow)->pluck('course_id')->toArray();
+            ->where('date_end', '>=', $dateNow)
+            ->pluck('course_id')
+            ->toArray();
 
         $students = [];
+
         foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
             $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
         }

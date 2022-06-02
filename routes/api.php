@@ -25,7 +25,38 @@ Route::group(['prefix' => 'absences', 'middleware' => 'auth:sanctum'], function 
 });
 
 Route::group(['prefix' => 'notifications', 'middleware' => 'auth:sanctum'], function () {
-    Route::get('/', [AbsenceController::class, 'index']);
-    Route::post('add', [AbsenceController::class, 'add']);
+    Route::get('/', [NotificationController::class, 'index']);
+    Route::post('add', [NotificationController::class, 'add']);
 
+});
+
+Route::group(['prefix' => 'results', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [ResultController::class, 'index']);
+    Route::post('add', [ResultController::class, 'add']);
+
+});
+
+Route::group(['prefix' => 'reviews', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [ReviewController::class, 'index']);
+    Route::get('create', [ReviewController::class, 'create']);
+    Route::post('add', [ReviewController::class, 'add']);
+
+});
+
+Route::group(['prefix' => 'schedule', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [ScheduleController::class, 'index']);
+
+});
+
+Route::group(['prefix' => 'tasks', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [TaskController::class, 'index']);
+    Route::post('add', [TaskController::class, 'add']);
+    Route::get('edit/{id}', [TaskController::class, 'edit']);
+    Route::post('update/{id}', [TaskController::class, 'update']);
+    Route::delete('delete/{id}', [TaskController::class, 'delete']);
+
+});
+
+Route::group(['prefix' => 'users', 'middleware' => 'auth:sanctum'], function () {
+    Route::get('/', [UserController::class, 'index']);
 });
