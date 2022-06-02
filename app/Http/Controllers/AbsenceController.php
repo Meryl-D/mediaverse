@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
-use App\Models\User;
-use App\Models\Classe;
+use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AbsenceController extends Controller
@@ -21,32 +20,18 @@ class AbsenceController extends Controller
     public function index()
     {
         $classes = [];
-
         $dateNow = new DateTime();
         $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
-        $lessons = Lesson::whereIn('course_id', $courseIds)
+        $lessonsCourseIds = Lesson::whereIn('course_id', $courseIds)
             ->where('date_start', '<=', $dateNow)
-            ->where('date_end', '>=', $dateNow)->get()->toArray();
+            ->where('date_end', '>=', $dateNow)->pluck('course_id')->toArray();
 
-        $participants = [];
-        foreach ($courseIds as $key => $courseId) {
-            $participants[] = Course::find($courseId)->users()->get();
+        $students = [];
+        foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
+            $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
         }
-        $students = User::where('id',$participants)->where('role_id',3)->get();
-        // foreach ($lessons as $key => $lesson) {
-        //     $classes[] = $lesson['class'];
-        // }
 
-        // $classIds = Classe::whereIn('name', $classes)->pluck('id');
-
-        // $students = [];
-        // foreach ($classIds as $key => $classId) {
-        //     $students[] = Classe::find($classId)->users()->get();
-        // }
-
-        //$students = User::all()->classes()->whereIn('id', $classes);
-
-        return $students;
+        return $lessonsCourseIds;
     }
 
     /**
