@@ -22,22 +22,6 @@ class AbsenceController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $classes = [];
-        $dateNow = new DateTime();
-        $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
-
-        $lessonsCourseIds = Lesson::whereIn('course_id', $courseIds)
-            ->where('date_start', '<=', $dateNow)
-            ->where('date_end', '>=', $dateNow)
-            ->pluck('course_id')
-            ->toArray();
-
-        $students = [];
-
-        foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
-            $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
-=======
         if (Gate::allows('isTeacher')) {
             $classes = [];
             $dateNow = new DateTime();
@@ -58,7 +42,6 @@ class AbsenceController extends Controller
                 ->get()
                 ->toArray();
             return $absence;
->>>>>>> 928d1749069daeb18307acf0a6efd2fc5b613aa1
         }
 
     }
