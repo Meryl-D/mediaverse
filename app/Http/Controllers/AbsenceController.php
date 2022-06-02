@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\User;
-use App\Models\Classe;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Absence;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AbsenceController extends Controller
 {
@@ -20,33 +22,28 @@ class AbsenceController extends Controller
      */
     public function index()
     {
-        $classes = [];
+        if (Gate::allows('isTeacher')) {
+            $classes = [];
+            $dateNow = new DateTime();
+            $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
+            $lessonsCourseIds = Lesson::distinct()->whereIn('course_id', $courseIds)
+                ->where('date_start', '<=', $dateNow)
+                ->where('date_end', '>=', $dateNow)->pluck('course_id')->toArray();
 
-        $dateNow = new DateTime();
-        $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
-        $lessons = Lesson::whereIn('course_id', $courseIds)
-            ->where('date_start', '<=', $dateNow)
-            ->where('date_end', '>=', $dateNow)->get()->toArray();
-
-        $participants = [];
-        foreach ($courseIds as $key => $courseId) {
-            $participants[] = Course::find($courseId)->users()->get();
+            $students = [];
+            foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
+                $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
+            }
+            return $students;
         }
-        $students = User::where('id',$participants)->where('role_id',3)->get();
-        // foreach ($lessons as $key => $lesson) {
-        //     $classes[] = $lesson['class'];
-        // }
 
-        // $classIds = Classe::whereIn('name', $classes)->pluck('id');
+        if (Gate::allows('isStudent')) {
+            $absence = Absence::where('user_id', Auth::id())
+                ->get()
+                ->toArray();
+            return $absence;
+        }
 
-        // $students = [];
-        // foreach ($classIds as $key => $classId) {
-        //     $students[] = Classe::find($classId)->users()->get();
-        // }
-
-        //$students = User::all()->classes()->whereIn('id', $classes);
-
-        return $students;
     }
 
     /**
@@ -54,9 +51,15 @@ class AbsenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function add()
     {
-
+        if (Gate::allows('isTeacher')) {
+            $absence = new Absence([
+                'state' => $request->input('state'),
+            ]);
+            $absence->save();
+            return response()->json('Absences enregistée');
+        }
     }
 
     /**

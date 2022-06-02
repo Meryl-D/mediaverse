@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\ScheduleController;
 
 /*

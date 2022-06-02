@@ -24,7 +24,8 @@ class ReviewRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'rating' => 'numeric|required',
+            'feedback' => 'alpha|required'
         ];
     }
 }
