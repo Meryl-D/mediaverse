@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\Module;
 use App\Models\Result;
 use App\Models\Sector;
+use App\Models\Semester;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -44,19 +47,28 @@ class ResultController extends Controller
             ];
 
             return $dataResultTeacher;
-        } else {
-            $listeCourses = Auth::user()->courses()->get()->toArray();
-
             
-            $results = Result::where('receiver_id', Auth::id())->get()->toArray();
-            dd($listeCourses);
-            return $results;
+        } else {
+            $results = Result::where('receiver_id', Auth::id())->get();
+            $resultCourseId = $results->pluck('course_id');
+
+            $listeCourses = Course::distinct()->whereIn('id', $resultCourseId)->get();            
+            $listeCoursesIds = $listeCourses->pluck('module_id');
+            $modules = Module::distinct()->whereIn('id', $listeCoursesIds)->get();
+            
+            $moduleSemesterIds = $modules->pluck('semester_id');
+            $semesters = Semester::distinct()->whereIn('id', $moduleSemesterIds)->get();
+                    
+            
+            $dataResultStudent = [
+                "results" => $results,
+                "listeCourses" => $listeCourses,
+                "modules" => $modules,
+                "semesters" => $semesters
+            ];
+            return $dataResultStudent;
         }
     }
-
-
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -66,18 +78,6 @@ class ResultController extends Controller
 
     public function add(Request $request)
     {
-
-<<<<<<< HEAD
-        //validation
-        $this->validate($request, [
-            'users.*.user_grade' => 'required|float|min:1|max:6',
-            'users.*.weight' => 'required|float',
-            'users.*.type' => 'required|string',
-            'users.*.date_examen' => '^(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d$',
-        ]);
-=======
->>>>>>> 6401be638b042152671c763df2cfd57352b5ce16
-
         foreach ($request->get('users') as $userData) {
             $result = new Result;
             $result->grade = $userData['grade'];
@@ -90,7 +90,6 @@ class ResultController extends Controller
 
             $result->save();
         }
-
         return response()->json('Les notes ont bien été saisies');
     }
 }

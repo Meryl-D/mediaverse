@@ -32,14 +32,10 @@ class ReviewController extends Controller
 
     public function create()
     {
-
         //check the role of the user
         if (Gate::allows('isStudent')) {
-
             $listCourses = Auth::user()->courses()->pluck('course_id')->toArray();
             return $listCourses;
-
-
         }
     }
 
@@ -56,6 +52,5 @@ class ReviewController extends Controller
             return response()->json('Review ajoutée avec succès');
         
     }
-
 
 }
