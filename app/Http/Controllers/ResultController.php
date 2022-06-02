@@ -29,7 +29,15 @@ class ResultController extends Controller
         dd($results);
         return $results; 
         
+        if(Gate::allows('isStudent')){
+
+        }
+    
     }
+
+
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -63,5 +71,6 @@ class ResultController extends Controller
         
         return response()->json('Les notes ont bien été saisies');
     }
+
 
 }

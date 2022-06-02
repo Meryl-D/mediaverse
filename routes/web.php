@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\ResultController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ScheduleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,7 @@ Route::get('/', function () {
 //         'test2'
 //     ];
 // });
+Route::get('resultat', [ResultController::class, 'index']);
 Route::get('review', [ReviewController::class, 'index']);
 Route::get('/horaire', [ScheduleController::class, 'index']);
 Auth::routes();
