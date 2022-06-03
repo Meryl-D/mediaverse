@@ -20,9 +20,9 @@ use App\Http\Controllers\ScheduleController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Route::get('/api/test', function () {
 //     return [
@@ -30,12 +30,9 @@ Route::get('/', function () {
 //         'test2'
 //     ];
 // });
-Route::get('resultat', [ResultController::class, 'index']);
-Route::get('review', [ReviewController::class, 'index']);
-Route::get('/horaire', [ScheduleController::class, 'index']);
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');
 
-Route::get('/tasks', [TaskController::class, 'index']);
-Route::get('/absence', [AbsenceController::class, 'index']);
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
