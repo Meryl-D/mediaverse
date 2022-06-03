@@ -110,5 +110,9 @@
         --beige: #F1DFCD;
         --white: #FFFCFA;
 
+        /**
+        * 
+        */
+
     }
 </style>
