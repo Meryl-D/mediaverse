@@ -20,10 +20,13 @@ use App\Http\Controllers\NotificationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group(['prefix' => 'absences', 'middleware' => 'auth:sanctum'], function () {
     Route::get('/', [AbsenceController::class, 'index']);

@@ -17,16 +17,21 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
+        $courses = Auth::user()->courses()->get();
 
-        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get()->toArray();
+        $courseIds = $courses->pluck('course_id')->toArray();
+
+        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get();
 
         $holidays = Holiday::all();
 
-        return [
+        $data = [
+            'courses' => $courses,
             'lessons' => $lessons,
             'holidays' => $holidays
         ];
+
+        return response()->json($data);
     }
 
 }
