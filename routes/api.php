@@ -20,8 +20,8 @@ use App\Http\Controllers\NotificationController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('login', [UserController::class, 'login']);
-Route::post('logout', [UserController::class, 'logout'])->middleware('auth:sanctum');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth:sanctum');
 
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
