@@ -24,16 +24,16 @@
         '#': {
         label: 'Schedule',
         component: TheSchedule,
-        },
-        '#notes': {
+    },
+    '#notes': {
         label: 'Results',
         component: TheResults,
-        },
-        '#absences': {
+    },
+    '#absences': {
         label: 'Absences',
         component: TheAbsences,
-        },
-        '#compte': {
+    },
+    '#compte': {
         label: 'Account',
         component: TheAccount,
         },
@@ -61,17 +61,17 @@
         console.log("logout");
         //evt.preventDefault();
 
-        axios.get("/sanctum/csrf-cookie").then((response) => {
+    axios.get("/sanctum/csrf-cookie").then((response) => {
 
-            axios.post("/api/logout").then((response) => {
+        axios.post("/api/logout").then((response) => {
 
                 if (response.data.success) {
                     window.location.hash = 'login';
                     auth.value = false;
                 } else {
                 console.log(response);
-                }
-            })
+            }
+        })
             .catch(function (error) {
                 console.error(error);
             });
@@ -81,10 +81,10 @@
 
 
 <template>
-  <!-- <h1>
+    <!-- <h1>
         {{ message }}
     </h1> -->
-  <!-- <h2>
+    <!-- <h2>
          {{message2}}
     </h2> -->
     <!-- for logged-in user-->
@@ -93,7 +93,7 @@
         <main>
             <template v-for="(route, hash) of routes" :key="route">
                 <div v-show="hash == curHash">
-                    <component :is="curComponent"/>
+                    <component :is="curComponent" />
                 </div>
             </template>
         </main>
@@ -105,18 +105,18 @@
 </template>
 
 <style scoped>
-    * {
-        /**
+* {
+    /**
         * Colors
         */
-        --orange: #F9A228;
-        --green: #2A3A30;
-        --beige: #F1DFCD;
-        --white: #FFFCFA;
+    --orange: #F9A228;
+    --green: #2A3A30;
+    --beige: #F1DFCD;
+    --white: #FFFCFA;
 
         /**
         * Fonts
         */
 
-    }
+}
 </style>
