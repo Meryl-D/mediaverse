@@ -3,28 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        $credentials = [
-            'email' => $request->email,
-            'password' => $request->password,
-        ];
+        $credentials = $request->validate([
+            'email' => ['required'],
+            'password' => ['required'],
+        ]);
 
         if (Auth::attempt($credentials)) {
             $success = true;
             $message = 'Connexion réussie';
+            $user = Auth::user();
         } else {
             $success = false;
             $message = 'Accès non authorisé';
+            $user = null;
         }
 
         // response
         $response = [
             'success' => $success,
             'message' => $message,
+            'user' => $user
         ];
         return response()->json($response);
     }
@@ -35,7 +40,7 @@ class LoginController extends Controller
             Session::flush();
             $success = true;
             $message = 'Déconnexion réussie';
-        } catch (\Illuminate\Database\QueryException $ex) {
+        } catch (QueryException $ex) {
             $success = false;
             $message = $ex->getMessage();
         }

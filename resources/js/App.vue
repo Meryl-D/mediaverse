@@ -1,11 +1,12 @@
 <script setup>
-    import { ref } from "vue";
+    import { ref, computed } from "vue";
     import axios from "axios";
+    import { auth } from './stores.js';
     import TheSchedule from './components/TheSchedule.vue'
     import TheResults from './components/TheResults.vue'
     import TheAbsences from './components/TheAbsences.vue'
     import TheAccount from './components/TheAccount.vue'
-    import TheLogin from './components/TheLogin.vue'
+    import TheLoginForm from './components/subComponents/TheLoginForm.vue'
 
     // const message = ref('hello from vue');
     // const message2 = ref(data);
@@ -16,7 +17,8 @@
     // 	test => console.log(test)
     // )
 
-    const isLoggedIn = ref("false");
+    //const isLoggedIn = ref("false");
+    if (!auth.value) window.location.hash = 'login';
 
     const routes = {
         '#': {
@@ -35,11 +37,18 @@
         label: 'Account',
         component: TheAccount,
         },
+        '#login': {
+        label: 'Login',
+        component: TheLoginForm,
+        },
     };
 
-    if (window.Laravel.isLoggedin) {
-    this.isLoggedIn = true;
-    }
+    const hash = ref(window.location.hash);
+    window.addEventListener('hashchange', () => hash.value = window.location.hash);
+    const curHash = computed(() => routes[hash.value] ? hash.value : Object.keys(routes)[0]);
+    const curComponent = computed(() => routes[curHash.value].component);
+
+
 
     /**
      * Logs out the user.
@@ -48,16 +57,17 @@
      * 
      * @return void
      */
-    function logout(evt) {
+    function logout() {
         console.log("logout");
-        evt.preventDefault();
+        //evt.preventDefault();
 
         axios.get("/sanctum/csrf-cookie").then((response) => {
 
             axios.post("/api/logout").then((response) => {
 
                 if (response.data.success) {
-                window.location.href = "/";
+                    window.location.hash = 'login';
+                    auth.value = false;
                 } else {
                 console.log(response);
                 }
@@ -67,11 +77,6 @@
             });
         });
     }
-
-    const hash = ref(window.location.hash);
-    window.addEventListener('hashchange', () => hash.value = window.location.hash);
-    const curHash = computed(() => routes[hash.value] ? hash.value : Object.keys(routes)[0]);
-    const curComponent = computed(() => routes[curHash.value].component);
 </script>
 
 
@@ -83,9 +88,8 @@
          {{message2}}
     </h2> -->
     <!-- for logged-in user-->
-    <div v-if="isLoggedIn">
-        <the-header :routes="routes" :curHash="curHash"></the-header>
-
+    <!-- <div v-if="isLoggedIn.value"> -->
+        <!-- <the-header :routes="routes" :curHash="curHash"></the-header> -->
         <main>
             <template v-for="(route, hash) of routes" :key="route">
                 <div v-show="hash == curHash">
@@ -93,11 +97,11 @@
                 </div>
             </template>
         </main>
-    </div>
+    <!-- </div> -->
     <!-- for non-logged user-->
-    <div v-else>
-      <the-login></the-login>
-    </div>
+    <!-- <div v-else> -->
+      <!-- <the-login-form></the-login-form>
+    </div> -->
 </template>
 
 <style scoped>
@@ -111,7 +115,7 @@
         --white: #FFFCFA;
 
         /**
-        * 
+        * Fonts
         */
 
     }

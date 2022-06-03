@@ -8,7 +8,7 @@
     <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    @if (Auth::check())
+    <!-- @if (Auth::check())
         <script>
             window.Laravel = {!!json_encode([
                 'isLoggedin' => true,
@@ -21,9 +21,8 @@
                 'isLoggedin' => false
             ])!!}
         </script>
-    @endif
-    <div id="utiliz">
-    </div>
+    @endif -->
+    <div id="utiliz"></div>
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
 </body>
 </html>
