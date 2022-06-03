@@ -101,5 +101,14 @@
 </template>
 
 <style scoped>
+    * {
+        /**
+        * Colors
+        */
+        --orange: #F9A228;
+        --green: #2A3A30;
+        --beige: #F1DFCD;
+        --white: #FFFCFA;
 
+    }
 </style>
