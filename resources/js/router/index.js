@@ -18,7 +18,7 @@ const routes = [
         component : TheLoginForm
     },
     {
-        path : '/horaires',
+        path : '/',
         name : 'Horaires',
         meta : {
             requiresAuth : true

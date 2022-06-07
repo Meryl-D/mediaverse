@@ -1,6 +1,5 @@
 <script setup>
 import { axiosClient } from "../../utils/axios.js";
-import { ref, watchEffect } from "vue";
 import { user } from "../../stores.js";
 import router from '../../router/index.js';
 import BaseButton from "./BaseButton.vue";
@@ -21,7 +20,6 @@ async function login() {
     lastName : data.lastName,
     token : data.token,
   };
-  // window.location.hash='#horaires';
 }
 
 async function submitForm() {
