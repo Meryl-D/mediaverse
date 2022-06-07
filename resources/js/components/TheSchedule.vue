@@ -3,14 +3,12 @@
     import { axiosClient } from '../utils/axios.js';
 
     const { data } = await axiosClient.get('/api/lessons')
-    // .then(response => {
-    //     //console.log(response.data)
-    //     data.value = response.data;
-    // })
     // .catch(function (error) {
     //     console.error(error);
     // });
-    console.log(data);
+    data.lessons.forEach(lesson => {
+        //data.lessons.map(course_id => lesson.course)
+    });
 
 </script>
 
