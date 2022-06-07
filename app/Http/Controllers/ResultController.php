@@ -66,7 +66,7 @@ class ResultController extends Controller
                 "modules" => $modules,
                 "semesters" => $semesters
             ];
-            return $dataResultStudent;
+            return response()->json($dataResultStudent);
         }
     }
 
