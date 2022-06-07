@@ -22,7 +22,7 @@ class AuthController extends Controller
             $token = $user->createToken('utiliz_token')->plainTextToken;
         } else {
             $success = false;
-            $message = 'Accès non authorisé';
+            $message = 'Identifiants incorrects';
             $user = null;
         }
 

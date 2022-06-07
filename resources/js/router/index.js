@@ -6,6 +6,8 @@ import TheAbsences from '../components/TheAbsences.vue';
 import TheAccount from '../components/TheAccount.vue';
 import TheLoginForm from '../components/subComponents/TheLoginForm.vue';
 
+console.log()
+
 const routes = [
     {
         path : '/login',
@@ -54,12 +56,12 @@ const router = createRouter({
     routes
 })
 
-// router.beforeEach((to, from, next) => {
-//     if (to.meta.requiresAuth && !user.token) {
-//         next({ name : 'Login' });
-//     } else {
-//         next();
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth && !user.value.token) {
+        next({ name : 'Login' });
+    } else {
+        next();
+    }
+})
 
 export default router;
