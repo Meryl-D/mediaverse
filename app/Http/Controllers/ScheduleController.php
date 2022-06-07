@@ -13,16 +13,40 @@ use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
+    /**
+     * Get all week days between two dates.
+     * 
+     * @param Carbon $dateStart
+     * @param Carbon $dateEnd
+     * 
+     * @return array
+     */
     private function getDatesInRange($dateStart, $dateEnd) {
 
-        $period = CarbonPeriod::create($dateStart, $dateEnd);
+        $allDates = CarbonPeriod::create($dateStart, $dateEnd);
 
-        return $period;
+        $weekDays = [];
+
+        foreach ($allDates as $key => $date) {
+            if ($date->isWeekDay()) $weekDays[] = $date;
+        }
+
+        return $weekDays;
     }
+
+    // private function arrangeLessons($lessons, $courses) {
+
+    //     foreach ($lessons as $key => $lesson) {
+    //         $courseId = array_search($lesson->course_id, $courses);
+    //         $courseName = $courses[$courseId]->name;
+
+    //         $lesson->course_id = $courseName;
+    //     }
+    // }
 
     /**
      * Return authentified users schedule and all holidays.
-     * 
+     *
      * @return array
      */
     public function index()
@@ -30,9 +54,10 @@ class ScheduleController extends Controller
         $courses = Auth::user()->courses()->get();
         $courseIds = $courses->pluck('id')->toArray();
 
-        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get();
+        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get()->toArray();
 
         $currDate = new Carbon();
+
         $currSemesterDates = Semester::select('date_start', 'date_end')
             ->where('date_start', '<=', $currDate)
             ->where('date_end', '>=', $currDate)
@@ -40,15 +65,21 @@ class ScheduleController extends Controller
 
         $holidays = Holiday::all();
 
-        $dates = $this->getDatesInRange($currSemesterDates['date_start'], $currSemesterDates['date_end']);
+        $currDateStart = new Carbon($currSemesterDates['date_start']);
+        $currDateEnd = new Carbon($currSemesterDates['date_end']);
+
+        $weekDays = $this->getDatesInRange($currDateStart, $currDateEnd);
 
         $data = [
             'courses' => $courses,
             'lessons' => $lessons,
-            'holidays' => $holidays
+            'holidays' => $holidays,
+            'weekDays' => $weekDays
         ];
 
-        return response()->json($dates);
+        //$lessons = $this->arrangeLessons($lessons, $courses);
+
+        return response()->json($data);
     }
 
 }
