@@ -6,7 +6,7 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.type);
+//console.log(props.type);
 </script>
 
 <template>
@@ -18,10 +18,18 @@ console.log(props.type);
 
 <style scoped>
 button {
-  color: var(--orange)  ;
+  color: var(--green)  ;
   background-color: var(--white);
-  border-color:var(--orange);
-  border:solid 0.2em;
-  border-radius: 0.5rem;
+  border: none;
+  border-radius: 0.3em;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+button:hover {
+  color: var(--white)  ;
+  background-color: var(--orange);
+}
+button:active {
+  color: var(--white)  ;
+  background-color: var(--orange);
 }
 </style>

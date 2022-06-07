@@ -40,7 +40,6 @@ async function submitForm() {
       <label for="password">Mot de passe</label>
       <input id="password" type="password" v-model="creds.password" required />
     </div>
-   <!-- <button type="submit">Envoyer</button>-->
     <base-button type="submit">Envoyer</base-button>
   </form>
 </template>
