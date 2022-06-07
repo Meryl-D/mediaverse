@@ -1,33 +1,36 @@
-<!-- <script setup>
-import { axiosClient } from "../../utils/axios.js";
+<script async setup>
+import { axiosClient } from "../utils/axios.js";
 import { ref, watchEffect } from "vue";
-import { user } from "../../stores.js";
-import router from '../../router/index.js';
+import { user } from "../stores.js";
+import router from '../router/index.js';
 
 
-const creds = {
-  email : '',
-  password : ''
+
+
+async function review() {
+    const { datas } = await axiosClient.get('api/reviews');
+
+    console.log(datas)
+    //console.log(datas[0].created_at)
+    
+     return datas
+
 }
 
-async function login() {
-  await axiosClient.get('/sanctum/csrf-cookie');
-  const { data } = await axiosClient.post('api/login', creds);
+const test = await review();
+console.log(test)
+</script>
 
-  user.value={
-    id : data.id,
-    firstName : data.firstName,
-    lastName : data.lastName,
-    token : data.token,
-  };
-  // window.location.hash='#horaires';
-}
+<template>
+    <h1>Vos reviews :</h1>
+    <div id="#app">
+        <ul>
+            <li class="rating" v-for="data in datas" :key="data.something">{{ data }}</li>
+            <li class="feedback"></li>
+            <li class="dateCreation"></li>
+            <li class="acronym"></li>
+        </ul>
 
-async function submitForm() {
-  await login();
-  router.push({
-    name : 'Horaires'
-  })
-}
-</script> -->
+    </div>
+</template>
 

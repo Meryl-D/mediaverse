@@ -4,6 +4,7 @@ import TheSchedule from '../components/TheSchedule.vue';
 import TheResults from '../components/TheResults.vue';
 import TheAbsences from '../components/TheAbsences.vue';
 import TheAccount from '../components/TheAccount.vue';
+import TheReviews from '../components/TheReviews.vue';
 import TheLoginForm from '../components/subComponents/TheLoginForm.vue';
 
 console.log()
@@ -18,7 +19,7 @@ const routes = [
         component : TheLoginForm
     },
     {
-        path : '/horaires',
+        path : '/',
         name : 'Horaires',
         meta : {
             requiresAuth : true
@@ -40,6 +41,14 @@ const routes = [
             requiresAuth : true
         },
         component : TheResults
+    },
+    {
+        path : '/reviews',
+        name : 'Reviews',
+        meta : {
+            requiresAuth : true
+        },
+        component : TheReviews
     },
     {
         path : '/absences',
