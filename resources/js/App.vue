@@ -34,7 +34,7 @@
             firstName : '',
             lastName : '',
             token : ''
-        }
+        } 
         //window.location.hash = '#login'
     }
 </script>
