@@ -19,7 +19,7 @@ class ScheduleController extends Controller
     {
         $courses = Auth::user()->courses()->get();
 
-        $courseIds = $courses->pluck('course_id')->toArray();
+        $courseIds = $courses->pluck('id')->toArray();
 
         $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get();
 

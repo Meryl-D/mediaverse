@@ -1,3 +1,8 @@
 import { useLocalstorage } from "./composables/localStorage";
 
-export const { value: auth } = useLocalstorage('auth', '');
+export const { value: user } = useLocalstorage('user', {
+    id : null,
+    firstName : '',
+    lastName : '',
+    token : ''
+});
