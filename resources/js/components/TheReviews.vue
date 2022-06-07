@@ -8,27 +8,28 @@ import router from '../router/index.js';
 
 
 async function review() {
-    const { datas } = await axiosClient.get('api/reviews');
-
-    console.log(datas)
+    const { data } = await axiosClient.get('api/reviews');
+    //console.log(data)
     //console.log(datas[0].created_at)
-    
-     return datas
+
+    return data
 
 }
 
-const test = await review();
-console.log(test)
+const reviews = await review();
+console.log(reviews)
+
 </script>
 
 <template>
     <h1>Vos reviews :</h1>
-    <div id="#app">
-        <ul>
-            <li class="rating" v-for="data in datas" :key="data.something">{{ data }}</li>
-            <li class="feedback"></li>
-            <li class="dateCreation"></li>
-            <li class="acronym"></li>
+    <div>
+        <ul v-for="review in reviews" :key="review.id">
+            
+                <div>Cours : {{ review.course.acronym }}</div>
+                <div>Note : {{ review.rating}}</div>
+                <div>Feedback : {{ review.feedback }}</div>
+           
         </ul>
 
     </div>
