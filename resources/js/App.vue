@@ -28,7 +28,7 @@
             lastName : '',
             token : ''
         }
-    }
+     }
 
 </script>
 
@@ -40,16 +40,22 @@
 <style scoped>
 * {
     /**
-        * Colors
-        */
+    * Colors
+    */
     --orange: #F9A228;
     --green: #2A3A30;
     --beige: #F1DFCD;
     --white: #FFFCFA;
+    --shadow: 0px 0px 10px 0px #FFCFAD;
 
-        /**
-        * Fonts
-        */
 
+    /**
+    * Fonts
+    */
+
+}
+
+:root {
+    background-color : var(--white);
 }
 </style>

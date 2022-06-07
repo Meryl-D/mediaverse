@@ -22,15 +22,11 @@ button {
   background-color: var(--white);
   border: none;
   border-radius: 0.3em;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 5px, rgba(0, 0, 0, 0.24) 0px 1px 4px;
+  box-shadow: var(--shadow);
   margin: 1em;
 }
-button:hover {
-  color: var(--white)  ;
-  background-color: var(--orange);
-}
-button:active {
-  color: var(--white)  ;
-  background-color: var(--orange);
+
+button:hover, button:active {
+  color: var(--orange)  ;
 }
 </style>
