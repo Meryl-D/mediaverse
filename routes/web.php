@@ -20,10 +20,6 @@ use App\Http\Controllers\ScheduleController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 // Route::get('/api/test', function () {
 //     return [
 //         'test1',

@@ -76,7 +76,7 @@ class ResultController extends Controller
      * @return json
      */
 
-    public function add(Request $request)
+    public function add(ResultRequest $request)
     {
 
         foreach ($request->get('users') as $userData) {

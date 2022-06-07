@@ -1,48 +1,46 @@
 <script setup>
-    import axios from "axios";
-    import { ref, watchEffect } from 'vue';
-    import { auth } from '../../stores.js';
+import { axiosClient } from "../../utils/axios.js";
+import { ref, watchEffect } from "vue";
+import { user } from "../../stores.js";
+import router from '../../router/index.js';
 
-    const email = ref('');
-    const password = ref('');
-    const error = ref(null);
 
-    function login() {
-        if (!password) return;
+const creds = {
+  email : '',
+  password : ''
+}
 
-        axios.get('/sanctum/csrf-cookie').then(response => {
-            
-            axios.post('api/login', {
-                email: email.value,
-                password: password.value
-            })
-            .then(response => {
-                console.log(response.data)
-                if (response.data.success) {
-                    window.location.hash = '#'
-                    auth.value = true;
-                } else {
-                    error.value = response.data.message
-                }
-            })
-            .catch(function (error) {
-                console.error(error.value)
-            });
-        })
-    }
+async function login() {
+  await axiosClient.get('/sanctum/csrf-cookie');
+  const { data } = await axiosClient.post('api/login', creds);
 
+  user.value={
+    id : data.id,
+    firstName : data.firstName,
+    lastName : data.lastName,
+    token : data.token,
+  };
+  // window.location.hash='#horaires';
+}
+
+async function submitForm() {
+  await login();
+  router.push({
+    name : 'Horaires'
+  })
+}
 </script>
 
 <template>
-    <form @submit.prevent="login()">
-        <div>
-            <label for="email">Adresse e-mail</label>
-            <input id="email" type="email" v-model="email" required>
-        </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input id="password" type="password" v-model="password" required>
-        </div>
-        <button type="submit">Envoyer</button>
-    </form>
+  <form @submit.prevent="submitForm()">
+    <div>
+      <label for="email">Adresse e-mail</label>
+      <input id="email" type="email" v-model="creds.email" required />
+    </div>
+    <div>
+      <label for="password">Mot de passe</label>
+      <input id="password" type="password" v-model="creds.password" required />
+    </div>
+    <button type="submit">Envoyer</button>
+  </form>
 </template>
