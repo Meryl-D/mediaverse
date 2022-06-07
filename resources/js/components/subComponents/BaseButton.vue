@@ -18,10 +18,10 @@ console.log(props.type);
 
 <style scoped>
 button {
-  color:#F9A228;
-  background-color: #FFFCFA;
-  border-color: #F9A228;
-  border: 1em;
-  border-radius: 25rem;
+  color: var(--orange)  ;
+  background-color: var(--white);
+  border-color:var(--orange);
+  border:solid 0.2em;
+  border-radius: 0.5rem;
 }
 </style>
