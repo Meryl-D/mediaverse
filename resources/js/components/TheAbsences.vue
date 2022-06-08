@@ -22,7 +22,7 @@ const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 
         <ul>
             <li v-for="absence in test" :key="absence.id">
-                <div>{{ absence.lesson_id}}</div>
+                <div>{{ absence}}</div>
             </li>
         </ul>
 

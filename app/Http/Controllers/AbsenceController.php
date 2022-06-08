@@ -30,14 +30,14 @@ class AbsenceController extends Controller
                 ->where('date_start', '<=', $dateNow)
                 ->where('date_end', '>=', $dateNow)->pluck('course_id')->toArray();
 
-            $infos[] = $lessonsCourseIds;
+            $absence[] = $lessonsCourseIds;
 
             $students = [];
             foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
                 $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
             }
-            $infos[] = $students;
-            return response()->json($infos);
+            $absence[] = $students;
+            return response()->json($absence);
 
         }
 
