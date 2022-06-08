@@ -11,8 +11,9 @@ const creds = {
 };
 
 async function login() {
-  await axiosClient.get("/sanctum/csrf-cookie");
-  const { data } = await axiosClient.post("api/login", creds);
+  await axiosClient.get('/sanctum/csrf-cookie');
+  const { data } = await axiosClient.post('api/login', creds);
+  console.log(data)
 
   user.value = {
     id: data.id,
