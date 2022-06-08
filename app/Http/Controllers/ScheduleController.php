@@ -10,14 +10,15 @@ use App\Models\Holiday;
 use App\Models\Semester;
 use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
 {
     /**
-     * Returns an array with all the dates of the current semesters.
+     * Return a Collection with all the dates of the current semesters.
      * 
-     * @return array
+     * @return Collection
      */
     private function getDatesInSemester() {
 
@@ -42,31 +43,12 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Returns an array with only the week days.
+     * Organize and prepare lessons data.
+     * Format lessons dates and replace course id by its name.
      * 
-     * @param array (of strings) $dates
+     * @param Collection $lessons
      * 
-     * @return array
-     */
-    private function getWeekDays($dates) {
-
-        $weekDays = [];
-
-        foreach ($dates as $key => $date) {
-        
-            $date = new Carbon($date); //needs to be a date for isWeekDay()
-            if ($date->isWeekDay()) $weekDays[] = $date->format('Y-m-d');
-        }
-
-        return $weekDays;
-    }
-
-    /**
-     * Organize and prepare lessons data for frontend.
-     * 
-     * @param collection $lessons
-     * 
-     * @return collection 
+     * @return Collection 
      */
     private function prepLessons($lessons) {
 
@@ -74,9 +56,6 @@ class ScheduleController extends Controller
             $course = Course::where('id', $lesson->course_id)->first();
 
             return [
-                'dayShort' => ucfirst($lesson->date_start->isoFormat('dd')),
-                'dayLong' => ucfirst($lesson->date_start->isoFormat('dddd')),
-                'month' => ucfirst($lesson->date_start->isoFormat('MMMM')),
                 'date' => $lesson->date_start->format('Y-m-d'),
                 'name' => $course->name,
                 'timeStart'  => $lesson->date_start->format('H:i'),
@@ -88,40 +67,104 @@ class ScheduleController extends Controller
         return $lessons;
     }
 
+    /**
+     * format holidays dates.
+     *
+     * @param Collection $holidays
+     * 
+     * @return Collection
+     */
     private function prepHolidays($holidays) {
 
-        $holidays = $holidays->map(function ($holidays, $key) {
+        $holidays = $holidays->map(function ($holiday, $key) {
 
             return [
-                'name' => $holidays->name,
-                'dateStart' => (new Carbon($holidays->date_start))->format('Y-m-d'),
-                'dateEnd' => (new Carbon($holidays->date_end))->format('Y-m-d')
+                'name' => $holiday->name,
+                'dateStart' => (new Carbon($holiday->date_start))->format('Y-m-d'),
+                'dateEnd' => (new Carbon($holiday->date_end))->format('Y-m-d')
             ];
         });
 
         return $holidays;
     }
 
-    // private function prepAgendaSchedule($lessons, $holidays) {
+    /**
+     * Create an array with all data needed for every day of a semester.
+     * 
+     * @param Collection $lessons
+     * @param Collection $holidays
+     * 
+     * @return array
+     */
+    private function prepAgendaSchedule($lessons, $holidays) {
 
-    //     $dates = $this->getDatesInSemester();
+        $dates = $this->getDatesInSemester();
+        $data = collect();
 
-    //     foreach ($dates as $key => $date) {
+        foreach ($dates as $date) {
             
-    //         $lessonsOfDate = $lessons->where('date', $date)->get();
-            
-    //         return $lessonsOfDate;
-    //     }
+            $lessonsOfDate = $lessons->where('date', $date);
+            $holidayOfDate = $holidays->where('dateStart', '<=', $date)->where('dateEnd', '>=', $date)->first();
 
-    //     return $lessonsOfDate;   
-    // }
+            if (!$lessonsOfDate->isEmpty()) {
+                foreach ($lessonsOfDate as $lesson) {
+                    $data->push([
+                        'name' => $lesson['name'],
+                        'timeStart'  => $lesson['timeStart'],
+                        'timeEnd' => $lesson['timeEnd'],
+                        'room' => $lesson['room'],
+                        'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                        'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                        'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                        'date' => $date
+                    ]);
+                };
+            };
 
-    // private function prepWeeklySchedule($agendaSchedule) {
+            if ($holidayOfDate) {
+                $data->push([
+                    'name' => $holidayOfDate['name'],
+                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                    'date' => $date
+                ]);
+            };
 
-    // }
+            if ($lessonsOfDate->isEmpty() && !$holidayOfDate) {
+                $data->push([
+                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                    'date' => $date
+                ]);
+            }
+        };
+
+        $data = $data->all();
+
+        return $data;   
+    }
 
     /**
-     * Returns authenticated users schedule and all holidays.
+     * Create an array with all data needed for every weekday of a semester.
+     * 
+     * @param array $schedule
+     * 
+     * @return array
+     */
+    private function prepWeeklySchedule($schedule) {
+        foreach ($schedule as $key => $date) {
+            if ($date['dayShort'] == 'Sa' || $date['dayShort'] == 'Di') unset($schedule[$key]);
+        }
+        
+        $schedule = array_values($schedule);
+
+        return $schedule;
+    }
+
+    /**
+     * Return an array with weekday and every day schedules for the authenticated user.
      *
      * @return array
      */
@@ -129,26 +172,27 @@ class ScheduleController extends Controller
     {
         $courses = Auth::user()->courses()->get();
         $courseIds = $courses->pluck('id')->toArray();
+        $classes = Auth::user()->classes()->pluck('name');
 
-        $lessons = Lesson::whereIn('course_id', $courseIds)->orderBy('date_start', 'asc')->get();
+        $lessons = Lesson::whereIn('course_id', $courseIds)
+            ->whereIn('class', $classes)
+            ->orderBy('date_start', 'asc')
+            ->get();
 
         $holidays = Holiday::all();
 
-        $datesInSemester = $this->getDatesInSemester(); // needed for the agenda view
-        $weekDays = $this->getWeekDays($datesInSemester); // needed for the weekly view
         $lessons = $this->prepLessons($lessons);
         $holidays = $this->prepHolidays($holidays);
 
-        //$agendaSchedule = $this->prepAgendaSchedule($lessons, $holidays);
+        $allDaysSchedule = $this->prepAgendaSchedule($lessons, $holidays); // needed for the agenda view
+        $weekDaysSchedule = $this->prepWeeklySchedule($allDaysSchedule); // needed for the weekly view
 
         $data = [
-            'lessons' => $lessons,
-            'holidays' => $holidays,
-            'weekDays' => $weekDays,
-            'allDays' => $datesInSemester
+            'allDaysSchedule' => $allDaysSchedule,
+            'weekDaysSchedule' => $weekDaysSchedule,
         ];
 
-        return response()->json($agendaSchedule);
+        return $data;
     }
 
 }

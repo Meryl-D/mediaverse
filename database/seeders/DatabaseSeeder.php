@@ -12,6 +12,7 @@ use Database\Seeders\ModulesTableSeeder;
 use Database\Seeders\SectorsTableSeeder;
 use Database\Seeders\HolidaysTableSeeder;
 use Database\Seeders\SemestersTableSeeder;
+use Database\Seeders\ClasseUserTableSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
@@ -33,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(CourseUserTableSeeder::class);
+        $this->call(ClasseUserTableSeeder::class);
     }
 }

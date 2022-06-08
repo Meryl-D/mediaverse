@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
@@ -15,24 +16,24 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials, true)) {
-            $success = true;
-            $message = 'Connexion réussie';
-            $user = Auth::user();
-            $token = $user->createToken('utiliz_token')->plainTextToken;
-        } else {
-            $success = false;
-            $message = 'Identifiants incorrects';
-            $user = null;
+        if (!Auth::attempt($credentials, true)) {
+
+            return response([
+                'error' => 'Identifiants incorrects'
+            ], 422);
         }
 
-        // response
+        $user = Auth::user();
+
+        $roleId = $user['role_id'];
+        $role = Role::where('id', $roleId)->value('name');
+
+        $token = $user->createToken('utiliz_token')->plainTextToken;
+
         $response = [
-            'success' => $success,
-            'message' => $message,
-            'id' => $user['id'],
             'firstName' => $user['first_name'],
             'lastName' => $user['last_name'],
+            'role' => $role,
             'token' => $token
         ];
         

@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { axiosClient } from "../../utils/axios.js";
 import { user } from "../../stores.js";
 import router from "../../router/index.js";
@@ -10,24 +11,30 @@ const creds = {
   password: "",
 };
 
+const errorMsg = ref('');
+
 async function login() {
   await axiosClient.get('/sanctum/csrf-cookie');
   const { data } = await axiosClient.post('api/login', creds);
-  console.log(data)
 
   user.value = {
-    id: data.id,
     firstName: data.firstName,
     lastName: data.lastName,
+    role: data.role,
     token: data.token,
   };
 }
 
 async function submitForm() {
-  await login();
-  router.push({
-    name: "Horaires",
-  });
+
+  try {
+    await login();
+    router.push({
+      name: "Horaires",
+    });
+  } catch (err) {
+    errorMsg.value = err.response.data.error
+  }
 }
 </script>
 
@@ -47,6 +54,9 @@ async function submitForm() {
           required
         />
       </div>
+      <p v-if="errorMsg">
+        {{ errorMsg }}
+      </p>
       <base-button type="submit">Envoyer</base-button>
     </form>
   </base-box>

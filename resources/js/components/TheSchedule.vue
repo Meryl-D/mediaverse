@@ -1,21 +1,11 @@
 <script setup>
     import { ref, watchEffect } from 'vue';
     import { axiosClient } from '../utils/axios.js';
+    import { user } from '../stores.js';
 
-    const { data } = await axiosClient.get('/api/lessons')
-    // .catch(function (error) {
-    //     console.error(error);
-    // });
-    // function replaceCourseIdByName(data) {
-
-    //     data.lessons.forEach(lesson => {
-    //     const course = data.courses.find(course => course.id === lesson.course_id);
-    //     lesson.course = course.name;
-    //     delete lesson.course_id;
-    //     });    
-    // }
-
-    // replaceCourseIdByName(data)
+    const { data } = await axios.get('/api/lessons', {
+        headers: { Authorization : `Bearer ${user.value.token}` }
+    });
 
     console.log(data)
 
