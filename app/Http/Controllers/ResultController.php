@@ -22,6 +22,34 @@ class ResultController extends Controller
      * 
      * @return array
      */
+
+    private function prepResult($results) {
+
+        $results = $results->map(function ($result, $key) {
+          
+            $course = Course::where('id', $result->course_id)->first();
+            $moduleId = $course->module_id;
+           
+            $module = Module::where('id', $moduleId)->first();
+           
+
+            $semestreId = $module->semester_id;
+            $semestre = Semester::where('id', $semestreId)->first();
+
+            return [        
+                'grade' => $result->grade,
+                'gradeWeight' => $result->weight,
+                'moduleCredit' => $module->credit,
+                'moduleName' => $module->name,
+                'CourseName' => $course->name,
+                'semesterNo' => $semestre->number
+            ];
+
+        });
+
+        return $results;
+    }
+
     public function index()
     {
         //check the role of the user
@@ -50,23 +78,10 @@ class ResultController extends Controller
             
         } else {
             $results = Result::where('receiver_id', Auth::id())->get();
-            $resultCourseId = $results->pluck('course_id');
 
-            $listeCourses = Course::distinct()->whereIn('id', $resultCourseId)->get();            
-            $listeCoursesIds = $listeCourses->pluck('module_id');
-            $modules = Module::distinct()->whereIn('id', $listeCoursesIds)->get();
-            
-            $moduleSemesterIds = $modules->pluck('semester_id');
-            $semesters = Semester::distinct()->whereIn('id', $moduleSemesterIds)->get();
-                    
-            
-            $dataResultStudent = [
-                "results" => $results,
-                "listeCourses" => $listeCourses,
-                "modules" => $modules,
-                "semesters" => $semesters
-            ];
-            return response()->json($dataResultStudent);
+            $studentResult = $this->prepResult($results);
+
+            return response()->json($studentResult);
         }
     }
 

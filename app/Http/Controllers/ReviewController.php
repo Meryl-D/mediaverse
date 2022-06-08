@@ -37,7 +37,7 @@ class ReviewController extends Controller
     {
         //check the role of the user
         if (Gate::allows('isStudent')) {
-            $listCourses = Auth::user()->courses()->pluck('course_id')->toArray();
+            $listCourses = Auth::user()->courses()->pluck('courses.name')->toArray();
             return $listCourses;
         }
     }

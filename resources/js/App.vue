@@ -56,6 +56,8 @@ async function logout() {
     src: local("SuisseScreen"),
     url(../fonts/SuisseScreen-Medium.otf) format("otf"),
     url(../fonts/SuisseScreen-Bold.otf) format("otf");
+
+    background-color: var(--white);
 }
 
 :root {
