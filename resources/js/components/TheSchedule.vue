@@ -3,19 +3,31 @@
     import { axiosClient } from '../utils/axios.js';
 
     const { data } = await axiosClient.get('/api/lessons')
-    // .then(response => {
-    //     //console.log(response.data)
-    //     data.value = response.data;
-    // })
     // .catch(function (error) {
     //     console.error(error);
     // });
-    console.log(data);
+    // function replaceCourseIdByName(data) {
+
+    //     data.lessons.forEach(lesson => {
+    //     const course = data.courses.find(course => course.id === lesson.course_id);
+    //     lesson.course = course.name;
+    //     delete lesson.course_id;
+    //     });    
+    // }
+
+    // replaceCourseIdByName(data)
+
+    console.log(data)
 
 </script>
 
 <template>
-    
+    <div v-for="lesson in data.lessons" :key="lesson.id">
+        <base-lesson
+           :name="lesson.name"
+        >
+        </base-lesson>
+    </div>
 </template>
 
 <style scoped>
