@@ -37,7 +37,7 @@ class AbsenceController extends Controller
                 $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
             }
             $infos[] = $students;
-            return $infos;
+            return response()->json($infos);
 
         }
 
@@ -45,7 +45,7 @@ class AbsenceController extends Controller
             $absence = Absence::where('user_id', Auth::id())
                 ->get()
                 ->toArray();
-            return $absence;
+            return response()->json($absence);
         }
 
     }
