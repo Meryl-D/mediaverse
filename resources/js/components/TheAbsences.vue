@@ -8,7 +8,7 @@ async function absences() {
   return data
 }
 
-const test = await absences()
+const listAbsences = await absences()
 
 console.log(test)
 
@@ -21,7 +21,7 @@ const items = ref([{ message: 'Foo' }, { message: 'Bar' }])
 <h1>Absences</h1>
 
         <ul>
-            <li v-for="absence in test" :key="absence.id">
+            <li v-for="absence in listAbsences" :key="absence.id">
                 <div>{{ absence}}</div>
             </li>
         </ul>

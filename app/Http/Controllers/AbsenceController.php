@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Absence;
 use App\Models\Course;
 use App\Models\Lesson;
-use App\Models\User;
-use DateTime;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -15,7 +13,39 @@ use Illuminate\Support\Facades\Gate;
 class AbsenceController extends Controller
 {
     /**
-     * If authentified as a teacher : return the list of students for the current courses.
+     * Organize and prepare absence data for frontend.
+     *
+     * @param collection $absences
+     *
+     * @return collection
+     */
+    private function prepabsences($absences)
+    {
+        if (Gate::allows('isStudent')) {
+
+            $absences = $absences->map(function ($absence, $key) {
+                $lessonId = $absence->lesson_id;
+                $lesson = Lesson::where('id', $lessonId)->first();
+                $courseId = $lesson->pluck('course_id');
+                $course = Course::where('id', $courseId)->first();
+                $date = $lesson->date_start;
+
+                return [
+                    'state' => $absence->state,
+                    'name' => $course->pluck('acronym'),
+                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                    'date' => $date->format('Y-m-d'),
+                ];
+            });
+
+            return $absences;
+        }
+    }
+
+    /**
+     * If authentified as a teacher : return the list of students for the current lessons.
      * If authentified as a student : return the students absences.
      *
      * @return array
@@ -23,29 +53,30 @@ class AbsenceController extends Controller
     public function index()
     {
         if (Gate::allows('isTeacher')) {
-            $classes = [];
-            $dateNow = new DateTime();
-            $courseIds = Auth::user()->courses()->pluck('course_id')->toArray();
-            $lessonsCourseIds = Lesson::distinct()->whereIn('course_id', $courseIds)
-                ->where('date_start', '<=', $dateNow)
-                ->where('date_end', '>=', $dateNow)->pluck('course_id')->toArray();
+            // $classes = [];
+            // $dateNow = new DateTime();
+            // $lessonIds = Auth::user()->lessons()->pluck('lesson_id')->toArray();
+            // $absenceslessonIds = Absence::distinct()->whereIn('lesson_id', $lessonIds)
+            //     ->where('date_start', '<=', $dateNow)
+            //     ->where('date_end', '>=', $dateNow)->pluck('lesson_id')->toArray();
 
-            $absence[] = $lessonsCourseIds;
+            // $absence[] = $absenceslessonIds;
 
-            $students = [];
-            foreach ($lessonsCourseIds as $key => $lessonsCourseId) {
-                $students[] = Course::find($lessonsCourseId)->users()->where('role_id', 3)->get();
-            }
-            $absence[] = $students;
-            return response()->json($absence);
+            // $students = [];
+            // foreach ($absenceslessonIds as $key => $absenceslessonId) {
+            //     $students[] = Lesson::find($absenceslessonId)->users()->where('role_id', 3)->get();
+            // }
+            // $absence[] = $students;
+            // return response()->json($absence);
 
         }
 
         if (Gate::allows('isStudent')) {
-            $absence = Absence::where('user_id', Auth::id())
-                ->get()
-                ->toArray();
-            return response()->json($absence);
+
+            $absences = Absence::where('user_id', Auth::id())
+                ->get();
+            $listeAbsence = $this->prepabsences($absences);
+            return response()->json($listeAbsence);
         }
 
     }

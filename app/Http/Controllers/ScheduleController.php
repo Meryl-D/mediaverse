@@ -148,7 +148,7 @@ class ScheduleController extends Controller
             'allDays' => $datesInSemester
         ];
 
-        return response()->json($agendaSchedule);
+       // return response()->json($agendaSchedule);
     }
 
 }
