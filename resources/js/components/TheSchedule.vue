@@ -6,14 +6,28 @@
     // .catch(function (error) {
     //     console.error(error);
     // });
-    data.lessons.forEach(lesson => {
-        //data.lessons.map(course_id => lesson.course)
-    });
+    // function replaceCourseIdByName(data) {
+
+    //     data.lessons.forEach(lesson => {
+    //     const course = data.courses.find(course => course.id === lesson.course_id);
+    //     lesson.course = course.name;
+    //     delete lesson.course_id;
+    //     });    
+    // }
+
+    // replaceCourseIdByName(data)
+
+    console.log(data)
 
 </script>
 
 <template>
-    
+    <div v-for="lesson in data.lessons" :key="lesson.id">
+        <base-lesson
+           :name="lesson.name"
+        >
+        </base-lesson>
+    </div>
 </template>
 
 <style scoped>
