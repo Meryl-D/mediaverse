@@ -19,24 +19,25 @@ class AbsenceController extends Controller
      *
      * @return collection
      */
-    private function prepabsences($absences)
+    private function prepAbsences($absences)
     {
         if (Gate::allows('isStudent')) {
 
             $absences = $absences->map(function ($absence, $key) {
                 $lessonId = $absence->lesson_id;
                 $lesson = Lesson::where('id', $lessonId)->first();
-                $courseId = $lesson->pluck('course_id');
+                $courseId = $lesson->course_id;
                 $course = Course::where('id', $courseId)->first();
-                $date = $lesson->date_start;
+                //$date = $lesson->date_start->format('Y-m-d');
 
                 return [
                     'state' => $absence->state,
-                    'name' => $course->pluck('acronym'),
-                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
-                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
-                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
-                    'date' => $date->format('Y-m-d'),
+                    'name' => $course->acronym,
+                    'date' => $lesson->date_start->format('Y-m-d'),
+                   // 'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                   // 'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                   // 'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                   // 'date' => $date->format('Y-m-d'),
                 ];
             });
 
@@ -72,10 +73,8 @@ class AbsenceController extends Controller
         }
 
         if (Gate::allows('isStudent')) {
-
-            $absences = Absence::where('user_id', Auth::id())
-                ->get();
-            $listeAbsence = $this->prepabsences($absences);
+            $absences = Absence::where('user_id', Auth::id())->get();
+            $listeAbsence = $this->prepAbsences($absences);
             return response()->json($listeAbsence);
         }
 
