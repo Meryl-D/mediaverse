@@ -15,10 +15,10 @@ console.log(allData);
 let dataFiltred = []
 let n = 0
 allData.forEach(d => {
-    if (d.resultId == allData[0].resultId) {
-      dataFiltred[n] = d
-      n++ 
-    }
+  if (d.resultId == allData[0].resultId) {
+    dataFiltred[n] = d
+    n++
+  }
 });
 console.log(dataFiltred)
 
@@ -58,9 +58,9 @@ function smsChoosen(id) {
         <div>
           <p>{{ result.moduleName }}</p>
           <p>
-            <strong>{{ result.CourseName }}</strong> (coeff: {{ result.courseWeight}})
+            <strong>{{ result.CourseName }}</strong> (coeff: {{ result.courseWeight }})
           </p>
-          <p>{{ result.gradeType}} ({{ result.gradeWeight }}%) : <strong>{{ result.grade }}</strong></p>
+          <p>{{ result.gradeType }} ({{ result.gradeWeight }}%) : <strong>{{ result.grade }}</strong></p>
         </div>
         <hr />
       </div>
@@ -77,11 +77,13 @@ function smsChoosen(id) {
   justify-content: center;
   align-items: center;
 }
+
 h1 {
   text-align: center;
   margin-top: 1%;
   margin-bottom: 1%;
 }
+
 #semester {
   display: flex;
   flex-direction: row;
@@ -95,5 +97,4 @@ h1 {
   padding: 1%;
   width: 80%;
 }
-
 </style>

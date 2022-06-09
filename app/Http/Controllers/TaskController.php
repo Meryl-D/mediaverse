@@ -19,9 +19,10 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = (Task::where('user_id', Auth::id())
-            ->orderBy('date', 'asc'))
+            ->orderBy('dateStart', 'asc'))
             ->get()
             ->toArray();
+            //dd($tasks);
         return $tasks;
     }
 
@@ -35,7 +36,8 @@ class TaskController extends Controller
     {
         $task = new Task([
             'name' => $request->input('name'),
-            'date' => $request->input('date'),
+            'dateStart' => $request->input('dateStart'),
+            'dateEnd' => $request->input('dateEnd'),
             'description' => $request->input('description'),
         ]);
         $task->save();
