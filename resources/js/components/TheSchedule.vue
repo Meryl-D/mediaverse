@@ -14,10 +14,10 @@
 
 <template>
     <!-- <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule> -->
-    <the-daily-schedule :days="data.allDaysSchedule"></the-daily-schedule>
+    <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule>
     <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
     <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
-    <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
+    <!-- <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule> -->
 </template>
 
 <style scoped>

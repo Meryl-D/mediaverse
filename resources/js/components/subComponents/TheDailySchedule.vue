@@ -1,21 +1,35 @@
 <script setup>
+import { chunkArrayInGroups } from "../../stores.js";
+import { ref } from "vue";
+
 const props = defineProps({
   days: {
     type: Object,
     required: true,
   },
+  today: {
+    type: String,
+    required: true,
+  },
 });
 
+let currentDate = "";
+props.days.forEach((d) => {
+  if (d.fullDate == props.today) {
+    currentDate =
+      d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
+  }
+});
 
-
-console.log(props.days);
+const weeksSchedule = chunkArrayInGroups(props.days, 7);
+console.log(weeksSchedule);
 </script>
 
 <template>
   <div id="file">
     <div id="header">
-      <div id="week">
-        <div v-for="day in props.days" :key="day.id" class="day">
+      <div v-for="group in weeksSchedule" :key="group" id="week">
+        <div v-for="day in group" :key="day.id" class="day">
           <p>{{ day.dayShort }}</p>
           <p>
             <strong>{{ day.date }}</strong>
@@ -23,7 +37,7 @@ console.log(props.days);
         </div>
       </div>
       <p class="choosenDay">
-        <strong>Date du jour{{}}</strong>
+        <strong>{{ currentDate }}</strong>
       </p>
     </div>
     <hr />
