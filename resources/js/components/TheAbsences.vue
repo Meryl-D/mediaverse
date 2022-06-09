@@ -27,14 +27,18 @@ const items = ref([{ message: "Foo" }, { message: "Bar" }]);
       <base-button type="submit">S6</base-button>
     </div>
   </section>
-  <ul>
-    <li v-for="absence in listAbsences" :key="absence.id">
-      <div>{{ absence.state }}</div>
-      <div>{{ absence.name }}</div>
-      <div>{{ absence.date }}</div>
-    </li>
-  </ul>
+  <base-box>
+    <ul>
+      <li v-for="absence in listAbsences" :key="absence.id">
+        <div class="p bold">{{ absence.name }}</div>
+        <div class="p">{{ absence.state }}</div>
+        <div class="p">{{ absence.date }}</div>
+      </li>
+    </ul>
+  </base-box>
 </template>
 
 
-<style></style>
+<style scoped>
+
+</style>

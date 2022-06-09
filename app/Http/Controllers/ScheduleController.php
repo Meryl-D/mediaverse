@@ -106,39 +106,47 @@ class ScheduleController extends Controller
             $lessonsOfDate = $lessons->where('date', $date);
             $holidayOfDate = $holidays->where('dateStart', '<=', $date)->where('dateEnd', '>=', $date)->first();
 
+            $singleData = collect([
+                'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+                'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+                'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                'date' => (new Carbon($date))->format('d'),
+                'year' => (new Carbon($date))->format('Y')
+            ]);
+
+            $i = 1;
             if (!$lessonsOfDate->isEmpty()) {
                 foreach ($lessonsOfDate as $lesson) {
-                    $data->push([
+                    $singleData->put('course'.$i, [
                         'name' => $lesson['name'],
                         'timeStart'  => $lesson['timeStart'],
                         'timeEnd' => $lesson['timeEnd'],
                         'room' => $lesson['room'],
-                        'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
-                        'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
-                        'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
-                        'date' => $date
                     ]);
+                    $i++;
                 };
             };
 
             if ($holidayOfDate) {
-                $data->push([
+                $singleData->put('holiday', [
                     'name' => $holidayOfDate['name'],
-                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
-                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
-                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
-                    'date' => $date
                 ]);
             };
 
-            if ($lessonsOfDate->isEmpty() && !$holidayOfDate) {
-                $data->push([
-                    'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
-                    'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
-                    'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
-                    'date' => $date
-                ]);
-            }
+            // if ($lessonsOfDate->isEmpty() && !$holidayOfDate) {
+            //     $data->push([
+            //         'name' => '',
+            //         'timeStart'  => '',
+            //         'timeEnd' => '',
+            //         'room' => '',
+            //         'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
+            //         'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
+            //         'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+            //         'date' => (new Carbon($date))->format('d'),
+            //         'year' => (new Carbon($date))->format('Y')
+            //     ]);
+            // }
+            $data->push($singleData);
         };
 
         $data = $data->all();
