@@ -56,8 +56,20 @@ async function logout() {
     url(../fonts/SuisseScreen-Medium.otf) format("otf"),
     url(../fonts/SuisseScreen-Bold.otf) format("otf");
 }
+.h1{
+  font-size: 2rem;
+}
+.h2{
+  font-size: 1.3rem;
+}
+.bignote{
+  font-size: 1.5rem;
+}
 .p {
   font-size: 1.1rem;
+}
+.psmall {
+  font-size: 1rem;
 }
 .bold {
   font-weight: bold;
