@@ -12,6 +12,18 @@ async function results() {
 const allData = await results();
 console.log(allData);
 
+let dataFiltred = []
+let n = 0
+allData.forEach(d => {
+    if (d.resultId == allData[0].resultId) {
+      dataFiltred[n] = d
+      n++ 
+    }
+});
+console.log(dataFiltred)
+
+
+
 //get semester
 let maxSemester = 0;
 for (const result in allData) {
@@ -26,33 +38,62 @@ for (const result in allData) {
 const semester = ref(0);
 
 function smsChoosen(id) {
-  semester.value = id
+  semester.value = id;
   console.log(semester.value);
 }
 
-console.log(allData);
+
 </script>
 
 <template>
   <h1>Notes</h1>
-
-  <div>
-    <span v-for="i in maxSemester" :key="i">
+  <div id="semester">
+    <div v-for="i in maxSemester" :key="i">
       <base-button @click="smsChoosen(i)" type="submit">S{{ i }}</base-button>
-    </span>
+    </div>
   </div>
-
-  <span v-for="result in allData" :key="result.grade">
-    <base-box>
-      <div>{{ result.moduleName }} |</div>
-      <div>
-        | <strong>{{ result.CourseName }}</strong> |
+  <div id="body">
+    <base-box id="file">
+      <div v-for="result in allData" :key="result.grade">
+        <div>
+          <p>{{ result.moduleName }}</p>
+          <p>
+            <strong>{{ result.CourseName }}</strong> (coeff: {{ result.courseWeight}})
+          </p>
+          <p>{{ result.gradeType}} ({{ result.gradeWeight }}%) : <strong>{{ result.grade }}</strong></p>
+        </div>
+        <hr />
       </div>
-      <div>| {{ result.gradeWeight }} |</div>
-      <div>| {{ result.grade }}</div>
     </base-box>
-  </span>
+
+    <base-button>Télécharger le pdf</base-button>
+  </div>
 </template>
 
 <style scoped>
+#body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  text-align: center;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+#semester {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 1%;
+}
+
+#file {
+  display: flex;
+  flex-direction: column;
+  padding: 1%;
+  width: 80%;
+}
+
 </style>

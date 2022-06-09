@@ -36,7 +36,7 @@ async function logout() {
   <Suspense><router-view></router-view></Suspense>
 </template>
 
-<style >
+<style>
 * {
   /**
     * Colors

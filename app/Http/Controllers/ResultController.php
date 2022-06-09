@@ -31,7 +31,6 @@ class ResultController extends Controller
             $moduleId = $course->module_id;
            
             $module = Module::where('id', $moduleId)->first();
-           
 
             $semestreId = $module->semester_id;
             $semestre = Semester::where('id', $semestreId)->first();
@@ -42,7 +41,10 @@ class ResultController extends Controller
                 'moduleCredit' => $module->credit,
                 'moduleName' => $module->name,
                 'CourseName' => $course->name,
-                'semesterNo' => $semestre->number
+                'semesterNo' => $semestre->number,
+                'courseWeight' => $course->weight,
+                'gradeType' => $result->type,
+                'resultId' => $result->id
             ];
 
         });
