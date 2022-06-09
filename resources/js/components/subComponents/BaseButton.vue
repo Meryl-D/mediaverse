@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <button >
+  <button>
       <!-- insérer le contenu du parent -->
       <slot></slot>
   </button>
