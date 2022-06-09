@@ -46,7 +46,7 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
-  background-color: var(--white);
+
 
   /**
     * Fonts
@@ -58,24 +58,31 @@ async function logout() {
 }
 .h1 {
   font-size: 2rem;
+  color: var(--green);
 }
 .h2 {
   font-size: 1.3rem;
+  color: var(--green);
 }
 .bignote {
   font-size: 1.5rem;
+  color: var(--green);
 }
 .p {
   font-size: 1.1rem;
+  color: var(--green);
 }
 .psmall {
   font-size: 1rem;
+  color: var(--green);
 }
 .bold {
   font-weight: bold;
 }
 
-:root {
-  background-color: var(--white);
+
+.DailyCourseBox{
+    display: inline-block;
+    background-color: #7f726a;
 }
 </style>
