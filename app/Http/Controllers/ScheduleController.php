@@ -111,13 +111,15 @@ class ScheduleController extends Controller
                 'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
                 'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
                 'date' => (new Carbon($date))->format('d'),
-                'year' => (new Carbon($date))->format('Y')
+                'year' => (new Carbon($date))->format('Y'),
+                'fullDate' => (new Carbon($date))->format('Y-m-d')
             ]);
 
+            $courses = collect();
             $i = 1;
             if (!$lessonsOfDate->isEmpty()) {
                 foreach ($lessonsOfDate as $lesson) {
-                    $singleData->put('course'.$i, [
+                    $courses->push([
                         'name' => $lesson['name'],
                         'timeStart'  => $lesson['timeStart'],
                         'timeEnd' => $lesson['timeEnd'],
@@ -125,6 +127,8 @@ class ScheduleController extends Controller
                     ]);
                     $i++;
                 };
+
+                $singleData->put('courses', $courses);
             };
 
             if ($holidayOfDate) {
@@ -195,9 +199,11 @@ class ScheduleController extends Controller
         $allDaysSchedule = $this->prepAgendaSchedule($lessons, $holidays); // needed for the agenda view
         $weekDaysSchedule = $this->prepWeeklySchedule($allDaysSchedule); // needed for the weekly view
 
+        $today = (Carbon::now())->format('Y-m-d');
         $data = [
             'allDaysSchedule' => $allDaysSchedule,
             'weekDaysSchedule' => $weekDaysSchedule,
+            'today' => $today
         ];
 
         return $data;

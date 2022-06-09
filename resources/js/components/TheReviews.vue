@@ -5,13 +5,13 @@ import { user } from "../stores.js";
 import router from '../router/index.js';
 import { createApp } from 'vue';
 
-// Quelques fonctions utilitaires
-function domForEach(selector, callback) {
-    document.querySelectorAll(selector).forEach(callback);
-}
-function domOn(selector, event, callback, options) {
-    document.querySelectorAll(selector).forEach(element => element.addEventListener(event, callback, options));
-}
+// // Quelques fonctions utilitaires
+// function domForEach(selector, callback) {
+//     document.querySelectorAll(selector).forEach(callback);
+// }
+// function domOn(selector, event, callback, options) {
+//     document.querySelectorAll(selector).forEach(element => element.addEventListener(event, callback, options));
+// }
 
 const student = true;
 const teacher = false;

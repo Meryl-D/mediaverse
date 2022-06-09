@@ -13,7 +13,7 @@ class Task extends Model
     public $timestamps = false; 
 
     protected $fillable = [
-        'name','date','description','user_id'
+        'name','dateStart','dateEnd', 'description','user_id'
     ];
 
     public function user() {
