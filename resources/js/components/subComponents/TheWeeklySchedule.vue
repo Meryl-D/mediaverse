@@ -7,12 +7,10 @@
             required : true
         }
     });
-
-    console.log(props.schedule)
 </script>
 
 <template>
-    <div v-for="lessonDay in props.schedule" :key="lessonDay.id">
+    <div v-for="lessonDay in props.schedule" :key="lessonDay">
         <base-day :lessonDay="lessonDay">
         </base-day>
     </div>

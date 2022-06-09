@@ -9,8 +9,6 @@
         headers: { Authorization : `Bearer ${user.value.token}` }
     });
 
-    //console.log(data)
-
 </script>
 
 <template>
@@ -19,5 +17,5 @@
 </template>
 
 <style scoped>
-
+    
 </style>
