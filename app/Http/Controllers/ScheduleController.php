@@ -112,7 +112,7 @@ class ScheduleController extends Controller
                 'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
                 'date' => (new Carbon($date))->format('d'),
                 'year' => (new Carbon($date))->format('Y'),
-                'fullDate' => (new Carbon($date))
+                'fullDate' => (new Carbon($date))->format('Y-m-d')
             ]);
 
             $courses = collect();
@@ -199,9 +199,11 @@ class ScheduleController extends Controller
         $allDaysSchedule = $this->prepAgendaSchedule($lessons, $holidays); // needed for the agenda view
         $weekDaysSchedule = $this->prepWeeklySchedule($allDaysSchedule); // needed for the weekly view
 
+        $today = (Carbon::now())->format('Y-m-d');
         $data = [
             'allDaysSchedule' => $allDaysSchedule,
             'weekDaysSchedule' => $weekDaysSchedule,
+            'today' => $today
         ];
 
         return $data;

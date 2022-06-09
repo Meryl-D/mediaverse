@@ -1,5 +1,5 @@
 <script setup>
-import { usePropExists } from '../../composables/propExists.js'
+import { propExists } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -9,8 +9,8 @@ const props = defineProps({
     },
 });
 
-const courseExists = ref(usePropExists('courses', props.lessonDay))
-const holidayExists = ref(usePropExists('holiday', props.lessonDay))
+const courseExists = ref(propExists('courses', props.lessonDay))
+const holidayExists = ref(propExists('holiday', props.lessonDay))
 </script>
 
 <template>
@@ -47,5 +47,5 @@ const holidayExists = ref(usePropExists('holiday', props.lessonDay))
 </template>
 
 <style scoped>
-    
+
 </style>

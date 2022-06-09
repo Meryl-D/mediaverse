@@ -3,6 +3,7 @@
     import { axiosClient } from '../utils/axios.js';
     import { user } from '../stores.js';
     import TheWeeklySchedule from './subComponents/TheWeeklySchedule.vue';
+    import TheDailySchedule from './subComponents/TheDailySchedule.vue'
     import TheMonthlySchedule from './subComponents/TheMonthlySchedule.vue';
 
     const { data } = await axios.get('/api/lessons', {
@@ -12,10 +13,13 @@
 </script>
 
 <template>
+    <!-- <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule> -->
+    <the-daily-schedule :days="data.allDaysSchedule"></the-daily-schedule>
+    <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
     <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
     <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
 </template>
 
 <style scoped>
-    
+
 </style>
