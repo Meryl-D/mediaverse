@@ -1,6 +1,6 @@
 <script setup>
     const props = defineProps({
-        content : {
+        lessonDay : {
             type : Object,
             required : true
         }
@@ -11,20 +11,20 @@
     <div class="lesson-ctn">
         <div class="date-ctn">
             <p class="day">
-                {{ content.dayShort }}
+                {{ props.lessonDay.dayShort }}
             </p>
             <p class="date">
-                {{ content.date }}
+                {{ props.lessonDay.date }}
             </p>
         </div>
-        <div v-for="course in content" :key="course" class="course-ctn">
+        <!-- <div v-for="course in lesson" :key="course" class="course-ctn">
             <p class="course-name">
-                {{ content.name }}
+                {{ props.lessonDay.name }}
             </p>
             <p class="course-time">
-                {{ content.timeStart }}-{{ content.timeEnd }}
+                {{ props.lessonDay.timeStart }}-{{ props.lessonDay.timeEnd }}
             </p>
-        </div>
+        </div> -->
     </div>
 </template>
 

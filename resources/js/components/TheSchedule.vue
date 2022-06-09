@@ -9,13 +9,14 @@
         headers: { Authorization : `Bearer ${user.value.token}` }
     });
 
-    console.log(data)
+    //console.log(data)
 
 </script>
 
 <template>
     <!-- <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule> -->
     <the-daily-schedule :days="data.allDaysSchedule"></the-daily-schedule>
+    <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule>
 </template>
 
 <style scoped>
