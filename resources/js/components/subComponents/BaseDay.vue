@@ -1,5 +1,6 @@
 <script setup>
-import { usePropExists } from "../../composables/propExists.js";
+import { usePropExists } from '../../composables/propExists.js'
+import { ref } from 'vue'
 
 const props = defineProps({
     lessonDay: {
@@ -8,37 +9,43 @@ const props = defineProps({
     },
 });
 
-const exists = computed({
-    get: () => exists.value,
-    set: (val) => usePropExists('course1', props.lessonDay),
-});
+const courseExists = ref(usePropExists('courses', props.lessonDay))
+const holidayExists = ref(usePropExists('holiday', props.lessonDay))
 </script>
 
 <template>
-  <div class="lesson-ctn">
+<div class="lesson-ctn">
     <div class="date-ctn">
-      <p class="day">
+        <p class="day">
         {{ props.lessonDay.dayShort }}
-      </p>
-      <p class="date">
+        </p>
+        <p class="date">
         {{ props.lessonDay.date }}
-      </p>
+        </p>
     </div>
-    <!-- <div v-if="usePropExists('course1', props.lessonDay)" class="course">
-            <div v-for="course in lessonDay" :key="course" class="course-ctn">
+    <div class="info-ctn">
+        <div v-if="courseExists">
+            <div v-for="course in props.lessonDay.courses" :key="course.name" class="course-ctn">
                 <p class="course-name">
-                    {{ props.lessonDay.name }}
+                    {{ course.name }}
                 </p>
                 <p class="course-time">
-                    {{ props.lessonDay.timeStart }}-{{ props.lessonDay.timeEnd }}
+                    {{ course.timeStart }}-{{ course.timeEnd }}
                 </p>
                 <p class="course-room">
-                    {{ props.lessonDay.room }}
+                    {{ course.room }}
                 </p>
             </div>
-        </div> -->
-  </div>
+        </div>
+        <div v-if="holidayExists">
+            <p class="holiday-name">
+                {{ props.lessonDay.holiday.name }}
+            </p>
+        </div>
+    </div>
+</div>
 </template>
 
 <style scoped>
+    
 </style>
