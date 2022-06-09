@@ -25,7 +25,8 @@ class TaskRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100',
-            'date' => 'required'
+            'dateStart' => 'required',
+            'dateEnd' => 'required|after_or_equal:dateStart'
         ];
     }
 }

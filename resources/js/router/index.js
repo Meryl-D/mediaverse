@@ -6,6 +6,7 @@ import TheAbsences from '../components/TheAbsences.vue';
 import TheAccount from '../components/TheAccount.vue';
 import TheReviews from '../components/TheReviews.vue';
 import TheLoginForm from '../components/subComponents/TheLoginForm.vue';
+import TheTasks from '../components/subComponents/TheTasks.vue';
 
 console.log()
 
@@ -57,6 +58,14 @@ const routes = [
             requiresAuth : true
         },
         component : TheAbsences
+    },
+    {
+        path : '/tasks',
+        name : 'Tasks',
+        meta : {
+            requiresAuth : true
+        },
+        component : TheTasks
     }
 ];
 
