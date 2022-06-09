@@ -3,6 +3,7 @@
     import { axiosClient } from '../utils/axios.js';
     import { user } from '../stores.js';
     import TheWeeklySchedule from './subComponents/TheWeeklySchedule.vue';
+    import TheDailySchedule from './subComponents/TheDailySchedule.vue'
 
     const { data } = await axios.get('/api/lessons', {
         headers: { Authorization : `Bearer ${user.value.token}` }
@@ -13,7 +14,8 @@
 </script>
 
 <template>
-    <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule>
+    <!-- <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule> -->
+    <the-daily-schedule :days="data.allDaysSchedule"></the-daily-schedule>
 </template>
 
 <style scoped>
