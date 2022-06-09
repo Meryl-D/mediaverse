@@ -1,9 +1,8 @@
 <script setup>
-    import { ref, computed } from 'vue';
-    import { axiosClient } from './utils/axios';
-    import { user } from './stores.js';
-    import router from './router/index.js';
-
+import { ref, computed } from "vue";
+import { axiosClient } from "./utils/axios";
+import { user } from "./stores.js";
+import router from "./router/index.js";
 
 // const message = ref('hello from vue');
 // const message2 = ref(data);
@@ -34,33 +33,37 @@ async function logout() {
 
 
 <template>
-        <Suspense><router-view></router-view></Suspense>
+  <Suspense><router-view></router-view></Suspense>
 </template>
 
-<style scoped>
+<style >
 * {
-    /**
+  /**
     * Colors
     */
-    --orange: #F9A228;
-    --green: #2A3A30;
-    --beige: #F1DFCD;
-    --white: #FFFCFA;
-    --shadow: 0px 0px 10px 0px #FFCFAD;
+  --orange: #f9a228;
+  --green: #2a3a30;
+  --beige: #f1dfcd;
+  --white: #fffcfa;
+  --shadow: 0px 0px 10px 0px #ffcfad;
+  background-color: var(--white);
 
-
-    /**
+  /**
     * Fonts
     */
-    @font-face font-family: "SuisseScreen";
-    src: local("SuisseScreen"),
+  @font-face font-family: "SuisseScreen";
+  src: local("SuisseScreen"),
     url(../fonts/SuisseScreen-Medium.otf) format("otf"),
     url(../fonts/SuisseScreen-Bold.otf) format("otf");
-
-    background-color: var(--white);
+}
+.p {
+  font-size: 1.1rem;
+}
+.bold {
+  font-weight: bold;
 }
 
 :root {
-    background-color : var(--white);
+  background-color: var(--white);
 }
 </style>
