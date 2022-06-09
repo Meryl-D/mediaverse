@@ -37,6 +37,9 @@ async function logout() {
 </template>
 
 <style>
+
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 * {
   /**
     * Colors
@@ -48,13 +51,17 @@ async function logout() {
   --shadow: 0px 0px 10px 0px #ffcfad;
 
 
+
   /**
     * Fonts
     */
-  @font-face font-family: "SuisseScreen";
-  src: local("SuisseScreen"),
+  @font-face {
+    font-family: "SuisseScreen";
+    src: local("SuisseScreen"),
     url(../fonts/SuisseScreen-Medium.otf) format("otf"),
     url(../fonts/SuisseScreen-Bold.otf) format("otf");
+  } 
+  
 }
 .h1 {
   font-size: 2rem;
