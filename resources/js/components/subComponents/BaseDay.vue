@@ -5,10 +5,6 @@
             required : true
         }
     });
-
-    function propExists(property) {
-        return `${property}` in content.value;
-    }
 </script>
 
 <template>
