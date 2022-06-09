@@ -56,13 +56,13 @@ async function logout() {
     url(../fonts/SuisseScreen-Medium.otf) format("otf"),
     url(../fonts/SuisseScreen-Bold.otf) format("otf");
 }
-.h1{
+.h1 {
   font-size: 2rem;
 }
-.h2{
+.h2 {
   font-size: 1.3rem;
 }
-.bignote{
+.bignote {
   font-size: 1.5rem;
 }
 .p {
