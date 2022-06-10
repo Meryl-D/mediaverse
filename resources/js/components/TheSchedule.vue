@@ -12,8 +12,9 @@ const { data } = await axios.get("/api/lessons", {
 </script>
 
 <template>
+<the-header-mobil></the-header-mobil>
   <!-- <the-weekly-schedule :content="data.weekDaysSchedule"></the-weekly-schedule> -->
-  <!-- <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule> -->
+  <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule> 
   <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
   >
 </template>

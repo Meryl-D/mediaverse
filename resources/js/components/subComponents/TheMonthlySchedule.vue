@@ -1,6 +1,7 @@
 
 <script setup>
     import BaseCourse from './BaseCourse.vue';
+    import TheHeaderMobil from './TheHeaderMobil.vue';
 
     const props = defineProps({
         schedule : {

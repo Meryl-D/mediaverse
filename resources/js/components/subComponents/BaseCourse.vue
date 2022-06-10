@@ -19,8 +19,7 @@ const holidayExists = ref(propExists("holiday", props.lessonDay));
     <div
       v-for="course in props.lessonDay.courses"
       :key="course.name"
-      class="course-ctn"
-    >
+      class="course-ctn">
       <div class="border"></div>
       <div class="DailyCourseBox">
         <p class="p bold course-name">
@@ -33,6 +32,7 @@ const holidayExists = ref(propExists("holiday", props.lessonDay));
     </div>
   </div>
   <div v-if="holidayExists">
+  <div class="border"></div>
     <div class="DailyCourseBox">
       <p class="p bold holiday-name">
         {{ props.lessonDay.holiday.name }}
