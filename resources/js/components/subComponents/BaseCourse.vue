@@ -1,6 +1,6 @@
 <script setup>
 import { propExists } from "../../stores.js";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 import BaseBox from "./BaseBox.vue";
 const props = defineProps({
   lessonDay: {
@@ -8,18 +8,30 @@ const props = defineProps({
     required: true,
   },
 });
-console.log(props.lessonDay);
 
-const courseExists = ref(propExists("courses", props.lessonDay));
-const holidayExists = ref(propExists("holiday", props.lessonDay));
+const courseExists = ref("");
+const holidayExists = ref("");
+
+function check() {
+  courseExists.value = propExists("courses", props.lessonDay);
+  holidayExists.value = propExists("holiday", props.lessonDay);
+}
+
+check();
+watchEffect(() => {
+  check();
+});
 </script>
+
+
 
 <template>
   <div v-if="courseExists">
     <div
       v-for="course in props.lessonDay.courses"
       :key="course.name"
-      class="course-ctn">
+      class="course-ctn"
+    >
       <div class="border"></div>
       <div class="DailyCourseBox">
         <p class="p bold course-name">
@@ -32,7 +44,7 @@ const holidayExists = ref(propExists("holiday", props.lessonDay));
     </div>
   </div>
   <div v-if="holidayExists">
-  <div class="border"></div>
+    <div class="border"></div>
     <div class="DailyCourseBox">
       <p class="p bold holiday-name">
         {{ props.lessonDay.holiday.name }}

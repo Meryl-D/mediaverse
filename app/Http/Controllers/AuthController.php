@@ -28,7 +28,7 @@ class AuthController extends Controller
         $roleId = $user['role_id'];
         $role = Role::where('id', $roleId)->value('name');
 
-        $token = $user->createToken('utiliz_token')->plainTextToken;
+        $token = $user->createToken('organiz_token')->plainTextToken;
 
         $response = [
             'firstName' => $user['first_name'],
