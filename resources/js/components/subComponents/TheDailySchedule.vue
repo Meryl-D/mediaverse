@@ -21,8 +21,7 @@ const props = defineProps({
 const currentDate = ref("")
 props.days.forEach((d) => {
   if (d.fullDate == props.today) {
-    currentDate.value =
-      d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
+    currentDate.value = d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   }
 });
 
