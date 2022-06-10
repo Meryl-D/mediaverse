@@ -4,7 +4,6 @@ import BaseCourse from "./BaseCourse.vue";
 import TheHeaderMobil from "./TheHeaderMobil.vue";
 import { chunkArrayInGroups } from "../../stores.js";
 import { computed, ref } from "vue";
-import VCalendar from 'v-calendar';
 
 //-------------------------------------------------------------------------------------------------
 
@@ -43,7 +42,7 @@ function getDay(d) {
 //-------------------------------------------------------------------------------------------------
 
 //put 7 days together
-const weeksSchedule = chunkArrayInGroups(props.days, 7);
+const weeksSchedule = chunkArrayInGroups(props.days, 30);
 console.log(weeksSchedule);
 </script>
 
