@@ -19,6 +19,7 @@ async function tasks() {
 }
 
 const allDatas = await tasks();
+//console.log(allDatas);
 
 
 function getTask(d){
@@ -36,7 +37,7 @@ function getTask(d){
       class="course-ctn"
     ><div v-if="getTask(allData)">
       <div class="border"></div>
-      <div class="DailyCourseBox">
+      <div class="TaskBox">
         <p class="p bold task-name">
           {{ allData.name }}
         </p>
@@ -65,7 +66,7 @@ div {
   display: flex;
 }
 
-.DailyCourseBox {
+.TaskBox {
   flex-direction: column;
   padding: 1em;
   margin: 1rem 1rem 1rem 0rem;

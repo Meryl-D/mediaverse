@@ -1,13 +1,10 @@
 
 <script setup>
-import BaseCourse from "./BaseCourse.vue";
-import TheHeaderMobil from "./TheHeaderMobil.vue";
-import { chunkArrayInGroups } from "../../stores.js";
-import { computed, ref } from "vue";
-import VueCal from "vue-cal";
-import "vue-cal/dist/vuecal.css";
+import BaseCourse from './BaseCourse.vue';
+import TheHeaderMobile from './TheHeaderMobile.vue';
+import TheTasks from './TheTasks.vue';
 
-//-------------------------------------------------------------------------------------------------
+
 
 const props = defineProps({
   schedule: {
