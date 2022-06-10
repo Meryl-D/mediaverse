@@ -14,16 +14,16 @@ const { data } = await axios.get("/api/lessons", {
 </script>
 
 <template>
-    <the-weekly-schedule 
+    <!-- <the-weekly-schedule 
     :schedule="data.weekDaysSchedule"
     :today="data.today"
     >
-    </the-weekly-schedule>
+    </the-weekly-schedule> -->
 
     <the-header-mobil></the-header-mobil>
 
   <!-- <base-grille :today="data.allDaysSchedule" tasks=""></base-grille> -->
-  <!-- <the-monthly-schedule :schedule="data.allDaysSchedule" :days="data.allDaysSchedule" :today="data.today"></the-monthly-schedule>-->
+  <the-monthly-schedule :schedule="data.allDaysSchedule" :days="data.allDaysSchedule" :today="data.today"></the-monthly-schedule>
 
   <!-- <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule>  -->
   

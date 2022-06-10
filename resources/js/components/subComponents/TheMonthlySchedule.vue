@@ -54,13 +54,11 @@ console.log(weeksSchedule);
     <div id="calendar">
       <vue-cal
         :time="false"
-        hide-weekends
         style="height: 500px"
         active-view="month"
         :disable-views="['years', 'year', 'week', 'day']"
         hide-view-selector
-        class="vuecal--rounded-theme"
-        locale='fr'
+        class="vuecal--date-picker"
       />
     </div>
   </div>
