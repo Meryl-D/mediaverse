@@ -11,18 +11,14 @@ const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
-async function getTasks() {
-  const { task } = await axiosClient.get("/api/tasks");
-  return task;
-}
+// async function getTasks() {
+//   const { task } = await axiosClient.get("/api/tasks");
+//   return task;
+// }
 
-const tasks = await getTasks();
-console.log(tasks.data);
+// const tasks = await getTasks();
+// console.log(tasks.data);
 
-
-const { data } = await axios.get("/api/lessons", {
-  headers: { Authorization: `Bearer ${user.value.token}` },
-});
 </script>
 
 <template>
