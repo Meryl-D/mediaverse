@@ -1,11 +1,15 @@
 
 <script setup>
-import BaseCourse from "./BaseCourse.vue";
-import TheHeaderMobil from "./TheHeaderMobil.vue";
-import { chunkArrayInGroups } from "../../stores.js";
-import { computed, ref } from "vue";
+import BaseCourse from './BaseCourse.vue';
+import TheHeaderMobile from './TheHeaderMobile.vue';
+import TheTasks from './TheTasks.vue';
 
-//-------------------------------------------------------------------------------------------------
+const props = defineProps({
+    schedule: {
+        type: Object,
+        required: true
+    }
+});
 
 const props = defineProps({
   schedule: {
@@ -50,21 +54,17 @@ console.log(weeksSchedule);
 <template>
   <div id="file">
     <div id="calendar">
-      <div v-for="group in weeksSchedule" :key="group" class="week">
-        <div v-for="day in group" :key="day" class="day" @click="getDay(day)">
-          <p>{{ day.dayShort }}</p>
-          <p>
-            <strong>{{ day.date }}</strong>
-          </p>
-        </div>
-      </div>
+      <vue-cal
+        :time="false"
+        hide-weekends
+        style="height: 500px"
+        active-view="month"
+        :disable-views="['years', 'year', 'week', 'day']"
+        hide-view-selector
+        class="vuecal--rounded-theme"
+        locale='fr'
+      />
     </div>
-    <div>
-      <p class="choosenDay">
-        <strong>{{ currentDate }}</strong>
-      </p>
-    </div>
-    <hr />
   </div>
   <div v-for="lesson in props.schedule" :key="lesson.id">
     <base-course :lessonDay="lesson"> </base-course>
@@ -72,42 +72,4 @@ console.log(weeksSchedule);
 </template>
 
 <style scoped>
-#calendar {
-  display: flex;
-  /* flex-direction: column; */
-  overflow-y: auto;
-  -ms-overflow-style: none; /* for Internet Explorer, Edge */
-  scrollbar-width: none; /* for Firefox */
-  height: 15vh;
-}
-
-#calendar::-webkit-scrollbar {
-  display: none; /* for Chrome, Safari, and Opera */
-}
-
-.week {
-  display: contents;
-  flex-direction: row;
-  /* justify-content: space-between;  */
-
-  /* width: 100vw;  */
-  background-color: black;
-}
-.day {
-  height: 80%;
-  margin-right: 3%;
-  margin-left: 3%;
-  margin-top: 1%;
-  cursor: pointer;
-}
-.select {
-  color: var(--orange);
-}
-.choosenDay {
-  text-align: center;
-}
-hr {
-  color: var(--orange);
-  margin: 0%;
-}
 </style>
