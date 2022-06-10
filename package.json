@@ -24,6 +24,7 @@
     "dependencies": {
         "install": "^0.13.0",
         "vue": "^3.2.33",
+        "vue-cal": "^4.2.0",
         "vue-loader": "^17.0.0",
         "vue-router": "^4.0.13",
         "vue-template-compiler": "^2.6.14"
