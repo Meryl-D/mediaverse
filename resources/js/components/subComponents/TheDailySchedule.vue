@@ -21,24 +21,22 @@ const props = defineProps({
 
 //reactive variable for day selected with the date of the day
 const currentDate = ref("");
-const courseToShow = ref(Object)
+const courseToShow = ref(Object);
 
 props.days.forEach((d) => {
   if (d.fullDate == props.today) {
     currentDate.value =
       d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
-      courseToShow.value = d
+    courseToShow.value = d;
   }
 });
-
 
 //event listener for day choose
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
-  courseToShow.value = d
+  courseToShow.value = d;
 }
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -65,8 +63,8 @@ const weeksSchedule = chunkArrayInGroups(props.days, 7);
       </p>
     </div>
     <hr />
-      <base-course :lessonDay="courseToShow"> </base-course>
-      <the-tasks :day="courseToShow"></the-tasks>
+    <base-course :lessonDay="courseToShow"> </base-course>
+    <the-tasks :day="courseToShow"></the-tasks>
   </div>
 </template>
 
