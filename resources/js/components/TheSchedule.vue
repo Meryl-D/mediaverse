@@ -20,6 +20,9 @@ const tasks = await getTasks();
 console.log(tasks.data);
 
 
+const { data } = await axios.get("/api/lessons", {
+  headers: { Authorization: `Bearer ${user.value.token}` },
+});
 </script>
 
 <template>
@@ -32,6 +35,9 @@ console.log(tasks.data);
   <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
   <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
   <!-- <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule> -->
+  <!-- <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule> -->
+  <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
+  >
 </template>
 
 <style scoped>
