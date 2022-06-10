@@ -2,6 +2,8 @@
 import { chunkArrayInGroups } from "../../stores.js";
 import { computed, ref } from "vue";
 import BaseCourse from "./BaseCourse.vue";
+import TheTasks from "./TheTasks.vue";
+
 //-------------------------------------------------------------------------------------------------
 
 const props = defineProps({
@@ -19,25 +21,30 @@ const props = defineProps({
 
 //reactive variable for day selected with the date of the day
 const currentDate = ref("");
+const courseToShow = ref(Object)
+
 props.days.forEach((d) => {
   if (d.fullDate == props.today) {
     currentDate.value =
       d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
+      courseToShow.value = d
   }
 });
+
 
 //event listener for day choose
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
-  console.log(d);
+  courseToShow.value = d
 }
+
 
 //-------------------------------------------------------------------------------------------------
 
 //put 7 days together
 const weeksSchedule = chunkArrayInGroups(props.days, 7);
-console.log(weeksSchedule);
+
 </script>
 
 <template>
@@ -58,10 +65,8 @@ console.log(weeksSchedule);
       </p>
     </div>
     <hr />
-
-    <div v-for="lesson in props.days" :key="lesson.id">
-      <base-course :lessonDay="lesson"> </base-course>
-    </div>
+      <base-course :lessonDay="courseToShow"> </base-course>
+      <the-tasks :day="courseToShow"></the-tasks>
   </div>
 </template>
 

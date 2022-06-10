@@ -4,14 +4,29 @@ import { axiosClient } from "../../utils/axios.js";
 import BaseButton from "../../components/subComponents/BaseButton.vue";
 import BaseBox from "../../components/subComponents/BaseBox.vue";
 
+const props = defineProps({
+  day: { 
+  type: Object,
+  required: true,
+  },
+})
+
+console.log(props.day)
+
 async function tasks() {
   const { data } = await axiosClient.get("api/tasks");
   return data;
 }
 
 const allDatas = await tasks();
-console.log(allDatas);
 
+
+function getTask(d){
+  if( d.dateStart.substr(0,10) == props.day.fullDate){
+    return true
+  }
+  return false
+}
 
 </script>
 <template>
@@ -19,7 +34,7 @@ console.log(allDatas);
       v-for="allData in allDatas"
       :key="allData.id"
       class="course-ctn"
-    >
+    ><div v-if="getTask(allData)">
       <div class="border"></div>
       <div class="DailyCourseBox">
         <p class="p bold task-name">
@@ -28,6 +43,7 @@ console.log(allDatas);
         <p class="p task-description">
           {{ allData.description }}
         </p>
+      </div>
       </div>
     </div>
           <!-- <div>{{ allData.dateStart }}</div>
