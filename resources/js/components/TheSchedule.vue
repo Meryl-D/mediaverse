@@ -12,8 +12,12 @@
 </script>
 
 <template>
-    <!-- <the-weekly-schedule :schedule="data.weekDaysSchedule"></the-weekly-schedule> -->
-    <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
+    <the-weekly-schedule 
+    :schedule="data.weekDaysSchedule"
+    :today="data.today"
+    >
+    </the-weekly-schedule>
+    <!-- <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule> -->
 </template>
 
 <style scoped>

@@ -23,7 +23,6 @@ import router from "./router/index.js";
 async function logout() {
   const { data } = await axiosClient.post("/api/logout");
   user.value = {
-    id: null,
     firstName: "",
     lastName: "",
     token: "",
@@ -46,7 +45,6 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
-  background-color: var(--white);
 
   /**
     * Fonts
