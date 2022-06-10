@@ -10,7 +10,7 @@ async function tasks() {
 }
 
 const allDatas = await tasks();
-console.log(allDatas);
+//console.log(allDatas);
 
 
 </script>
@@ -21,7 +21,7 @@ console.log(allDatas);
       class="course-ctn"
     >
       <div class="border"></div>
-      <div class="DailyCourseBox">
+      <div class="TaskBox">
         <p class="p bold task-name">
           {{ allData.name }}
         </p>
@@ -49,7 +49,7 @@ div {
   display: flex;
 }
 
-.DailyCourseBox {
+.TaskBox {
   flex-direction: column;
   padding: 1em;
   margin: 1rem 1rem 1rem 0rem;
