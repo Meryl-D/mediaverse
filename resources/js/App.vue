@@ -38,8 +38,12 @@ async function logout() {
 <style>
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
 
 * {
+  margin: 0;
+  padding: 0;
   /**
     * Colors
     */
@@ -48,28 +52,19 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
-<<<<<<< HEAD
-=======
 
-
->>>>>>> f6e3f91ea5091743c7cd1abe1580dd03c60c25d4
 
   /**
     * Fonts
     */
-  @font-face {
-    font-family: "SuisseScreen";
-    src: local("SuisseScreen"),
-    url(../fonts/SuisseScreen-Medium.otf) format("otf"),
-    url(../fonts/SuisseScreen-Bold.otf) format("otf");
-  } 
+  font-family: 'Inter', sans-serif;
   
 }
-.h1 {
+h1 {
   font-size: 2rem;
   color: var(--green);
 }
-.h2 {
+h2 {
   font-size: 1.3rem;
   color: var(--green);
 }
@@ -77,7 +72,7 @@ async function logout() {
   font-size: 1.5rem;
   color: var(--green);
 }
-.p {
+p {
   font-size: 1.1rem;
   color: var(--green);
 }

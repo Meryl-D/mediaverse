@@ -23,21 +23,16 @@ const tasks = await axiosClient.get("/api/tasks", {
     :today="data.today"
     >
     </the-weekly-schedule>
-    
+
     <the-header-mobil></the-header-mobil>
 
   <!-- <base-grille :today="data.allDaysSchedule" tasks=""></base-grille> -->
-  <the-monthly-schedule :schedule="data.allDaysSchedule" :days="data.allDaysSchedule" :today="data.today"></the-monthly-schedule>
-
-  <the-daily-schedule :days="data.allDaysSchedule" :today="data.today"></the-daily-schedule> 
+  <!-- <the-monthly-schedule :schedule="data.allDaysSchedule" :days="data.allDaysSchedule" :today="data.today"></the-monthly-schedule>
 
   <the-daily-schedule
     :days="data.allDaysSchedule"
     :today="data.today"
-  ></the-daily-schedule>
-  
-
-  <the-monthly-schedule :schedule="data.allDaysSchedule"></the-monthly-schedule>
+  ></the-daily-schedule> -->
 
 </template>
 
