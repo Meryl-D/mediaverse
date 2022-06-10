@@ -4,6 +4,7 @@ import { axiosClient } from "./utils/axios";
 import { user } from "./stores.js";
 import router from "./router/index.js";
 
+
 // const message = ref('hello from vue');
 // const message2 = ref(data);
 
@@ -23,7 +24,6 @@ import router from "./router/index.js";
 async function logout() {
   const { data } = await axiosClient.post("/api/logout");
   user.value = {
-    id: null,
     firstName: "",
     lastName: "",
     token: "",
@@ -39,8 +39,12 @@ async function logout() {
 <style>
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
+
 
 * {
+  margin: 0;
+  padding: 0;
   /**
     * Colors
     */
@@ -51,23 +55,17 @@ async function logout() {
   --shadow: 0px 0px 10px 0px #ffcfad;
 
 
-
   /**
     * Fonts
     */
-  @font-face {
-    font-family: "SuisseScreen";
-    src: local("SuisseScreen"),
-    url(../fonts/SuisseScreen-Medium.otf) format("otf"),
-    url(../fonts/SuisseScreen-Bold.otf) format("otf");
-  } 
+  font-family: 'Inter', sans-serif;
   
 }
-.h1 {
+h1 {
   font-size: 2rem;
   color: var(--green);
 }
-.h2 {
+h2 {
   font-size: 1.3rem;
   color: var(--green);
 }
@@ -75,7 +73,7 @@ async function logout() {
   font-size: 1.5rem;
   color: var(--green);
 }
-.p {
+p {
   font-size: 1.1rem;
   color: var(--green);
 }

@@ -1,6 +1,8 @@
 <script setup>
-import { chunkArrayInGroups } from "../../stores.js"
-import { computed, ref } from "vue"
+import { chunkArrayInGroups } from "../../stores.js";
+import { computed, ref } from "vue";
+import BaseCourse from "./BaseCourse.vue";
+import TheTasks from "./TheTasks.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -18,26 +20,30 @@ const props = defineProps({
 //-------------------------------------------------------------------------------------------------
 
 //reactive variable for day selected with the date of the day
-const currentDate = ref("")
+const currentDate = ref("");
+const courseToShow = ref(Object)
+
 props.days.forEach((d) => {
   if (d.fullDate == props.today) {
     currentDate.value =
       d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
+      courseToShow.value = d
   }
 });
 
+
 //event listener for day choose
-function getDay(d){
-    currentDate.value = d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
-    console.log(d)
+function getDay(d) {
+  currentDate.value =
+    d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
+  courseToShow.value = d
 }
+
 
 //-------------------------------------------------------------------------------------------------
 
 //put 7 days together
 const weeksSchedule = chunkArrayInGroups(props.days, 7);
-console.log(weeksSchedule);
-
 
 </script>
 
@@ -45,7 +51,7 @@ console.log(weeksSchedule);
   <div id="file">
     <div id="calendar">
       <div v-for="group in weeksSchedule" :key="group" class="week">
-        <div v-for="day in group" :key="day" class="day"  @click="getDay(day)">
+        <div v-for="day in group" :key="day" class="day" @click="getDay(day)">
           <p>{{ day.dayShort }}</p>
           <p>
             <strong>{{ day.date }}</strong>
@@ -59,19 +65,20 @@ console.log(weeksSchedule);
       </p>
     </div>
     <hr />
+      <base-course :lessonDay="courseToShow"> </base-course>
+      <the-tasks :day="courseToShow"></the-tasks>
   </div>
 </template>
 
 
 <style scoped>
-
 #calendar {
   display: flex;
   /* flex-direction: column; */
   overflow-y: auto;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
-  height: 15vh; 
+  height: 15vh;
 }
 
 #calendar::-webkit-scrollbar {
@@ -83,8 +90,8 @@ console.log(weeksSchedule);
   flex-direction: row;
   /* justify-content: space-between;  */
 
-   /* width: 100vw;  */
-   background-color: black;
+  /* width: 100vw;  */
+  background-color: black;
 }
 .day {
   height: 80%;
@@ -93,7 +100,7 @@ console.log(weeksSchedule);
   margin-top: 1%;
   cursor: pointer;
 }
-.select{
+.select {
   color: var(--orange);
 }
 .choosenDay {
@@ -103,5 +110,4 @@ hr {
   color: var(--orange);
   margin: 0%;
 }
-
 </style>
