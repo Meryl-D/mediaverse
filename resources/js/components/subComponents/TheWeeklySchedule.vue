@@ -58,7 +58,7 @@
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
         overflow-y: scroll;
-        height: 85vh;
+        height: 90vh;
         scroll-snap-type: y mandatory;
     }
 
@@ -84,7 +84,7 @@
         padding: 0;
         height: 0;
         border: none;
-        border-top: thin solid;
+        border-top: 1px solid #6e6e6e;
         background-color: transparent;
         width: calc(100% - 4rem);
         align-self: center;

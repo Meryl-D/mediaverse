@@ -38,8 +38,7 @@ async function logout() {
 <style>
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
 
 * {
   margin: 0;
@@ -73,7 +72,7 @@ h2 {
   color: var(--green);
 }
 p {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: var(--green);
 }
 .psmall {
@@ -81,7 +80,7 @@ p {
   color: var(--green);
 }
 .bold {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 
