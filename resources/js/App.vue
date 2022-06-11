@@ -4,6 +4,7 @@ import { axiosClient } from "./utils/axios";
 import { user } from "./stores.js";
 import router from "./router/index.js";
 
+
 // const message = ref('hello from vue');
 // const message2 = ref(data);
 
@@ -43,7 +44,12 @@ async function logout() {
 * {
   margin: 0;
   padding: 0;
-  /**
+
+  font-family: 'Inter', sans-serif;
+}
+
+:root {
+    /**
     * Colors
     */
   --orange: #f9a228;
@@ -51,40 +57,38 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
-
-
-  /**
-    * Fonts
-    */
-  font-family: 'Inter', sans-serif;
-  
 }
+
 h1 {
   font-size: 2rem;
   color: var(--green);
 }
+
 h2 {
   font-size: 1.3rem;
   color: var(--green);
 }
+
 .bignote {
   font-size: 1.5rem;
   color: var(--green);
 }
+
 p {
   font-size: 0.8rem;
   color: var(--green);
 }
+
 .psmall {
   font-size: 1rem;
   color: var(--green);
 }
+
 .bold {
   font-weight: 700;
 }
 
-
-.DailyCourseBox{
+.DailyCourseBox {
     display: inline-block;
     background-color: #7f726a;
 }

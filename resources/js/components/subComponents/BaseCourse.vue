@@ -8,6 +8,7 @@ const props = defineProps({
     required: true,
   },
 });
+//console.log(props.lessonDay);
 
 const courseExists = ref("");
 const holidayExists = ref("");

@@ -137,19 +137,6 @@ class ScheduleController extends Controller
                 ]);
             };
 
-            // if ($lessonsOfDate->isEmpty() && !$holidayOfDate) {
-            //     $data->push([
-            //         'name' => '',
-            //         'timeStart'  => '',
-            //         'timeEnd' => '',
-            //         'room' => '',
-            //         'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
-            //         'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
-            //         'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
-            //         'date' => (new Carbon($date))->format('d'),
-            //         'year' => (new Carbon($date))->format('Y')
-            //     ]);
-            // }
             $data->push($singleData);
         };
 
@@ -200,13 +187,16 @@ class ScheduleController extends Controller
         $weekDaysSchedule = $this->prepWeeklySchedule($allDaysSchedule); // needed for the weekly view
 
         $today = (Carbon::now())->format('Y-m-d');
+        $nextMonday = ((Carbon::now())->next(Carbon::MONDAY))->format('Y-m-d');
+
+
         $data = [
             'allDaysSchedule' => $allDaysSchedule,
             'weekDaysSchedule' => $weekDaysSchedule,
-            'today' => $today
+            'today' => $today,
+            'nextMonday' => $nextMonday
         ];
 
         return $data;
     }
-
 }

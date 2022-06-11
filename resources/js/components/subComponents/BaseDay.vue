@@ -1,5 +1,5 @@
 <script setup>
-import { propExists } from '../../stores.js'
+import { propExists, selectedDate, isActive } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -18,10 +18,17 @@ if (props.today == props.lessonDay.fullDate) isToday = true;
 
 const courseExists = propExists('courses', props.lessonDay)
 const holidayExists = propExists('holiday', props.lessonDay)
+
+
+function toDailyView() {
+    selectedDate.value = props.lessonDay
+    isActive.value.weekly = false
+    isActive.value.daily = true
+}
 </script>
 
 <template>
-<div class="lesson-ctn">
+<div class="lesson-ctn" @click="toDailyView()">
     <div class="date-ctn" :class="{ 'today' : isToday }">
         <div class="day-date">
             <p class="day">
