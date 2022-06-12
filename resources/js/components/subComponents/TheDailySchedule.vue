@@ -4,6 +4,7 @@ import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrille from "./BaseGrille.vue";
+import AddTask from "./AddTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -63,42 +64,66 @@ onMounted(() => {
 function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
+
+//add task on click
+const popUp = ref(false);
+function addTask() {
+  popUp.value = true;
+  console.log(popUp.value);
+  return popUp;
+}
 </script>
 
 <template>
-  <div id="file">
-    <div id="calendar">
-      <div
-        v-for="(group, index) in weeksSchedule"
-        :key="group"
-        class="week"
-        :class="{ 'selected-week': index == selectedWeekIndex }"
-      >
+  <div v-if="popUp">
+       <add-task></add-task>
+  </div>
+  <div v-if="!popUp">
+    <div id="file">
+      <div id="calendar">
         <div
-          v-for="day in group"
-          :key="day"
-          class="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
+          v-for="(group, index) in weeksSchedule"
+          :key="group"
+          class="week"
+          :class="{ 'selected-week': index == selectedWeekIndex }"
         >
-          <p>{{ day.dayShort }}</p>
-          <p>
-            <strong>{{ day.date }}</strong>
-          </p>
+          <div
+            v-for="day in group"
+            :key="day"
+            class="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <p>{{ day.dayShort }}</p>
+            <p>
+              <strong>{{ day.date }}</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="choosenDay bold">
+          {{ currentDate }}
+        </p>
+      </div>
+      <div id="separate">
+        <hr />
+      </div>
+      <div class="grid-container">
+        <div class="grid">
+          <the-tasks :day="courseToShow"></the-tasks>
+          <base-course :lessonDay="courseToShow"> </base-course>
+          <base-grille :day="courseToShow"></base-grille>
+        </div>
+        <div class="icone">
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+          />
+          <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
       </div>
     </div>
-    <div>
-      <p class="choosenDay bold">
-        {{ currentDate }}
-      </p>
-    </div>
-    <div id="separate">
-      <hr />
-    </div>
-    <the-tasks :day="courseToShow"></the-tasks>
-    <base-course :lessonDay="courseToShow"> </base-course>
-    <base-grille :day="courseToShow"></base-grille>
   </div>
 </template>
 
@@ -159,5 +184,16 @@ hr {
 
 .selected-day p {
   color: var(--orange);
+}
+
+.icone {
+  margin: 3%;
+  /* display: inline-block; */
+  text-align: center;
+}
+.material-icons {
+  color: var(--orange);
+  filter: drop-shadow(0 0 0.75rem var(--orange));
+  cursor: pointer;
 }
 </style>
