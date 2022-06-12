@@ -8,9 +8,9 @@ export const { value : user } = useLocalstorage('user', {
 });
 
 export const { value : isActive } = useLocalstorage('isActive', {
-    weekly : false,
+    weekly : true,
     monthly : false,
-    daily : true
+    daily : false
 })
 
 export const { value : selectedDate } = useLocalstorage('selectedDate', '')

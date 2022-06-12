@@ -15,13 +15,14 @@ const { data } = await axios.get("/api/lessons", {
 </script>
 
 <template>
-  <the-header-mobile></the-header-mobile>
-  <the-weekly-schedule
-    v-if="isActive.weekly"
-    :schedule="data.weekDaysSchedule"
-    :today="data.today"
-    :nextMonday="data.nextMonday"
-  ></the-weekly-schedule>
+  <the-header-mobile  class="header-mobile"></the-header-mobile>
+  <div class="weekly-box" v-if="isActive.weekly">
+    <the-weekly-schedule
+      :schedule="data.weekDaysSchedule"
+      :today="data.today"
+      :nextMonday="data.nextMonday"
+    ></the-weekly-schedule>
+  </div>
 
   <the-daily-schedule 
     v-if="isActive.daily"
@@ -36,4 +37,14 @@ const { data } = await axios.get("/api/lessons", {
 </template>
 
 <style scoped>
+.header-mobile {
+  height: 10vh;
+}
+
+.weekly-box {
+  width:100vw;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+}
 </style>

@@ -1,5 +1,6 @@
 <script setup>
     import BaseDay from './BaseDay.vue'
+    import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
     import { chunkArrayInGroups } from '../../stores.js'
 
@@ -41,7 +42,7 @@
 </script>
 
 <template>
-<div class="week-box">
+<base-box class="week-box">
     <div 
         v-for="(week, i1) in weeksSchedule" 
         :key="week" class="week-ctn" 
@@ -60,17 +61,16 @@
             <hr v-if="i2 + 1 != week.length" class="sep">
         </div>
     </div>
-</div>
+</base-box>
 </template>
 
 <style scoped>
     /* hide scrollbar but allow scrolling */
     .week-box {
-        border: thin solid black;
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
         overflow-y: scroll;
-        height: 90vh;
+        height: calc(100% - 7vw);
         scroll-snap-type: y mandatory;
     }
 
@@ -79,6 +79,7 @@
     }
 
     .week-ctn {
+        flex-basis: 100%;
         height: 100%;
         display: grid;
         grid-template-rows: repeat(5, 1fr);

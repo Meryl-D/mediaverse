@@ -11,9 +11,13 @@
 <style scoped>
 div {
   display: flex;
+  justify-content: center;
   background-color: var(--white);
   border: none;
-  border-radius: 0.3em;
+  border-radius: var(--big-radius);
+  flex-wrap: wrap;
   box-shadow: var(--shadow);
+  width: 86vw;
+  max-width: 750px;
 }
 </style>

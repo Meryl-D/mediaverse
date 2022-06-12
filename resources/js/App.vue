@@ -57,10 +57,18 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
+  --small-radius: .6rem;
+  --big-radius: 1.2rem;
+
+  /** 
+   * Sizes
+   */
+  --mobile-margins: 7vw;
 }
 
 h1 {
   font-size: 2rem;
+  font-weight: 700;
   color: var(--green);
 }
 

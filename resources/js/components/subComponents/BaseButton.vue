@@ -21,9 +21,9 @@ button {
   color: var(--green)  ;
   background-color: var(--white);
   border: none;
-  border-radius: 0.3em;
+  border-radius: var(--small-radius);
   box-shadow: var(--shadow);
-  margin: 1em;
+  padding: .3rem .6rem;
 }
 
 button:hover, button:active {
