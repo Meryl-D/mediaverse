@@ -4,7 +4,7 @@ import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrille from "./BaseGrille.vue";
-import AddTask from "./AddTask.vue";
+import TheAddTask from "./TheAddTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -76,7 +76,7 @@ function addTask() {
 
 <template>
   <div v-if="popUp">
-       <add-task></add-task>
+       <the-add-task></the-add-task>
   </div>
   <div v-if="!popUp">
     <div id="file">
