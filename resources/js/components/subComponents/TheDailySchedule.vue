@@ -72,11 +72,15 @@ function addTask() {
   console.log(popUp.value);
   return popUp;
 }
+function callback() {
+  popUp.value = false;
+  return popUp;
+}
 </script>
 
 <template>
   <div v-if="popUp">
-       <the-add-task></the-add-task>
+    <the-add-task @close="callback" @add="callback"></the-add-task>
   </div>
   <div v-if="!popUp">
     <div id="file">
@@ -109,18 +113,25 @@ function addTask() {
       <div id="separate">
         <hr />
       </div>
-      <div class="grid-container">
-        <div class="grid">
-          <the-tasks :day="courseToShow"></the-tasks>
+
+      <div class="grid">
+        <div class="course">
+          <h1>Cours</h1>
           <base-course :lessonDay="courseToShow"> </base-course>
-          <base-grille :day="courseToShow"></base-grille>
         </div>
-        <div class="icone">
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-          />
-          <span class="material-icons" @click="addTask()">add_circle</span>
+        <div class="task">
+          <h1>Tâches</h1>
+          <the-tasks :day="courseToShow"></the-tasks>
+
+          <!-- <base-grille :day="courseToShow"></base-grille> -->
+
+          <div class="icone">
+            <link
+              rel="stylesheet"
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+            />
+            <span class="material-icons" @click="addTask()">add_circle</span>
+          </div>
         </div>
       </div>
     </div>
@@ -181,15 +192,23 @@ hr {
   border-top: 2px solid var(--orange);
   background-color: transparent;
 }
-
 .selected-day p {
   color: var(--orange);
 }
-
+.grid {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 5%;
+}
+h1 {
+  margin-left: 1rem;
+}
 .icone {
   margin: 3%;
   /* display: inline-block; */
-  text-align: center;
+  text-align: right;
 }
 .material-icons {
   color: var(--orange);

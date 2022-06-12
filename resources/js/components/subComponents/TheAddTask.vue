@@ -1,5 +1,6 @@
 <script setup>
 import BaseButton from "./BaseButton.vue";
+const emit = defineEmits(["close", "add"]);
 </script>
 <template>
   <div class="file">
@@ -10,7 +11,9 @@ import BaseButton from "./BaseButton.vue";
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
         />
-        <span class="material-symbols-outlined md-48"> close </span>
+        <span class="material-symbols-outlined" @click="$emit('close')">
+          close
+        </span>
       </div>
     </div>
     <div class="form">
@@ -30,7 +33,9 @@ import BaseButton from "./BaseButton.vue";
     </div>
 
     <div id="btn-add">
-      <base-button type="send" class="btn">Ajouter</base-button>
+      <base-button type="send" class="btn" @click="$emit('add')"
+        >Ajouter</base-button
+      >
     </div>
   </div>
 </template>
@@ -80,8 +85,7 @@ h1 {
   filter: drop-shadow(0 0 0.75rem var(--orange));
   cursor: pointer;
 }
-.icone {
-}
+
 .basic {
   background-color: #e3cec2;
   opacity: 50%;
