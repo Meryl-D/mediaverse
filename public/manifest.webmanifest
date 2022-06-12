@@ -1,0 +1,16 @@
+{
+  "short_name": "Organiz",
+  "name": "Organiz",
+  "icons": [
+    {
+      "src": "/organiz.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FFFCFA",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#FFFCFA"
+}

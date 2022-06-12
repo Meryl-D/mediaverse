@@ -58,7 +58,7 @@ for (let i = 0; i < weeksSchedule.length; i++) {
 // scroll to current week once the app is mounted
 onMounted(() => {
   const selectedWeek = document.getElementsByClassName("selected-week")[0];
-  selectedWeek.scrollIntoView();
+  selectedWeek.scrollIntoView({block: "nearest", inline: "nearest"});
 });
 
 function isSelectedDate(day) {
