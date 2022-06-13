@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TaskRequest;
+use Carbon\Carbon;
 use App\Models\Task;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
@@ -20,10 +21,22 @@ class TaskController extends Controller
     {
         $tasks = (Task::where('user_id', Auth::id())
             ->orderBy('dateStart', 'asc'))
-            ->get()
-            ->toArray();
-            //dd($tasks);
-        return $tasks;
+            ->get();
+
+        $data = collect();
+
+        foreach ($tasks as $key => $task) {
+            $data->push([
+                'name' => $task['name'],
+                'description' => $task['description'],
+                'dateStart' => $task['dateStart'],
+                'dateEnd' => $task['dateEnd'],
+                'hourStart' => (new Carbon($task['dateStart']))->format('H'),
+                'hourEnd' => (new Carbon($task['dateStart']))->format('H')
+            ]);
+        }
+
+        return $data;
     }
 
     // add task

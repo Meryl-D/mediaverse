@@ -1,48 +1,47 @@
 <script async setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { axiosClient } from "../../utils/axios.js";
 import BaseButton from "../../components/subComponents/BaseButton.vue";
 import BaseBox from "../../components/subComponents/BaseBox.vue";
+import { selectedTasks } from '../../stores.js'
 
 const props = defineProps({
-  day: { 
+  tasks: {
   type: Object,
   required: true,
-  },
+  }
 })
 
-//console.log(props.day)
+// watchEffect(() => {
+//   selectedTasks.value = []
+//   allData.forEach(data => {
+//     if( data.dateStart.substr(0,10) == props.day.fullDate){
+//         selectedTasks.value.push(data)
+//     }
+//   });
+// })
 
-async function tasks() {
-  const { data } = await axiosClient.get("api/tasks");
-  return data;
-}
-
-const allDatas = await tasks();
-//console.log(allDatas);
-
-
-function getTask(d){
-  if( d.dateStart.substr(0,10) == props.day.fullDate){
-    return true
-  }
-  return false
-}
+// function getTask(d){
+//   if( d.dateStart.substr(0,10) == props.day.fullDate){
+//     return true
+//   }
+//   return false
+// }
 
 </script>
 <template>
     <div
-      v-for="allData in allDatas"
-      :key="allData.id"
-      class="course-ctn"
-    ><div v-if="getTask(allData)">
+      v-for="(data, index) in allData"
+      :key="data"
+      class="task-ctn"
+    ><div v-if="getTask(data)" :class="`task-${index}`">
       <div class="border"></div>
       <div class="TaskBox">
         <p class="p bold task-name">
-          {{ allData.name }}
+          {{ data.name }}
         </p>
         <p class="p task-description">
-          {{ allData.description }}
+          {{ data.description }}
         </p>
       </div>
       </div>
@@ -59,8 +58,6 @@ function getTask(d){
   justify-content: center;
   align-items: center;
 } */
-
-
 
 div {
   display: flex;
