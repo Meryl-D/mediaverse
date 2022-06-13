@@ -18,6 +18,7 @@ async function login() {
   const { data } = await axiosClient.post('api/login', creds);
 
   user.value = {
+    id: data.id,
     firstName: data.firstName,
     lastName: data.lastName,
     role: data.role,
@@ -39,13 +40,12 @@ async function submitForm() {
 </script>
 
 <template>
-  <base-box>
     <form @submit.prevent="submitForm()">
-      <div>
+      <div class="input-box">
         <label for="email">Adresse e-mail</label>
         <input id="email" type="email" v-model="creds.email" required />
       </div>
-      <div>
+      <div class="input-box">
         <label for="password">Mot de passe</label>
         <input
           id="password"
@@ -54,10 +54,41 @@ async function submitForm() {
           required
         />
       </div>
-      <p v-if="errorMsg">
+      <p v-if="errorMsg" class="error">
         {{ errorMsg }}
       </p>
-      <base-button type="submit">Envoyer</base-button>
+      <base-button type="submit" class="btn">Envoyer</base-button>
     </form>
-  </base-box>
 </template>
+
+<style scoped>
+  .input-box {
+    display: flex;
+    flex-direction:column;
+  }
+
+  input {
+    /* border: 2px solid var(--beige); */
+    border: none;
+    background-color: var(--beige);
+    border-radius: var(--small-radius);
+    margin-bottom: 1rem;
+    height: 2rem;
+    padding: .3rem;
+  }
+
+  input:focus {
+    outline: 2px solid var(--orange);
+  }
+
+  .btn {
+    align-self: end;
+    margin-top: 1rem;
+  }
+
+  input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 50px var(--beige) inset;
+}
+
+</style>

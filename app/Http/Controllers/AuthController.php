@@ -31,6 +31,7 @@ class AuthController extends Controller
         $token = $user->createToken('organiz_token')->plainTextToken;
 
         $response = [
+            'id' => $user['id'],
             'firstName' => $user['first_name'],
             'lastName' => $user['last_name'],
             'role' => $role,

@@ -24,6 +24,7 @@ import router from "./router/index.js";
 async function logout() {
   const { data } = await axiosClient.post("/api/logout");
   user.value = {
+    id: null,
     firstName: "",
     lastName: "",
     token: "",
@@ -39,13 +40,17 @@ async function logout() {
 <style>
 
 @import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
 
 * {
   margin: 0;
   padding: 0;
-  /**
+
+  font-family: 'Inter', sans-serif;
+}
+
+:root {
+    /**
     * Colors
     */
   --orange: #f9a228;
@@ -53,40 +58,46 @@ async function logout() {
   --beige: #f1dfcd;
   --white: #fffcfa;
   --shadow: 0px 0px 10px 0px #ffcfad;
+  --small-radius: .6rem;
+  --big-radius: 1.2rem;
 
-
-  /**
-    * Fonts
-    */
-  font-family: 'Inter', sans-serif;
-  
+  /** 
+   * Sizes
+   */
+  --mobile-margins: 7vw;
 }
+
 h1 {
   font-size: 2rem;
+  font-weight: 700;
   color: var(--green);
 }
+
 h2 {
   font-size: 1.3rem;
   color: var(--green);
 }
+
 .bignote {
   font-size: 1.5rem;
   color: var(--green);
 }
+
 p {
-  font-size: 1.1rem;
+  font-size: 0.8rem;
   color: var(--green);
 }
+
 .psmall {
   font-size: 1rem;
   color: var(--green);
 }
+
 .bold {
-  font-weight: bold;
+  font-weight: 700;
 }
 
-
-.DailyCourseBox{
+.DailyCourseBox {
     display: inline-block;
     background-color: #7f726a;
 }

@@ -4,12 +4,7 @@ import BaseCourse from './BaseCourse.vue';
 import TheHeaderMobile from './TheHeaderMobile.vue';
 import TheTasks from './TheTasks.vue';
 
-const props = defineProps({
-    schedule: {
-        type: Object,
-        required: true
-    }
-});
+
 
 const props = defineProps({
   schedule: {
@@ -37,7 +32,7 @@ props.days.forEach((d) => {
   }
 });
 
-//event listener for day choose
+//event listener for chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -56,13 +51,11 @@ console.log(weeksSchedule);
     <div id="calendar">
       <vue-cal
         :time="false"
-        hide-weekends
         style="height: 500px"
         active-view="month"
         :disable-views="['years', 'year', 'week', 'day']"
         hide-view-selector
-        class="vuecal--rounded-theme"
-        locale='fr'
+        class="vuecal--date-picker"
       />
     </div>
   </div>

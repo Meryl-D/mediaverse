@@ -1,5 +1,6 @@
 <script setup>
     import BaseDay from './BaseDay.vue'
+    import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
     import { chunkArrayInGroups } from '../../stores.js'
 
@@ -11,29 +12,41 @@
         today : {
             type : String,
             required : true
+        },
+        nextMonday : {
+            type : String,
+            required : true
         }
     });
 
     const weeksSchedule = chunkArrayInGroups(props.schedule, 5)
-    let currWeekIndex = 0;
+    let currWeekIndex = null;
 
+    // Get the index of the current week when today is a week day
     for (let i = 0; i < weeksSchedule.length; i++) {
             if (weeksSchedule[i].some(day => day.fullDate == props.today)) currWeekIndex = i
     }
 
+    // Get the index of next week when today is a week-end day
+    if (currWeekIndex == null) {
+        for (let i = 0; i < weeksSchedule.length; i++) {
+            if (weeksSchedule[i].some(day => day.fullDate == props.nextMonday)) currWeekIndex = i
+        }
+    }
+
+    // scroll to current week once the app is mounted
     onMounted(() => {
-        const currWeek = (document.getElementsByClassName('currWeek'))[0]
+        const currWeek = (document.getElementsByClassName('curr-week'))[0]
         currWeek.scrollIntoView()
     })
-
 </script>
 
 <template>
-<div class="week-box">
+<base-box class="week-box">
     <div 
         v-for="(week, i1) in weeksSchedule" 
         :key="week" class="week-ctn" 
-        :class="{ 'currWeek' : i1 == currWeekIndex}"
+        :class="{ 'curr-week' : i1 == currWeekIndex}"
     >
         <div 
             v-for="(lessonDay, i2) in week" 
@@ -48,17 +61,16 @@
             <hr v-if="i2 + 1 != week.length" class="sep">
         </div>
     </div>
-</div>
+</base-box>
 </template>
 
 <style scoped>
     /* hide scrollbar but allow scrolling */
     .week-box {
-        border: thin solid black;
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
         overflow-y: scroll;
-        height: 85vh;
+        height: calc(100% - 7vw);
         scroll-snap-type: y mandatory;
     }
 
@@ -67,6 +79,7 @@
     }
 
     .week-ctn {
+        flex-basis: 100%;
         height: 100%;
         display: grid;
         grid-template-rows: repeat(5, 1fr);
@@ -77,14 +90,14 @@
     .day-ctn {
         display: flex;
         flex-direction: column;
+        cursor: pointer;
     }
 
     .sep {
-        margin: 0;
-        padding: 0;
         height: 0;
+        margin : 0;
         border: none;
-        border-top: thin solid;
+        border-top: 2px solid #b8b8b8;
         background-color: transparent;
         width: calc(100% - 4rem);
         align-self: center;

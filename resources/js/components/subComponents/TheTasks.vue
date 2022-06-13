@@ -11,7 +11,7 @@ const props = defineProps({
   },
 })
 
-console.log(props.day)
+//console.log(props.day)
 
 async function tasks() {
   const { data } = await axiosClient.get("api/tasks");
