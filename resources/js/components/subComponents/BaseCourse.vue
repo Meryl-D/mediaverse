@@ -2,6 +2,7 @@
 import { propExists } from "../../stores.js";
 import { ref, watchEffect, onMounted } from "vue";
 import BaseBox from "./BaseBox.vue";
+
 const props = defineProps({
   lessonDay: {
     type: Object,

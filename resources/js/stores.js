@@ -15,6 +15,8 @@ export const { value : isActive } = useLocalstorage('isActive', {
 
 export const { value : selectedDate } = useLocalstorage('selectedDate', '')
 
+export const { value : selectedTasks } = useLocalstorage('selectedTasks', [])
+
 export function propExists(property, data) {
     return `${property}` in data;
 }

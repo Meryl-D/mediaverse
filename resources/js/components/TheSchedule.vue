@@ -12,6 +12,8 @@ const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
+const allTasks = await axiosClient.get("api/tasks");
+
 </script>
 
 <template>
@@ -28,6 +30,7 @@ const { data } = await axios.get("/api/lessons", {
     v-if="isActive.daily"
     :days="data.allDaysSchedule"
     :today="data.today"
+    :tasks="allTasks.data"
   ></the-daily-schedule>
 
   <the-monthly-schedule
