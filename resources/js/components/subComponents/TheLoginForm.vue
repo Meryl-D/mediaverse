@@ -18,6 +18,7 @@ async function login() {
   const { data } = await axiosClient.post('api/login', creds);
 
   user.value = {
+    id: data.id,
     firstName: data.firstName,
     lastName: data.lastName,
     role: data.role,
