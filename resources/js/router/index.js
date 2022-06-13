@@ -5,7 +5,7 @@ import TheResults from '../components/TheResults.vue';
 import TheAbsences from '../components/TheAbsences.vue';
 import TheAccount from '../components/TheAccount.vue';
 import TheReviews from '../components/TheReviews.vue';
-import TheLoginForm from '../components/subComponents/TheLoginForm.vue';
+import TheLogin from '../components/TheLogin.vue';
 import TheTasks from '../components/subComponents/TheTasks.vue';
 
 console.log()
@@ -17,7 +17,7 @@ const routes = [
         meta: {
             requiresAuth : false
         },
-        component : TheLoginForm
+        component : TheLogin
     },
     {
         path : '/',

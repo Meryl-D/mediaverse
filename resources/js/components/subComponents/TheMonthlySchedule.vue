@@ -32,7 +32,7 @@ props.days.forEach((d) => {
   }
 });
 
-//event listener for day choose
+//event listener for chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;

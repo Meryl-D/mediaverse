@@ -1,6 +1,6 @@
 <script setup>
 import { propExists } from "../../stores.js";
-import { ref, watchEffect } from "vue";
+import { ref, watchEffect, onMounted } from "vue";
 import BaseBox from "./BaseBox.vue";
 const props = defineProps({
   lessonDay: {
@@ -24,14 +24,13 @@ watchEffect(() => {
 });
 </script>
 
-
-
 <template>
   <div v-if="courseExists">
     <div
       v-for="course in props.lessonDay.courses"
       :key="course.name"
       class="course-ctn"
+      ref="courseDiv"
     >
       <div class="border"></div>
       <div class="DailyCourseBox">

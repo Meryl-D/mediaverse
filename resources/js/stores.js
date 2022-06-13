@@ -1,11 +1,19 @@
 import { useLocalstorage } from "./composables/localStorage";
 
-export const { value: user } = useLocalstorage('user', {
+export const { value : user } = useLocalstorage('user', {
     firstName : '',
     lastName : '',
     role : '',
     token : ''
 });
+
+export const { value : isActive } = useLocalstorage('isActive', {
+    weekly : true,
+    monthly : false,
+    daily : false
+})
+
+export const { value : selectedDate } = useLocalstorage('selectedDate', '')
 
 export function propExists(property, data) {
     return `${property}` in data;

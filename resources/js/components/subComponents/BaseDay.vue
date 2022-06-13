@@ -1,5 +1,5 @@
 <script setup>
-import { propExists } from '../../stores.js'
+import { propExists, selectedDate, isActive } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -18,22 +18,31 @@ if (props.today == props.lessonDay.fullDate) isToday = true;
 
 const courseExists = propExists('courses', props.lessonDay)
 const holidayExists = propExists('holiday', props.lessonDay)
+
+
+function toDailyView() {
+    selectedDate.value = props.lessonDay
+    isActive.value.weekly = false
+    isActive.value.daily = true
+}
 </script>
 
 <template>
-<div class="lesson-ctn">
+<div class="lesson-ctn" @click="toDailyView()">
     <div class="date-ctn" :class="{ 'today' : isToday }">
-        <p class="day">
-        {{ props.lessonDay.dayShort }}
-        </p>
-        <p class="date">
-        {{ props.lessonDay.date }}
-        </p>
+        <div class="day-date">
+            <p class="day">
+                {{ props.lessonDay.dayShort }}
+                </p>
+                <p class="date">
+                {{ props.lessonDay.date }}
+            </p>
+        </div>
     </div>
     <div class="info-ctn">
         <div v-if="courseExists" class="course">
             <div v-for="course in props.lessonDay.courses" :key="course.name" class="course-ctn">
-                <p class="course-name">
+                <p class="course-name bold">
                     {{ course.name }}
                 </p>
                 <p class="course-room">
@@ -45,7 +54,7 @@ const holidayExists = propExists('holiday', props.lessonDay)
             </div>
         </div>
         <div v-if="holidayExists" class="holiday">
-            <p class="holiday-name">
+            <p class="holiday-name bold">
                 {{ props.lessonDay.holiday.name }}
             </p>
         </div>
@@ -62,19 +71,33 @@ const holidayExists = propExists('holiday', props.lessonDay)
     .lesson-ctn {
         display: flex;
         flex: 1;
-        padding: 1rem 2rem;
+        padding: 0rem 2rem;
     }
 
     .date-ctn {
         display: flex;
-        flex-direction: column;
         flex: 1;
-        justify-content: center;
+        align-items: center;
+    }
+
+    .date {
+        font-size: 1.5rem; 
+        font-weight: 900;
+    }
+
+    .day {
+        font-size: 1rem;
+    }
+
+    .day-date {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .info-ctn {
         display: flex;
-        flex: 3;
+        flex: 4;
     }
 
     .course {
@@ -87,10 +110,11 @@ const holidayExists = propExists('holiday', props.lessonDay)
     .course-ctn {
         display: flex;
         flex-wrap: wrap;
+        padding: .2rem;
     }
 
     .course-name {
-        flex: 3;
+        flex: 2;
     }
 
     .course-room {
@@ -107,7 +131,11 @@ const holidayExists = propExists('holiday', props.lessonDay)
         align-items: center;
     }
 
-    .today {
+    .today .date, .today .day {
         color : var(--orange);
+    }
+
+    .holiday-name {
+        padding: .2rem;
     }
 </style>
