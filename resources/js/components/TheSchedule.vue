@@ -12,22 +12,22 @@ const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
+const allTasks = await axiosClient.get("api/tasks");
+
 </script>
 
 <template>
-  <the-header-mobile  class="header-mobile"></the-header-mobile>
+  <the-header-mobile class="header-mobile"></the-header-mobile>
   <div class="weekly-box" v-if="isActive.weekly">
-    <the-weekly-schedule
-      :schedule="data.weekDaysSchedule"
-      :today="data.today"
-      :nextMonday="data.nextMonday"
-    ></the-weekly-schedule>
+    <the-weekly-schedule :schedule="data.weekDaysSchedule" :today="data.today" :nextMonday="data.nextMonday">
+    </the-weekly-schedule>
   </div>
 
   <the-daily-schedule 
     v-if="isActive.daily"
     :days="data.allDaysSchedule"
     :today="data.today"
+    :tasks="allTasks.data"
   ></the-daily-schedule>
 
   <the-monthly-schedule
@@ -43,12 +43,18 @@ const { data } = await axios.get("/api/lessons", {
 <style scoped>
 .header-mobile {
   height: 10vh;
+  position: relative;
+  z-index: 1;
+
 }
 
 .weekly-box {
-  width:100vw;
+  width: 100vw;
   height: 90vh;
   display: flex;
   justify-content: center;
+
+
 }
+
 </style>

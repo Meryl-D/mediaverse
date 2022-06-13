@@ -3,6 +3,8 @@ import { ref, computed } from "vue";
 import { axiosClient } from "../utils/axios.js";
 import BaseButton from "../components/subComponents/BaseButton.vue";
 import BaseBox from "../components/subComponents/BaseBox.vue";
+import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
+
 
 async function results() {
   const { data } = await axiosClient.get("api/results");
@@ -46,6 +48,7 @@ function smsChoosen(id) {
 </script>
 
 <template>
+<the-header-mobile class="header-mobile"></the-header-mobile>
   <h1>Notes</h1>
   <div id="semester">
     <div v-for="i in maxSemester" :key="i">
