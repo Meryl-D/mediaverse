@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { axiosClient } from "../utils/axios.js";
 import { user, isActive } from "../stores.js";
 import TheWeeklySchedule from "./subComponents/TheWeeklySchedule.vue";
@@ -7,20 +7,34 @@ import TheDailySchedule from "./subComponents/TheDailySchedule.vue";
 import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
 import BaseGrille from "./subComponents/BaseGrille.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
+import { useWindowSize } from 'vue-window-size';
 
 const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
+const {width, height} = useWindowSize()
+const isMobile = ref()
+
+watchEffect(() => {
+  if (width.value < 992) {
+    isMobile.value = true
+  } else {
+    isMobile.value = false
+  }
+})
+
 </script>
 
 <template>
-  <the-header-mobile  class="header-mobile"></the-header-mobile>
+  <the-header-mobile  v-if="isMobile" class="header-mobile"></the-header-mobile>
+
   <div class="weekly-box" v-if="isActive.weekly">
     <the-weekly-schedule
       :schedule="data.weekDaysSchedule"
       :today="data.today"
       :nextMonday="data.nextMonday"
+      :isMobile="isMobile"
     ></the-weekly-schedule>
   </div>
 
@@ -46,5 +60,12 @@ const { data } = await axios.get("/api/lessons", {
   height: 90vh;
   display: flex;
   justify-content: center;
+}
+
+@media (min-width: 992px) {
+  .weekly-box {
+    height: 100vh;
+    align-items: center;
+  }
 }
 </style>
