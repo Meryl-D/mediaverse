@@ -15,36 +15,34 @@ const { data } = await axios.get("/api/lessons", {
 </script>
 
 <template>
-  <the-header-mobile  class="header-mobile"></the-header-mobile>
+  <the-header-mobile class="header-mobile"></the-header-mobile>
   <div class="weekly-box" v-if="isActive.weekly">
-    <the-weekly-schedule
-      :schedule="data.weekDaysSchedule"
-      :today="data.today"
-      :nextMonday="data.nextMonday"
-    ></the-weekly-schedule>
+    <the-weekly-schedule :schedule="data.weekDaysSchedule" :today="data.today" :nextMonday="data.nextMonday">
+    </the-weekly-schedule>
   </div>
 
-  <the-daily-schedule 
-    v-if="isActive.daily"
-    :days="data.allDaysSchedule"
-    :today="data.today"
-  ></the-daily-schedule>
+  <the-daily-schedule class="daily-schedule" v-if="isActive.daily" :days="data.allDaysSchedule" :today="data.today">
+  </the-daily-schedule>
 
-  <the-monthly-schedule
-    v-if="isActive.monthly"
-    :schedule="data.allDaysSchedule"
-  ></the-monthly-schedule>
+  <the-monthly-schedule class="monthly-schedule" v-if="isActive.monthly" :schedule="data.allDaysSchedule">
+  </the-monthly-schedule>
 </template>
 
 <style scoped>
 .header-mobile {
   height: 10vh;
+  position: relative;
+  z-index: 1;
+
 }
 
 .weekly-box {
-  width:100vw;
+  width: 100vw;
   height: 90vh;
   display: flex;
   justify-content: center;
+
+
 }
+
 </style>
