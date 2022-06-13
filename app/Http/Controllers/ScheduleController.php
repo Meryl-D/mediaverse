@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
-use App\Models\User;
 use App\Models\Course;
-use App\Models\Lesson;
 use App\Models\Holiday;
+use App\Models\Lesson;
 use App\Models\Semester;
+use App\Models\User;
+use Carbon\Carbon;
 use Carbon\CarbonPeriod;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +16,11 @@ class ScheduleController extends Controller
 {
     /**
      * Return a Collection with all the dates of the current semesters.
-     * 
+     *
      * @return Collection
      */
-    private function getDatesInSemester() {
+    private function getDatesInSemester()
+    {
 
         $currDate = new Carbon();
 
@@ -28,13 +28,13 @@ class ScheduleController extends Controller
             ->where('date_start', '<=', $currDate)
             ->where('date_end', '>=', $currDate)
             ->first()->toArray();
-        
+
         $dateStart = new Carbon($currSemesterDates['date_start']);
         $dateEnd = new Carbon($currSemesterDates['date_end']);
 
         $allDates = CarbonPeriod::create($dateStart, $dateEnd);
 
-        $allDates = collect($allDates->map(function($date) {
+        $allDates = collect($allDates->map(function ($date) {
             return $date->format('Y-m-d');
         }));
 
@@ -45,12 +45,13 @@ class ScheduleController extends Controller
     /**
      * Organize and prepare lessons data.
      * Format lessons dates and replace course id by its name.
-     * 
+     *
      * @param Collection $lessons
-     * 
-     * @return Collection 
+     *
+     * @return Collection
      */
-    private function prepLessons($lessons) {
+    private function prepLessons($lessons)
+    {
 
         $lessons = $lessons->map(function ($lesson, $key) {
             $course = Course::where('id', $lesson->course_id)->first();
@@ -58,9 +59,9 @@ class ScheduleController extends Controller
             return [
                 'date' => $lesson->date_start->format('Y-m-d'),
                 'name' => $course->name,
-                'timeStart'  => $lesson->date_start->format('H:i'),
+                'timeStart' => $lesson->date_start->format('H:i'),
                 'timeEnd' => $lesson->date_end->format('H:i'),
-                'room' => $lesson->room
+                'room' => $lesson->room,
             ];
         });
 
@@ -71,17 +72,18 @@ class ScheduleController extends Controller
      * format holidays dates.
      *
      * @param Collection $holidays
-     * 
+     *
      * @return Collection
      */
-    private function prepHolidays($holidays) {
+    private function prepHolidays($holidays)
+    {
 
         $holidays = $holidays->map(function ($holiday, $key) {
 
             return [
                 'name' => $holiday->name,
                 'dateStart' => (new Carbon($holiday->date_start))->format('Y-m-d'),
-                'dateEnd' => (new Carbon($holiday->date_end))->format('Y-m-d')
+                'dateEnd' => (new Carbon($holiday->date_end))->format('Y-m-d'),
             ];
         });
 
@@ -90,19 +92,20 @@ class ScheduleController extends Controller
 
     /**
      * Create an array with all data needed for every day of a semester.
-     * 
+     *
      * @param Collection $lessons
      * @param Collection $holidays
-     * 
+     *
      * @return array
      */
-    private function prepAgendaSchedule($lessons, $holidays) {
+    private function prepAgendaSchedule($lessons, $holidays)
+    {
 
         $dates = $this->getDatesInSemester();
         $data = collect();
 
         foreach ($dates as $date) {
-            
+
             $lessonsOfDate = $lessons->where('date', $date);
             $holidayOfDate = $holidays->where('dateStart', '<=', $date)->where('dateEnd', '>=', $date)->first();
 
@@ -110,9 +113,10 @@ class ScheduleController extends Controller
                 'dayShort' => ucfirst((new Carbon($date))->isoFormat('dd')),
                 'dayLong' => ucfirst((new Carbon($date))->isoFormat('dddd')),
                 'month' => ucfirst((new Carbon($date))->isoFormat('MMMM')),
+                'monthNb'=> ucfirst((new Carbon($date))->isoFormat('MM')),
                 'date' => (new Carbon($date))->format('d'),
                 'year' => (new Carbon($date))->format('Y'),
-                'fullDate' => (new Carbon($date))->format('Y-m-d')
+                'fullDate' => (new Carbon($date))->format('Y-m-d'),
             ]);
 
             $courses = collect();
@@ -121,7 +125,7 @@ class ScheduleController extends Controller
                 foreach ($lessonsOfDate as $lesson) {
                     $courses->push([
                         'name' => $lesson['name'],
-                        'timeStart'  => $lesson['timeStart'],
+                        'timeStart' => $lesson['timeStart'],
                         'timeEnd' => $lesson['timeEnd'],
                         'room' => $lesson['room'],
                     ]);
@@ -142,21 +146,25 @@ class ScheduleController extends Controller
 
         $data = $data->all();
 
-        return $data;   
+        return $data;
     }
 
     /**
      * Create an array with all data needed for every weekday of a semester.
-     * 
+     *
      * @param array $schedule
-     * 
+     *
      * @return array
      */
-    private function prepWeeklySchedule($schedule) {
+    private function prepWeeklySchedule($schedule)
+    {
         foreach ($schedule as $key => $date) {
-            if ($date['dayShort'] == 'Sa' || $date['dayShort'] == 'Di') unset($schedule[$key]);
+            if ($date['dayShort'] == 'Sa' || $date['dayShort'] == 'Di') {
+                unset($schedule[$key]);
+            }
+
         }
-        
+
         $schedule = array_values($schedule);
 
         return $schedule;
@@ -188,13 +196,16 @@ class ScheduleController extends Controller
 
         $today = (Carbon::now())->format('Y-m-d');
         $nextMonday = ((Carbon::now())->next(Carbon::MONDAY))->format('Y-m-d');
-
+        $daysInMonth = Carbon::now()->daysInMonth; //get nb of days in the current month
+        $nextMonth = Carbon::createFromFormat('m/d/Y', '11/02/2020')->addMonthsNoOverflow();
 
         $data = [
             'allDaysSchedule' => $allDaysSchedule,
             'weekDaysSchedule' => $weekDaysSchedule,
             'today' => $today,
-            'nextMonday' => $nextMonday
+            'nextMonday' => $nextMonday,
+            'daysInMonth' => $daysInMonth,
+            'nextMonth' => $nextMonth,
         ];
 
         return $data;
