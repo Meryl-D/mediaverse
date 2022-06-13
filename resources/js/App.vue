@@ -24,6 +24,7 @@ import router from "./router/index.js";
 async function logout() {
   const { data } = await axiosClient.post("/api/logout");
   user.value = {
+    id: null,
     firstName: "",
     lastName: "",
     token: "",
