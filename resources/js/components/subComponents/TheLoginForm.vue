@@ -18,6 +18,7 @@ async function login() {
   const { data } = await axiosClient.post('api/login', creds);
 
   user.value = {
+    id: data.id,
     firstName: data.firstName,
     lastName: data.lastName,
     role: data.role,
@@ -88,6 +89,6 @@ async function submitForm() {
   input:-webkit-autofill {
     background-color: transparent !important;
     -webkit-box-shadow: 0 0 0 50px var(--beige) inset;
-}
+  }
 
 </style>

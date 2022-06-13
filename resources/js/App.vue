@@ -24,11 +24,14 @@ import router from "./router/index.js";
 async function logout() {
   const { data } = await axiosClient.post("/api/logout");
   user.value = {
+    id: null,
     firstName: "",
     lastName: "",
     token: "",
   };
 }
+
+//navigator.serviceWorker.register('/workerCacheFetched.js');
 </script>
 
 
@@ -56,6 +59,8 @@ async function logout() {
   --green: #2a3a30;
   --beige: #f1dfcd;
   --white: #fffcfa;
+  --red: #921b10;
+
   --shadow: 0px 0px 10px 0px #ffcfad;
   --small-radius: .6rem;
   --big-radius: 1.2rem;
@@ -99,5 +104,9 @@ p {
 .DailyCourseBox {
     display: inline-block;
     background-color: #7f726a;
+}
+
+.error {
+  color: var(--red);
 }
 </style>
