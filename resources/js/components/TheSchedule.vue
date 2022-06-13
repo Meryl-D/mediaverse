@@ -24,8 +24,19 @@ const { data } = await axios.get("/api/lessons", {
   <the-daily-schedule class="daily-schedule" v-if="isActive.daily" :days="data.allDaysSchedule" :today="data.today">
   </the-daily-schedule>
 
+<<<<<<< HEAD
   <the-monthly-schedule class="monthly-schedule" v-if="isActive.monthly" :schedule="data.allDaysSchedule">
   </the-monthly-schedule>
+=======
+  <the-monthly-schedule
+    v-if="isActive.monthly"
+    :today="data.today"
+    :days="data.allDaysSchedule"
+    :daysInMonth="data.daysInMonth"
+    :schedule="data.allDaysSchedule"
+    :nextMonth="data.nextMonday"
+  ></the-monthly-schedule>
+>>>>>>> 01e9840aa08ccac2ff7e606fa5131841648f948a
 </template>
 
 <style scoped>

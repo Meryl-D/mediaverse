@@ -71,7 +71,7 @@ function toDailyView() {
     .lesson-ctn {
         display: flex;
         flex: 1;
-        padding: 0rem 2rem;
+        padding: 0rem 1.5rem;
     }
 
     .date-ctn {
@@ -114,11 +114,11 @@ function toDailyView() {
     }
 
     .course-name {
-        flex: 2;
+        flex: 3;
     }
 
     .course-room {
-        flex: 1;
+        flex: 2;
         text-align: end;
     }
 
