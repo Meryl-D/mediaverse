@@ -58,7 +58,7 @@ for (let i = 0; i < weeksSchedule.length; i++) {
 // scroll to current week once the app is mounted
 onMounted(() => {
   const selectedWeek = document.getElementsByClassName("selected-week")[0];
-  selectedWeek.scrollIntoView({block: "nearest", inline: "nearest"});
+  selectedWeek.scrollIntoView({ block: "nearest", inline: "nearest" });
 });
 
 function isSelectedDate(day) {
@@ -79,59 +79,59 @@ function callback() {
 </script>
 
 <template>
-  <div v-if="popUp">
-    <the-add-task @close="callback" @add="callback"></the-add-task>
+  <div id="container">
+    <div v-if="popUp" class="ctn-popUp">
+      <the-add-task @close="callback" class="popUp"></the-add-task>
+    </div>
   </div>
-  <div v-if="!popUp">
-    <div id="file">
-      <div id="calendar">
+  <div id="file">
+    <div id="calendar">
+      <div
+        v-for="(group, index) in weeksSchedule"
+        :key="group"
+        class="week"
+        :class="{ 'selected-week': index == selectedWeekIndex }"
+      >
         <div
-          v-for="(group, index) in weeksSchedule"
-          :key="group"
-          class="week"
-          :class="{ 'selected-week': index == selectedWeekIndex }"
+          v-for="day in group"
+          :key="day"
+          class="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
         >
-          <div
-            v-for="day in group"
-            :key="day"
-            class="day"
-            :class="{ 'selected-day': isSelectedDate(day) }"
-            @click="getDay(day)"
-          >
-            <p>{{ day.dayShort }}</p>
-            <p>
-              <strong>{{ day.date }}</strong>
-            </p>
-          </div>
+          <p>{{ day.dayShort }}</p>
+          <p>
+            <strong>{{ day.date }}</strong>
+          </p>
         </div>
       </div>
-      <div>
-        <p class="choosenDay bold">
-          {{ currentDate }}
-        </p>
+    </div>
+    <div>
+      <p class="choosenDay bold">
+        {{ currentDate }}
+      </p>
+    </div>
+    <div id="separate">
+      <hr />
+    </div>
+
+    <div class="grid">
+      <div class="course">
+        <h1>Cours</h1>
+        <base-course :lessonDay="courseToShow"> </base-course>
       </div>
-      <div id="separate">
-        <hr />
-      </div>
+      <div class="task">
+        <h1>Tâches</h1>
+        <the-tasks :day="courseToShow"></the-tasks>
 
-      <div class="grid">
-        <div class="course">
-          <h1>Cours</h1>
-          <base-course :lessonDay="courseToShow"> </base-course>
-        </div>
-        <div class="task">
-          <h1>Tâches</h1>
-          <the-tasks :day="courseToShow"></the-tasks>
+        <!-- <base-grille :day="courseToShow"></base-grille> -->
 
-          <!-- <base-grille :day="courseToShow"></base-grille> -->
-
-          <div class="icone">
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-            />
-            <span class="material-icons" @click="addTask()">add_circle</span>
-          </div>
+        <div class="icone">
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+          />
+          <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
       </div>
     </div>
@@ -191,6 +191,7 @@ hr {
   border: none;
   border-top: 2px solid var(--orange);
   background-color: transparent;
+  z-index: 0;
 }
 .selected-day p {
   color: var(--orange);
@@ -214,5 +215,18 @@ h1 {
   color: var(--orange);
   filter: drop-shadow(0 0 0.75rem var(--orange));
   cursor: pointer;
+}
+.popUp {
+   width: 100%;
+}
+#container{
+  display: flex;
+  position: absolute;
+  width: 100%;
+  justify-content: center;
+  z-index: 100;
+}
+.ctn-popUp{
+  flex-basis: 80%;
 }
 </style>
