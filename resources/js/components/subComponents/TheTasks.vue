@@ -6,27 +6,27 @@ import BaseBox from "../../components/subComponents/BaseBox.vue";
 import { selectedTasks } from '../../stores.js'
 
 const props = defineProps({
-  day: { 
+  tasks: {
   type: Object,
   required: true,
   }
 })
 
-watchEffect(() => {
-  selectedTasks.value = []
-  allData.forEach(data => {
-    if( data.dateStart.substr(0,10) == props.day.fullDate){
-        selectedTasks.value.push(data)
-    }  
-  });
-})
+// watchEffect(() => {
+//   selectedTasks.value = []
+//   allData.forEach(data => {
+//     if( data.dateStart.substr(0,10) == props.day.fullDate){
+//         selectedTasks.value.push(data)
+//     }
+//   });
+// })
 
-function getTask(d){
-  if( d.dateStart.substr(0,10) == props.day.fullDate){
-    return true 
-  }
-  return false
-}
+// function getTask(d){
+//   if( d.dateStart.substr(0,10) == props.day.fullDate){
+//     return true
+//   }
+//   return false
+// }
 
 </script>
 <template>
