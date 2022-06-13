@@ -1,6 +1,7 @@
 <script setup>
 import BaseButton from "./BaseButton.vue";
 import { watch, ref, onMounted } from "vue";
+import { axiosClient } from "../../utils/axios.js";
 const emit = defineEmits(["close"]);
 
 let newTask = {
@@ -23,7 +24,7 @@ async function submitForm() {
       name: "Horaires",
     });
   } catch (err) {
-    errorMsg.value = err.response.data.error;
+    // errorMsg.value = err.response.data.error;
   }
 }
 
