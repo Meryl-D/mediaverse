@@ -17,13 +17,10 @@ const allTasks = await axiosClient.get("api/tasks");
 </script>
 
 <template>
-  <the-header-mobile  class="header-mobile"></the-header-mobile>
+  <the-header-mobile class="header-mobile"></the-header-mobile>
   <div class="weekly-box" v-if="isActive.weekly">
-    <the-weekly-schedule
-      :schedule="data.weekDaysSchedule"
-      :today="data.today"
-      :nextMonday="data.nextMonday"
-    ></the-weekly-schedule>
+    <the-weekly-schedule :schedule="data.weekDaysSchedule" :today="data.today" :nextMonday="data.nextMonday">
+    </the-weekly-schedule>
   </div>
 
   <the-daily-schedule 
@@ -35,19 +32,29 @@ const allTasks = await axiosClient.get("api/tasks");
 
   <the-monthly-schedule
     v-if="isActive.monthly"
+    :today="data.today"
+    :days="data.allDaysSchedule"
+    :daysInMonth="data.daysInMonth"
     :schedule="data.allDaysSchedule"
+    :nextMonth="data.nextMonday"
   ></the-monthly-schedule>
 </template>
 
 <style scoped>
 .header-mobile {
   height: 10vh;
+  position: relative;
+  z-index: 1;
+
 }
 
 .weekly-box {
-  width:100vw;
+  width: 100vw;
   height: 90vh;
   display: flex;
   justify-content: center;
+
+
 }
+
 </style>
