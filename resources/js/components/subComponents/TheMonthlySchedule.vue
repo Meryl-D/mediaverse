@@ -46,6 +46,10 @@ props.days.forEach((d) => {
   }
 });
 
+function isSelectedDate(day) {
+  return day.fullDate == selectedDate.value.fullDate ? true : false;
+}
+
 //event listener for day choose
 function getDay(d) {
   currentDate.value =
@@ -60,7 +64,7 @@ const currentMonth = ref("06");
 
 //-------------------------------------------------------------------------------------------------
 
-//put the right nb of days together
+//group days by month
 
 let monthlySchedule = [];
 props.days.forEach((d) => {
@@ -69,6 +73,7 @@ props.days.forEach((d) => {
   }
 });
 
+//if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
@@ -93,10 +98,10 @@ console.log(monthlySchedule);
 
 
 <template>
-  <div>
+  <div id="MonthlyCalendar">
     <div class="month">
       <div class="daysOfWeek">
-        <p>Lu</p>
+        <div class="days"><p>Lu</p></div>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Lu'">
             <p>
@@ -104,7 +109,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Lu'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -114,7 +124,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Ma</p>
+        <p class="days">Ma</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ma'">
             <p>
@@ -122,7 +132,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Ma'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -132,7 +147,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Me</p>
+        <p class="days">Me</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Me'">
             <p>
@@ -140,7 +155,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Me'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -150,7 +170,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Je</p>
+        <p class="days">Je</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Je'">
             <p>
@@ -158,7 +178,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Je'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -168,7 +193,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Ve</p>
+        <p class="days">Ve</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ve'">
             <p>
@@ -176,7 +201,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Ve'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -186,7 +216,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Sa</p>
+        <p class="days">Sa</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Sa'">
             <p>
@@ -194,7 +224,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Sa'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -204,7 +239,7 @@ console.log(monthlySchedule);
       </div>
 
       <div class="daysOfWeek">
-        <p>Di</p>
+        <p class="days">Di</p>
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Di'">
             <p>
@@ -212,7 +247,12 @@ console.log(monthlySchedule);
             </p>
           </div>
         </div>
-        <div v-for="day in monthlySchedule" :key="day" @click="getDay(day)">
+        <div
+          v-for="day in monthlySchedule"
+          :key="day"
+          :class="{ 'selected-day': isSelectedDate(day) }"
+          @click="getDay(day)"
+        >
           <div v-if="day.dayShort == 'Di'">
             <p>
               <strong>{{ day.date }}</strong>
@@ -222,24 +262,48 @@ console.log(monthlySchedule);
       </div>
     </div>
 
-    <div>
-      <p class="choosenDay">
-        <strong>{{ currentDate }}</strong>
-      </p>
+    <div class="course month">
+      <p classe="choosenDay p bold">{{ currentDate }}</p>
+      <div class="course">
+        <div>
+          <p>{{ courseToShow.timeStart }}</p>
+          <p>{{ courseToShow.timeEnd }}</p>
+        </div>
+        <base-course :lessonDay="courseToShow"></base-course>
+      </div>
     </div>
     <hr />
-  </div>
-  <div v-for="lesson in props.schedule" :key="lesson.id">
-    <base-course :lessonDay="lesson"></base-course>
   </div>
 </template>
 
 <style scoped>
+#MonthlyCalendar {
+  background-color: var(--white);
+  align-content: center;
+  justify-content: center;
+}
 .month {
   display: flex;
+  align-content: center;
+  justify-content: center;
 }
 .daysOfWeek {
+  border-bottom: 1em var(--orange);
+  text-align: center;
   margin: 1rem;
   align-content: center;
+}
+.course {
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.choosenDay {
+  padding-left: 1rem;
+}
+.selected-day p {
+  color: var(--orange);
+}
+.days {
+  border-bottom: 1em var(--orange);
 }
 </style>
