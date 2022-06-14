@@ -51,7 +51,6 @@ watchEffect(() => {
 
   <the-monthly-schedule
     v-if="isActive.monthly"
-    :today="data.today"
     :days="data.allDaysSchedule"
     :daysInMonth="data.daysInMonth"
     :schedule="data.allDaysSchedule"

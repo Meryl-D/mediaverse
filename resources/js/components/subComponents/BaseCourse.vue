@@ -26,30 +26,32 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div v-if="courseExists">
-    <div
-      v-for="course in props.lessonDay.courses"
-      :key="course.name"
-      class="course-ctn"
-      ref="courseDiv"
-    >
-      <div class="border"></div>
-      <div class="DailyCourseBox">
-        <p class="p bold course-name">
-          {{ course.name }}
-        </p>
-        <p class="p course-room">
-          {{ course.room }}
-        </p>
+  <div>
+    <div v-if="courseExists">
+      <div
+        v-for="course in props.lessonDay.courses"
+        :key="course.name"
+        class="course-ctn"
+        ref="courseDiv"
+      >
+        <div class="border"></div>
+        <div class="DailyCourseBox">
+          <p class="p bold course-name">
+            {{ course.name }}
+          </p>
+          <p class="p course-room">
+            {{ course.room }}
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-  <div v-if="holidayExists">
-    <div class="border"></div>
-    <div class="DailyCourseBox">
-      <p class="p bold holiday-name">
-        {{ props.lessonDay.holiday.name }}
-      </p>
+    <div v-if="holidayExists">
+      <div class="border"></div>
+      <div class="DailyCourseBox">
+        <p class="p bold holiday-name">
+          {{ props.lessonDay.holiday.name }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -71,5 +73,4 @@ div {
   background-color: #e3cec2;
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
-
 </style>
