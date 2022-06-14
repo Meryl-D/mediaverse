@@ -27,6 +27,7 @@
         "vue-cal": "^4.2.0",
         "vue-loader": "^17.0.0",
         "vue-router": "^4.0.13",
-        "vue-template-compiler": "^2.6.14"
+        "vue-template-compiler": "^2.6.14",
+        "vue-window-size": "^1.1.2"
     }
 }

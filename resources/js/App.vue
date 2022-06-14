@@ -70,6 +70,10 @@ async function logout() {
   --mobile-margins: 7vw;
 }
 
+#organiz {
+  background-color: var(--white);
+}
+
 h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -82,17 +86,17 @@ h2 {
 }
 
 .bignote {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: var(--green);
 }
 
 p {
-  font-size: 0.8rem;
+  font-size: .8rem;
   color: var(--green);
 }
 
 .psmall {
-  font-size: 1rem;
+  font-size: .5rem;
   color: var(--green);
 }
 
@@ -107,5 +111,18 @@ p {
 
 .error {
   color: var(--red);
+  margin: 0;
+}
+
+@media (min-width: 576px) {
+  p {
+    font-size: .85rem;
+  }
+}
+
+@media (min-width: 992px) {
+  p {
+    font-size: .9rem;
+  }
 }
 </style>

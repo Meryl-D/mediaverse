@@ -8,8 +8,8 @@ export const { value : user } = useLocalstorage('user', {
 });
 
 export const { value : isActive } = useLocalstorage('isActive', {
-    weekly : false,
-    monthly : true,
+    weekly : true,
+    monthly : false,
     daily : false
 })
 
