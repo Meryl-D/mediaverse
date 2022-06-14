@@ -13,9 +13,11 @@ const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
-const allTasks = await axiosClient.get("api/tasks");
+const allTasks = await axiosClient.get("api/tasks", {
+  headers: { Authorization: `Bearer ${user.value.token}` },
+});
 
-const {width, height} = useWindowSize()
+const { width, height } = useWindowSize()
 const isMobile = ref()
 
 watchEffect(() => {

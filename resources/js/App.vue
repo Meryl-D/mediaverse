@@ -120,4 +120,10 @@ p {
     font-size: .85rem;
   }
 }
+
+@media (min-width: 992px) {
+  p {
+    font-size: .9rem;
+  }
+}
 </style>
