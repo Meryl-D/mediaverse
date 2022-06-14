@@ -5,7 +5,7 @@ import { user, isActive } from "../stores.js";
 import TheWeeklySchedule from "./subComponents/TheWeeklySchedule.vue";
 import TheDailySchedule from "./subComponents/TheDailySchedule.vue";
 import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
-import BaseGrille from "./subComponents/BaseGrille.vue";
+import BaseGrille from "./subComponents/BaseGrid.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
 import { useWindowSize } from 'vue-window-size';
 
@@ -45,7 +45,6 @@ watchEffect(() => {
   <the-daily-schedule 
     v-if="isActive.daily"
     :days="data.allDaysSchedule"
-    :today="data.today"
     :tasks="allTasks.data"
   ></the-daily-schedule>
 
