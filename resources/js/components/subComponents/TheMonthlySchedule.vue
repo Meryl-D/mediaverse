@@ -9,7 +9,7 @@ import {
   selectedDate,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
-import { BaseDropdown } from "./BaseDropdown.vue";
+import  BaseDropdown  from "./BaseDropdown.vue";
 
 const props = defineProps({
   schedule: {
@@ -56,8 +56,8 @@ function getDay(d) {
 }
 
 // get current month
-//const currentMonth = ref(selectedDate.value.monthNb);
-const currentMonth = ref("06");
+const currentMonth = ref(selectedDate.value.monthNb);
+
 
 //-------------------------------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 <script setup>
 import { selectedDate } from "../../stores.js";
-
+import { ref, watchEffect } from "vue";
 const props = defineProps({
   schedule: {
     type: Object,
@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const currentMonthName = ref("");
-currentMonthName = selectedDate.value.month;
+currentMonthName.value = selectedDate.value.month;
 
 const currentMonth = ref("");
 
@@ -19,10 +19,34 @@ function getMonth(m) {
   selectedDate.value.month = m;
 }
 
-check();
-watchEffect(() => {
-  check();
-});
+const monthTab = [{
+  month: "Février",
+  monthNb: "02",
+},{
+  month: "Mars",
+  monthNb: "03",
+},{
+  month: "Avril",
+  monthNb: "04",
+},{
+  month: "Mai",
+  monthNb: "05",
+},{
+  month: "Juin",
+  monthNb: "06",
+},{
+  month: "Juillet",
+  monthNb: "07",
+},{
+  month: "Août",
+  monthNb: "08",
+},{
+  month: "Septembre",
+  monthNb: "09",
+}];
+
+
+console.log(monthTab);
 </script>
 
 
@@ -30,9 +54,9 @@ watchEffect(() => {
   <div id="month-selected">
     <select v-model="selected">
       <option
-        v-for="month in props.schedule.month"
+        v-for="month in monthTab"
         :key="month"
-        v-bind:value="month.value.monthNb"
+        v-bind:value="month.monthNb"
         @click="getMonth(month)"
       >
         {{ month.month }}
