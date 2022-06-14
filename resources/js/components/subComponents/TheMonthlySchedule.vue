@@ -9,7 +9,7 @@ import {
   selectedDate,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
-import {BaseDropdown} from "./BaseDropdown.vue";
+import { BaseDropdown } from "./BaseDropdown.vue";
 
 const props = defineProps({
   schedule: {
@@ -20,12 +20,12 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  daysInMonth: {
-    type: String,
+  today: {
+    type: Object,
     required: true,
   },
-  nextMonth: {
-    type: String,
+  tasks: {
+    type: Object,
     required: true,
   },
 });
@@ -98,7 +98,8 @@ if (firstDay.dayShort == "Di") {
     <base-dropdown :schedule="props.schedule"></base-dropdown>
     <section class="calendar">
       <div class="daysOfWeek">
-        <p>Lu</p><hr class="lineOrange" />
+        <p>Lu</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Lu'">
             <p class="day">
@@ -123,7 +124,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Ma</p><hr class="lineOrange" />
+        <p>Ma</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ma'">
             <p class="day">
@@ -148,7 +150,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Me</p><hr class="lineOrange" />
+        <p>Me</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Me'">
             <p class="day">
@@ -173,7 +176,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Je</p><hr class="lineOrange" />
+        <p>Je</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Je'">
             <p class="day">
@@ -198,7 +202,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Ve</p><hr class="lineOrange" />
+        <p>Ve</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ve'">
             <p class="day">
@@ -223,7 +228,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Sa</p><hr class="lineOrange" />
+        <p>Sa</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Sa'">
             <p class="day">
@@ -248,7 +254,8 @@ if (firstDay.dayShort == "Di") {
       </div>
 
       <div class="daysOfWeek">
-        <p>Di</p><hr class="lineOrange" />
+        <p>Di</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Di'">
             <p class="day">
@@ -295,7 +302,7 @@ if (firstDay.dayShort == "Di") {
   align-content: center;
   justify-content: center;
 }
-h1{
+h1 {
   display: flex;
   align-content: center;
   justify-content: center;
@@ -336,7 +343,7 @@ h1{
   height: 0;
   border-top: 1px solid var(--green);
 }
-.lineOrange{
+.lineOrange {
   margin: 0;
   height: 0;
   border-top: 2px solid var(--orange);

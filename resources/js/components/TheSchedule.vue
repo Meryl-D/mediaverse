@@ -7,7 +7,7 @@ import TheDailySchedule from "./subComponents/TheDailySchedule.vue";
 import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
 import BaseGrille from "./subComponents/BaseGrille.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
-import { useWindowSize } from 'vue-window-size';
+import { useWindowSize } from "vue-window-size";
 
 const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
@@ -17,21 +17,20 @@ const allTasks = await axiosClient.get("api/tasks", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
-const { width, height } = useWindowSize()
-const isMobile = ref()
+const { width, height } = useWindowSize();
+const isMobile = ref();
 
 watchEffect(() => {
   if (width.value < 992) {
-    isMobile.value = true
+    isMobile.value = true;
   } else {
-    isMobile.value = false
+    isMobile.value = false;
   }
-})
-
+});
 </script>
 
 <template>
-  <the-header-mobile  v-if="isMobile" class="header-mobile"></the-header-mobile>
+  <the-header-mobile v-if="isMobile" class="header-mobile"></the-header-mobile>
 
   <div class="weekly-box" v-if="isActive.weekly">
     <the-weekly-schedule
@@ -42,7 +41,7 @@ watchEffect(() => {
     ></the-weekly-schedule>
   </div>
 
-  <the-daily-schedule 
+  <the-daily-schedule
     v-if="isActive.daily"
     :days="data.allDaysSchedule"
     :today="data.today"
@@ -50,12 +49,14 @@ watchEffect(() => {
   ></the-daily-schedule>
 
   <the-monthly-schedule
+    class="monthly-schedule"
     v-if="isActive.monthly"
-    :days="data.allDaysSchedule"
-    :daysInMonth="data.daysInMonth"
     :schedule="data.allDaysSchedule"
-    :nextMonth="data.nextMonday"
-  ></the-monthly-schedule>
+    :days="data.allDaysSchedule"
+    :today="data.today"
+    :tasks="allTasks.data"
+  >
+  </the-monthly-schedule>
 </template>
 
 <style scoped>
@@ -63,7 +64,6 @@ watchEffect(() => {
   height: 10vh;
   position: relative;
   z-index: 1;
-
 }
 
 .weekly-box {
@@ -71,8 +71,6 @@ watchEffect(() => {
   height: 90vh;
   display: flex;
   justify-content: center;
-
-
 }
 
 @media (min-width: 992px) {

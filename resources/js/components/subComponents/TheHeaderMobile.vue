@@ -1,15 +1,25 @@
 <script setup>
 import { ref } from 'vue'
 
+// function animationStart() {
 
+//   document.querySelector('div').css("opacity", 0)
+//   // document.querySelector('.menu').addClass("fond")
+// }
+
+// function animationEnd() {
+//   document.querySelector('div').css("opacity", 1)
+//   // document.querySelector('.menu').removeClass("fond")
+
+// }
 
 
 const isActive = ref(false);
 
-function test() {
+function menu() {
 
-  console.log("222")
   isActive.value = !isActive.value;
+
 
 }
 
@@ -21,23 +31,28 @@ function test() {
 
 <template>
   <div>
-    <div v-if="!isActive" class="menuBurger" @click="test()">
-      <span class="material-icons">menu</span>
-      <span>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-      </span>
 
-    </div>
-
-
-    <div v-if="isActive" class="menu">
-      <div v-if="isActive">
-        <span class="material-icons close" @click="test()">close</span>
+    <div>
+      <div :class="!isActive ? 'active' : ''" class="menuBurger" @click="menu(); animationStart()">
+        <span class="material-icons">menu</span>
         <span>
           <link
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         </span>
+      </div>
+    </div>
+
+    <div :class="isActive ? 'shadow' : ''" class="fond"></div>
+
+    <div :class="isActive ? 'active' : ''" class="menu" @click="menu(); animationEnd()">
+      <div>
+        <div>
+          <span class="material-icons close">close</span>
+          <span>
+            <link
+              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+          </span>
+        </div>
         <div class="liens">
           <div class="linkBox">
             <p class="router">
@@ -92,6 +107,10 @@ p {
 .menuBurger {
   margin: 3% 0 0 2%;
   cursor: pointer;
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
+  position: absolute;
+  
 }
 
 .close {
@@ -139,7 +158,34 @@ a {
   width: 92vw;
   height: 100vh;
   background-color: #FFFCFA;
-  filter: drop-shadow(41px 0px 0px rgba(0, 0, 0, 0.5));
+
+  /* transition: margin-right 4s; */
+  position: absolute;
+  left: -100%;
+  transition: 0.5s;
+  
+ 
+}
+
+.menu.active {
+  /* filter: drop-shadow(41px 0px 0px rgba(0, 0, 0, 0.5)); */
+  left: 0;
+  position: absolute;
+  
+}
+
+.fond.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* right: 90; */
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.5s;
+
+  
+  
 
 }
 
@@ -156,6 +202,7 @@ hr {
   border-top: 2px solid #EFE4DD;
 
 }
+
 .deconnexion {
   flex-direction: column;
   text-align: left;
@@ -165,6 +212,6 @@ hr {
   border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
   margin-bottom: 0%;
   text-align: center;
-  filter : drop-shadow(0px 0px 10px #F1E3CD)
+  filter: drop-shadow(0px 0px 10px #F1E3CD)
 }
 </style>
