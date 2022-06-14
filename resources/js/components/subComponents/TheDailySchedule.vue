@@ -17,7 +17,17 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  tasks: {
+    type: Object,
+  }
 });
+console.log(props.tasks)
+
+ props.tasks.forEach(task => {
+    if( task.dateStart.substr(0,10) == selectedDate.value.fullDate){
+        selectedTasks.value.push(task)
+    }  
+  });
 
 //-------------------------------------------------------------------------------------------------
 
@@ -39,6 +49,14 @@ function getDay(d) {
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
+  console.log(courseToShow)
+
+  selectedTasks.value = [];
+  props.tasks.forEach(task => {
+    if( task.dateStart.substr(0,10) == d.fullDate){
+        selectedTasks.value.push(task)
+    }  
+  });
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -114,8 +132,8 @@ function callback() {
     <div id="separate">
       <hr />
     </div>
-
-    <div class="grid">
+  <base-grille :day="courseToShow"></base-grille>
+    <!-- <div class="grid">
       <div class="course">
         <h1>Cours</h1>
         <base-course :lessonDay="courseToShow"> </base-course>
@@ -124,7 +142,7 @@ function callback() {
         <h1>Tâches</h1>
         <the-tasks :day="courseToShow"></the-tasks>
 
-        <!-- <base-grille :day="courseToShow"></base-grille> -->
+        
 
         <div class="icone">
           <link
@@ -134,7 +152,7 @@ function callback() {
           <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -178,7 +196,7 @@ function callback() {
   color: var(--orange);
 }
 .choosenDay {
-  text-align: center;
+  text-align: center; 
   margin: 0.6rem 0;
 }
 #separate {

@@ -2,6 +2,7 @@
 import { propExists } from "../../stores.js";
 import { ref, watchEffect, onMounted } from "vue";
 import BaseBox from "./BaseBox.vue";
+
 const props = defineProps({
   lessonDay: {
     type: Object,
@@ -70,4 +71,5 @@ div {
   background-color: #e3cec2;
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
+
 </style>

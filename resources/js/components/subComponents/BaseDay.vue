@@ -7,9 +7,13 @@ const props = defineProps({
     type: Object,
     required: true,
     },
-    today : {
-        type : String,
-        required : true
+    today: {
+        type: String,
+        required: true
+    },
+    isMobile: {
+        type: Boolean,
+        required: true
     }
 });
 
@@ -31,10 +35,14 @@ function toDailyView() {
 <div class="lesson-ctn" @click="toDailyView()">
     <div class="date-ctn" :class="{ 'today' : isToday }">
         <div class="day-date">
-            <p class="day">
+            <p v-if="isMobile" class="day">
                 {{ props.lessonDay.dayShort }}
-                </p>
-                <p class="date">
+            </p>
+            <p v-if="!isMobile" class="day">
+                {{ props.lessonDay.dayLong }}
+            </p>
+            <hr v-if="!isMobile" class="hr-date">
+            <p class="date">
                 {{ props.lessonDay.date }}
             </p>
         </div>
@@ -137,5 +145,56 @@ function toDailyView() {
 
     .holiday-name {
         padding: .2rem;
+    }
+
+    @media (min-width: 576px) {
+        .lesson-ctn {
+            padding: 0rem 2.5rem;
+        }
+
+        .day {
+            font-size: 1.1rem;
+        }
+
+        .date {
+            font-size: 1.8rem;
+        }
+    }
+    @media (min-width: 992px) {
+ 
+        .date-ctn {
+            flex: 0 1 auto;
+            margin-bottom: .5rem;
+        }
+
+        .day-date {
+            flex-basis: 100%;
+            align-items: start;
+        }
+
+        .hr-date {
+            border-top: 3px solid var(--green);
+            opacity: 1;
+            margin: .1rem 0;
+        }
+
+        .today .hr-date {
+            border-color: var(--orange);
+        }
+
+        .info-ctn {
+            align-items: start;
+        }
+
+        .course-ctn {
+            flex-direction: column;
+            padding: 0 0 1rem 0;
+        }
+
+        .course-room {
+            text-align: start;
+            order: 3;
+        }
+
     }
 </style>

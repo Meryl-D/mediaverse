@@ -18,6 +18,15 @@ div {
   flex-wrap: wrap;
   box-shadow: var(--shadow);
   width: 86vw;
-  max-width: 750px;
+  max-width: 600px;
+}
+
+@media (min-width: 992px) {
+    div {
+        box-shadow: none;
+        border-radius: 0;
+        width: 96%;
+        max-width: 1000px; 
+    }
 }
 </style>

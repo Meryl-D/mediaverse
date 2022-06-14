@@ -16,6 +16,10 @@
         nextMonday : {
             type : String,
             required : true
+        },
+        isMobile : {
+            type : Boolean,
+            required : true
         }
     });
 
@@ -56,9 +60,10 @@
             <base-day 
                 :lessonDay="lessonDay"
                 :today="props.today"
+                :isMobile="isMobile"
             >
             </base-day>
-            <hr v-if="i2 + 1 != week.length" class="sep">
+            <hr v-if="i2 + 1 != week.length && isMobile" class="sep">
         </div>
     </div>
 </base-box>
@@ -101,5 +106,29 @@
         background-color: transparent;
         width: calc(100% - 4rem);
         align-self: center;
+    }
+
+    @media (min-width: 992px) {
+
+        .week-box {
+            height: calc(100% - 12vh)
+        } 
+
+        .week-ctn {
+            grid-template-rows: none;
+            grid-template-columns: repeat(5, 1fr);
+            grid-column-gap: 2rem;
+            height: calc(50% - 2rem);
+            margin-bottom: 2rem;
+        }
+
+        .lesson-ctn {
+            flex-direction: column;
+            padding: 0; 
+        }
+        /*
+        .sep {
+            width: 4vw;
+        } */
     }
 </style>
