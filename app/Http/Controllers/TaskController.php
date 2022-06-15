@@ -32,7 +32,7 @@ class TaskController extends Controller
                 'dateStart' => $task['dateStart'],
                 'dateEnd' => $task['dateEnd'],
                 'hourStart' => (new Carbon($task['dateStart']))->format('H'),
-                'hourEnd' => (new Carbon($task['dateStart']))->format('H')
+                'hourEnd' => (new Carbon($task['dateEnd']))->format('H')
             ]);
         }
 

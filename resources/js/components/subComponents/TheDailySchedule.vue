@@ -1,9 +1,9 @@
 <script setup>
-import { chunkArrayInGroups, selectedDate } from "../../stores.js";
+import { chunkArrayInGroups, selectedDate, selectedTasks } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
-import BaseGrille from "./BaseGrille.vue";
+import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 
 //-------------------------------------------------------------------------------------------------
@@ -13,20 +13,17 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  today: {
-    type: String,
-    required: true,
-  },
   tasks: {
     type: Object,
   },
 });
-console.log(props.tasks);
 
-props.tasks.forEach((task) => {
-  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
-    selectedTasks.value.push(task);
-  }
+selectedTasks.value = []
+
+props.tasks.forEach(task => {
+  if( task.dateStart.substr(0,10) == selectedDate.value.fullDate){
+      selectedTasks.value.push(task)
+  }  
 });
 
 //-------------------------------------------------------------------------------------------------
@@ -43,19 +40,20 @@ props.days.forEach((d) => {
   }
 });
 
-//event listener for day choose
+//event listener on the chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
-  console.log(courseToShow);
 
+  // empty the selected tasks array
   selectedTasks.value = [];
-  props.tasks.forEach((task) => {
-    if (task.dateStart.substr(0, 10) == d.fullDate) {
-      selectedTasks.value.push(task);
-    }
+  // add tasks of the selected day to selectedTasks array
+  props.tasks.forEach(task => {
+    if( task.dateStart.substr(0,10) == d.fullDate){
+        selectedTasks.value.push(task)
+    }  
   });
 }
 
@@ -85,12 +83,13 @@ function isSelectedDate(day) {
 
 //add task on click
 const popUp = ref(false);
+
 function addTask() {
   popUp.value = true;
   console.log(document.getElementById("rect").classList.add("hidden"));
   return popUp;
 }
-function callback() {
+function closeTask() {
   popUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
   return popUp;
@@ -138,7 +137,9 @@ function callback() {
     <div id="separate">
       <hr />
     </div>
-    <!-- <base-grille :day="courseToShow"></base-grille> -->
+    <div class="grid-container">
+        <base-grid :courseToShow="courseToShow"></base-grid>
+    </div>
     <!-- <div class="grid">
       <div class="course">
         <h1>Cours</h1>
@@ -162,9 +163,7 @@ function callback() {
 
 
 <style scoped>
-.file {
-  z-index: 1;
-}
+
 .hidden {
   position: absolute;
   top: 0;
@@ -174,6 +173,12 @@ function callback() {
   opacity: 50%;
   z-index: 50;
 }
+#file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 #calendar {
   display: flex;
   flex-flow: row nowrap;
@@ -230,13 +235,7 @@ hr {
 .selected-day p {
   color: var(--orange);
 }
-.grid {
-  display: grid;
-  grid-template-columns: 70% 30%;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 5%;
-}
+
 h1 {
   margin-left: 1rem;
 }
@@ -262,5 +261,18 @@ h1 {
 }
 .ctn-popUp {
   flex-basis: 80%;
+}
+
+.grid-container {
+  width: 86vw;
+  height: 50vh;
+  -ms-overflow-style: none; /* for Internet Explorer, Edge */
+  scrollbar-width: none; /* for Firefox */
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+
+.grid-container::-webkit-scrollbar {
+    display: none; /* for Chrome, Safari, and Opera */
 }
 </style>

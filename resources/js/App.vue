@@ -47,7 +47,6 @@ async function logout() {
 * {
   margin: 0;
   padding: 0;
-
   font-family: 'Inter', sans-serif;
 }
 
@@ -118,6 +117,12 @@ p {
 @media (min-width: 576px) {
   p {
     font-size: .85rem;
+  }
+}
+
+@media (min-width: 992px) {
+  p {
+    font-size: .9rem;
   }
 }
 </style>
