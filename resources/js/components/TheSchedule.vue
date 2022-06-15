@@ -5,7 +5,7 @@ import { user, isActive } from "../stores.js";
 import TheWeeklySchedule from "./subComponents/TheWeeklySchedule.vue";
 import TheDailySchedule from "./subComponents/TheDailySchedule.vue";
 import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
-import BaseGrille from "./subComponents/BaseGrille.vue";
+import BaseGrille from "./subComponents/BaseGrid.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
 import TheHeaderDesktop from "./subComponents/TheHeaderDesktop.vue";
 import { useWindowSize } from 'vue-window-size';
@@ -23,12 +23,11 @@ const isMobile = ref();
 
 watchEffect(() => {
   if (width.value < 992) {
-    isMobile.value = true
+    isMobile.value = true;
   } else {
-    isMobile.value = false
+    isMobile.value = false;
   }
-})
-
+});
 </script>
 
 <template>
@@ -77,8 +76,6 @@ watchEffect(() => {
   height: 90vh;
   display: flex;
   justify-content: center;
-
-
 }
 
 @media (min-width: 992px) {

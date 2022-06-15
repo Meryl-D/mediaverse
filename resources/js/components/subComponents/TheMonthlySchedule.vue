@@ -9,6 +9,9 @@ import {
   selectedDate,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
+import BaseDropdown from "./BaseDropdown.vue";
+import BaseBackButton from "./BaseBackButton.vue";
+
 
 const props = defineProps({
   schedule: {
@@ -20,15 +23,11 @@ const props = defineProps({
     required: true,
   },
   today: {
-    type: String,
+    type: Object,
     required: true,
   },
-  daysInMonth: {
-    type: String,
-    required: true,
-  },
-  nextMonth: {
-    type: String,
+  tasks: {
+    type: Object,
     required: true,
   },
 });
@@ -59,9 +58,12 @@ function getDay(d) {
 }
 
 // get current month
-//const currentMonth = ref(selectedDate.value.monthNb);
-const currentMonth = ref("06");
-
+const currentMonth = ref(selectedDate.value.monthNb);
+function changeMonth(month) {
+  console.log(month);
+  selectedDate.value = month;
+  console.log(month);
+}
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
@@ -75,6 +77,7 @@ props.days.forEach((d) => {
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
+console.log(monthlySchedule);
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -93,20 +96,26 @@ if (firstDay.dayShort == "Sa") {
 if (firstDay.dayShort == "Di") {
   monthlySchedule.unshift("Lu", "Ma", "Me", "Je", "Ve", "Sa");
 }
-console.log(monthlySchedule);
 </script>
 
 
 <template>
   <div id="MonthlyCalendar">
-    <div class="month">
+    <base-back-button :lessonDay="props.schedule"></base-back-button>
+    <base-dropdown
+      :schedule="props.schedule"
+      @getMonth="changeMonth"
+    ></base-dropdown>
+    <section class="calendar">
       <div class="daysOfWeek">
-        <div class="days"><p>Lu</p></div>
+        <p>Lu</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Lu'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -116,20 +125,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Lu'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Ma</p>
+        <p>Ma</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ma'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -139,20 +151,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Ma'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Me</p>
+        <p>Me</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Me'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -162,20 +177,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Me'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Je</p>
+        <p>Je</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Je'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -185,20 +203,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Je'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Ve</p>
+        <p>Ve</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Ve'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -208,20 +229,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Ve'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Sa</p>
+        <p>Sa</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Sa'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -231,20 +255,23 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Sa'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
 
       <div class="daysOfWeek">
-        <p class="days">Di</p>
+        <p>Di</p>
+        <hr class="lineOrange" />
         <div v-for="day in monthlySchedule">
           <div v-if="day == 'Di'">
-            <p>
+            <p class="day">
               <strong>-</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
         <div
@@ -254,25 +281,29 @@ console.log(monthlySchedule);
           @click="getDay(day)"
         >
           <div v-if="day.dayShort == 'Di'">
-            <p>
+            <p class="day">
               <strong>{{ day.date }}</strong>
             </p>
+            <hr class="lineSpace" />
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="course month">
-      <p classe="choosenDay p bold">{{ currentDate }}</p>
-      <div class="course">
+    <hr />
+    <section class="agenda">
+      <div class="chosenDay p bold">
+        <p>{{ currentDate }}</p>
+      </div>
+      <div class="maxWidth">
         <div>
           <p>{{ courseToShow.timeStart }}</p>
           <p>{{ courseToShow.timeEnd }}</p>
         </div>
-        <base-course :lessonDay="courseToShow"></base-course>
+        <base-course :lessonDay="courseToShow" class="course"></base-course>
       </div>
-    </div>
-    <hr />
+      <hr />
+    </section>
   </div>
 </template>
 
@@ -282,28 +313,54 @@ console.log(monthlySchedule);
   align-content: center;
   justify-content: center;
 }
-.month {
+h1 {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.calendar {
   display: flex;
   align-content: center;
   justify-content: center;
 }
 .daysOfWeek {
-  border-bottom: 1em var(--orange);
+  /* border-bottom: 1em var(--orange); */
   text-align: center;
-  margin: 1rem;
+  /* margin: 1rem; */
   align-content: center;
 }
-.course {
-  flex-direction: column;
+.agenda {
+  display: flex;
   flex-wrap: wrap;
 }
-.choosenDay {
+.course {
+  flex-basis: 100%;
+}
+.chosenDay {
+  margin-top: 1rem;
   padding-left: 1rem;
+  flex-basis: 100%;
+  margin-bottom: 0;
 }
 .selected-day p {
   color: var(--orange);
 }
-.days {
-  border-bottom: 1em var(--orange);
+
+.day {
+  margin: 1rem;
+}
+.lineSpace {
+  margin: 0;
+  border-top: 0.2rem solid var(--green);
+}
+.lineOrange {
+  margin: 0;
+  border-top: 0.5rem solid var(--orange);
+}
+.time {
+  height: 500px;
+}
+.maxWidth {
+  flex-basis: 100%;
 }
 </style>

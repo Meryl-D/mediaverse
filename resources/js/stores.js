@@ -8,14 +8,16 @@ export const { value : user } = useLocalstorage('user', {
 });
 
 export const { value : isActive } = useLocalstorage('isActive', {
-    weekly : true,
-    monthly : false,
+    weekly : false,
+    monthly : true,
     daily : false
 })
 
 export const { value : selectedDate } = useLocalstorage('selectedDate', '')
 
 export const { value : selectedTasks } = useLocalstorage('selectedTasks', [])
+
+export const { value : tasksTmpl } = useLocalstorage('tasksTmpl', [])
 
 export function propExists(property, data) {
     return `${property}` in data;

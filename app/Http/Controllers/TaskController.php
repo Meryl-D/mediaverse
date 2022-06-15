@@ -32,7 +32,7 @@ class TaskController extends Controller
                 'dateStart' => $task['dateStart'],
                 'dateEnd' => $task['dateEnd'],
                 'hourStart' => (new Carbon($task['dateStart']))->format('H'),
-                'hourEnd' => (new Carbon($task['dateStart']))->format('H')
+                'hourEnd' => (new Carbon($task['dateEnd']))->format('H')
             ]);
         }
 
@@ -49,9 +49,10 @@ class TaskController extends Controller
     {
         $task = new Task([
             'name' => $request->input('name'),
-            'dateStart' => $request->input('dateStart'),
-            'dateEnd' => $request->input('dateEnd'),
+            'dateStart' => Carbon::parse($request->input('dateStart')),
+            'dateEnd' => Carbon::parse($request->input('dateEnd')),
             'description' => $request->input('description'),
+            'user_id'=> Auth::id()
         ]);
         $task->save();
 
