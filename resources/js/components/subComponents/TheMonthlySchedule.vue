@@ -13,6 +13,7 @@ import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
 
+
 const props = defineProps({
   schedule: {
     type: Object,
@@ -297,6 +298,10 @@ const CourseTab = courseToShow.value.courses;
           :lessonDay="courseToShow"
           class="course"
         ></base-course-time>
+        <div class="task">
+          <h1>Tâches</h1>
+          <the-tasks :day="courseToShow"></the-tasks>
+        </div>
       </div>
       <hr />
     </section>

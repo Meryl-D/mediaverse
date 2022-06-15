@@ -1,5 +1,10 @@
 <script setup>
-import { chunkArrayInGroups, selectedDate, selectedTasks, isMobile } from "../../stores.js";
+import {
+  chunkArrayInGroups,
+  selectedDate,
+  selectedTasks,
+  isMobile,
+} from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
@@ -7,7 +12,7 @@ import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
-import TheEditTask from './TheEditTask.vue';
+import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -103,23 +108,21 @@ function closeTask() {
 }
 //-------------------------------------------------------------------------------------
 
-const editPopUp = ref(false)
+const editPopUp = ref(false);
 
-const toEditTask = ref("") 
-function popUpEdit(task){
+const toEditTask = ref("");
+function popUpEdit(task) {
   editPopUp.value = true;
-  toEditTask.value = task
-  document.getElementById("rect").classList.add("hidden")
-  return editPopUp
+  toEditTask.value = task;
+  document.getElementById("rect").classList.add("hidden");
+  return editPopUp;
 }
 
 function closeEditTask() {
   editPopUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
-  return editPopUp
+  return editPopUp;
 }
-
-
 </script>
 
 <template>
@@ -133,13 +136,13 @@ function closeEditTask() {
       ></the-add-task>
     </div>
   </div>
-    <div id="container">
+  <div id="container">
     <div v-if="editPopUp" class="ctn-editPopUp">
       <the-edit-task
         @close="closeEditTask"
         class="popUpEdit"
         @add="closeEditTask"
-        :task = "toEditTask"
+        :task="toEditTask"
       ></the-edit-task>
     </div>
   </div>
@@ -178,26 +181,25 @@ function closeEditTask() {
       <hr />
     </div>
     <div class="grid-container">
-        <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
+      <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
     <!-- <div class="grid"> -->
-      <div class="course">
-        <h1>Cours</h1>
-        <base-course :lessonDay="courseToShow"> </base-course>
-      </div>
-      <!-- <div class="task">
-        <h1>Tâches</h1>
-        <the-tasks :day="courseToShow"></the-tasks> -->
-
-    <div class="icone">
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-      />
-      <span class="material-icons" @click="addTask()">add_circle</span>
+    <div class="course">
+      <h1>Cours</h1>
+      <base-course :lessonDay="courseToShow"> </base-course>
     </div>
-    <!-- </div>
-    </div> -->
+    <div class="task">
+      <h1>Tâches</h1>
+      <the-tasks :day="courseToShow"></the-tasks>
+
+      <div class="icone">
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+        />
+        <span class="material-icons" @click="addTask()">add_circle</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -304,7 +306,7 @@ h1 {
 .ctn-popUp {
   flex-basis: 90%;
 }
-.ctn-editPopUp{
+.ctn-editPopUp {
   flex-basis: 90%;
 }
 
@@ -321,7 +323,7 @@ h1 {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
-@media(min-width: 992px){
+@media (min-width: 992px) {
   #rect {
     width: 75%;
   }
