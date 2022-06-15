@@ -8,7 +8,7 @@ const props = defineProps({
     required: true,
     },
     today: {
-        type: String,
+        type: Object,
         required: true
     },
     isMobile: {

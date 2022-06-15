@@ -35,8 +35,8 @@ import BaseButton from './BaseButton.vue';
                 </router-link>
             </div>
             <div class="linkBox">
-                <router-link to="/profil">
-                    <p class="router">Profil</p>
+                <router-link to="/compte">
+                    <p class="router">Compte</p>
                 </router-link>
             </div>
             <div id="separate">

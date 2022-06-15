@@ -10,7 +10,7 @@
             required : true
         },
         today : {
-            type : String,
+            type : Object,
             required : true
         },
         nextMonday : {
