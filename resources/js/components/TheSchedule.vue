@@ -38,6 +38,7 @@ watchEffect(() => {
       :today="data.today"
       :nextMonday="data.nextMonday"
       :isMobile="isMobile"
+      :tasks="allTasks.data"
     ></the-weekly-schedule>
   </div>
 
@@ -65,16 +66,11 @@ watchEffect(() => {
   z-index: 1;
 }
 
-.weekly-box {
-  width: 100vw;
-  height: 90vh;
-  display: flex;
-  justify-content: center;
-}
-
 @media (min-width: 992px) {
   .weekly-box {
+    display: flex;
     height: 100vh;
+    flex-direction: column;
     align-items: center;
   }
 }

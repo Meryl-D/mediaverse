@@ -23,7 +23,7 @@ button {
   border: none;
   border-radius: var(--small-radius);
   box-shadow: var(--shadow);
-  padding: .3rem .6rem;
+  padding: .3rem .9rem;
 }
 
 button:hover, button:active {
