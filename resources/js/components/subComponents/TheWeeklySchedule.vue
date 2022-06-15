@@ -2,7 +2,7 @@
     import BaseDay from './BaseDay.vue'
     import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
-    import { chunkArrayInGroups } from '../../stores.js'
+    import { chunkArrayInGroups, isMobile } from '../../stores.js'
 
     const props = defineProps({
         schedule : {
@@ -50,50 +50,54 @@
 </script>
 
 <template>
-<header v-if="!isMobile" class="weekly-header">
-    <h1>Horaires et tâches</h1>
-    <h2>{{today.month}} {{today.year}}</h2>
-</header>
+<section class="weekly-schedule">
+    <header v-if="!isMobile" class="weekly-header">
+        <h1>Horaires et tâches</h1>
+        <h2>{{today.month}} {{today.year}}</h2>
+    </header>
 
-<main class="weekly-main">
-    <base-box class="week-box">
-        <div 
-            v-for="(week, i1) in weeksSchedule" 
-            :key="week" class="week-ctn" 
-            :class="{ 'curr-week' : i1 == currWeekIndex}"
-        >
+    <main class="weekly-main">
+        <base-box class="week-box">
             <div 
-                v-for="(lessonDay, i2) in week" 
-                :key="lessonDay" 
-                class="day-ctn"
+                v-for="(week, i1) in weeksSchedule" 
+                :key="week" class="week-ctn" 
+                :class="{ 'curr-week' : i1 == currWeekIndex}"
             >
-                <base-day 
-                    :lessonDay="lessonDay"
-                    :today="props.today"
-                    :isMobile="isMobile"
-                    :tasks="props.tasks"
+                <div 
+                    v-for="(lessonDay, i2) in week" 
+                    :key="lessonDay" 
+                    class="day-ctn"
                 >
-                </base-day>
-                <hr v-if="i2 + 1 != week.length && isMobile" class="sep">
+                    <base-day 
+                        :lessonDay="lessonDay"
+                        :today="props.today"
+                        :isMobile="isMobile"
+                        :tasks="props.tasks"
+                    >
+                    </base-day>
+                    <hr v-if="i2 + 1 != week.length && isMobile" class="sep">
+                </div>
             </div>
-        </div>
-    </base-box>
-</main>
+        </base-box>
+    </main>
+</section>
 </template>
 
 <style scoped>
-    /* hide scrollbar but allow scrolling */
 
-    .weekly-header {
-        height: 15vh;
-        width: 90%;
+    .weekly-schedule {
         display: flex;
-        align-items: basline;
-        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
     }
 
     .weekly-header {
-        margin-top: 4vh;
+        padding-top: 2.5rem;
+        height: 10vh;
+        width: 90%;
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
     }
 
     .weekly-header h2 {
@@ -102,7 +106,7 @@
 
     .weekly-main {
         width: 100%;
-        height: 85vh;
+        height: 90vh;
         display: flex;
         justify-content: center;
     }

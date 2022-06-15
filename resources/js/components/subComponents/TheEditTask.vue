@@ -4,30 +4,43 @@ import { watch, ref, onMounted, watchEffect } from "vue";
 import { axiosClient } from "../../utils/axios.js";
 import router from "../../router/index.js";
 
+
+const props = defineProps({
+  task: {
+    type: Object,
+    required: true,
+  }
+});
+
+console.log(props.task)
 const emit = defineEmits(["close", "add"]);
 
-const nameTask = ref("");
-const dateStartTask = ref("");
-const dateEndTask = ref("");
-const categorieTask = ref("");
-const descriptionTask = ref("");
+
+const nameTask = ref(props.task.name);
+const dateStartTask = ref(new Date(props.task.dateStart).toISOString().substring(0, new Date(props.task.dateStart).toISOString().length - 1));
+const dateEndTask = ref(new Date(props.task.dateEnd).toISOString().substring(0, new Date(props.task.dateEnd).toISOString().length - 1));
+const descriptionTask = ref(props.task.description);
+
 
 const errorMsg = ref("");
-async function addTask() {
-  let newTask = {
+
+async function editTask() {
+  let task = {
     name: nameTask.value,
     dateStart: dateStartTask.value,
     dateEnd: dateEndTask.value,
     description: descriptionTask.value,
+    id: props.task.id
   };
-  console.log(newTask);
-  await axiosClient.post("api/tasks/add", newTask);
+  console.log("tâche modifiée",task);
+  const url = "api/tasks/update";
+  await axiosClient.post(url, task);
 }
 
 async function submitForm() {
   try {
-    await addTask();
-    emit("add");
+    await editTask();
+    // emit("add");
     // router.push({
     //   name: "Horaires",
     // });
@@ -35,11 +48,12 @@ async function submitForm() {
     // errorMsg.value = err.response.data.error;
   }
 }
+console.log(props.task)
 </script>
 <template>
   <div class="file">
     <div class="header">
-      <h2>Nouvelle tâche</h2>
+      <h2>Tâche</h2>
       <div class="icone">
         <link
           rel="stylesheet"
@@ -56,7 +70,7 @@ async function submitForm() {
           v-model="nameTask"
           type="text"
           class="basic name"
-          placeholder="Nom"
+          
         />
         <div id="time">
           <div class="dateStart">
@@ -91,7 +105,7 @@ async function submitForm() {
           {{ errorMsg }}
         </p>
         <div id="btn-add">
-          <base-button type="submit" class="btn">Ajouter</base-button>
+          <base-button type="submit" class="btn">Modifier</base-button>
         </div>
       </div>
     </form>

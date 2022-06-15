@@ -1,5 +1,5 @@
 <script setup>
-import { propExists, selectedDate, isActive } from '../../stores.js'
+import { propExists, selectedDate, isActive, isMobile } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -242,6 +242,10 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
+        }
+
+        .circles {
+            flex-wrap: nowrap;
         }
 
         .course-circle, .task-circle {

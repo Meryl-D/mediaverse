@@ -39,30 +39,21 @@ import BaseButton from './BaseButton.vue';
                     <p class="router">Compte</p>
                 </router-link>
             </div>
-            <div id="separate">
-                <hr class="ligne2" />
-                <router-link to="/login">
-                    <base-button class="bouton">
-                        Déconnexion
-                    </base-button>
-                </router-link>
-            </div>
+        </div>
+        <div id="separate">
+            <hr class="ligne2" />
+            <router-link to="/login">
+                <base-button class="bouton">
+                    Déconnexion
+                </base-button>
+            </router-link>
         </div>
     </div>
 </template>
 
 <style scoped>
 .bouton {
-
-    width: 230%;
     cursor: pointer;
-}
-
-p {
-    line-height: 3em;
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
 }
 
 p:hover {
@@ -70,18 +61,12 @@ p:hover {
     color: var(--orange);
 }
 
-.liens {
-   
-    float: left;
-
-}
-
-.router {
-    margin-left: 5%;
+.liens { 
+    flex: 1;
+    padding-top: 5vh;
 }
 
 a {
-    color: black;
     text-decoration: none;
     font-weight: bold;
 }
@@ -92,54 +77,36 @@ a {
 }
 
 .linkBox {
-    flex-direction: column;
-    text-align: left;
-    padding: 0.3em 0em;
-    margin: 1em 5%;
-    background-color: var(--beige);
-    border-radius: 0.6rem;
-    margin-bottom: 0%;
-    width: 180%;
-    height: 60px;
-    margin-left: 10%;
+    padding: .7rem;
+    margin-bottom: 2vh;
+    background-color: var(--beige-transp);
+    border-radius: var(--small-radius);
     cursor: pointer;
 
 }
 
-#separate {
-    display: grid;
-    padding-left: 20px;
-    padding-right: 15px;
-    margin-top: 30vh;
-}
-
 .ligne2 {
-
+    margin-bottom: 5vh;
     height: 0;
-    width: 230%;
     border: none;
-    border-top: 1px solid gray;
+    border-top: 2px solid #b8b8b8;
 
 }
 
 .titre {
-    margin-top: 20%;
-    text-align: center;
-    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
 }
 
 
 .ligne1 {
-    padding-top: 50%;
-    margin-left: 20px;
-    margin-right: 15px;
+    margin-top: 5vh;
     height: 0;
-    width: 85%;
+    width: 100%;
     border: none;
-    border-top: 1px solid gray;
-
-
+    border-top: 2px solid #b8b8b8;
 }
 
 </style>
