@@ -93,7 +93,7 @@
 
     .weekly-header {
         padding-top: 2.5rem;
-        height: 10vh;
+        /* height: 10vh; */
         width: 90%;
         display: flex;
         align-items: baseline;
@@ -165,9 +165,6 @@
             flex-direction: column;
             padding: 0; 
         }
-        /*
-        .sep {
-            width: 4vw;
-        } */
+
     }
 </style>

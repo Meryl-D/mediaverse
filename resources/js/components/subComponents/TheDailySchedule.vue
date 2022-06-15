@@ -11,7 +11,7 @@ import TheEditTask from './TheEditTask.vue';
 
 //-------------------------------------------------------------------------------------------------
 
-console.log(isMobile.value)
+//console.log(isMobile.value)
 
 const props = defineProps({
   days: {
@@ -60,6 +60,7 @@ function getDay(d) {
       selectedTasks.value.push(task);
     }
   });
+  //console.log(selectedTasks.value)
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -143,7 +144,7 @@ function closeEditTask() {
     </div>
   </div>
   <div id="file">
-    <section>
+    <section class="daily-nav">
       <base-back-button></base-back-button>
       <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </section>
@@ -308,7 +309,7 @@ h1 {
 }
 
 .grid-container {
-  width: 86vw;
+  width: 90%;
   height: 50vh;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
@@ -320,7 +321,21 @@ h1 {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
-@media(max-width: 992px){
+@media(min-width: 992px){
+  #rect {
+    width: 75%;
+  }
 
+  #container {
+    width: 75%;
+  }
+
+  .daily-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 2rem 0;
+    align-items: center;
+  }
 }
 </style>

@@ -60,23 +60,24 @@ const allTasks = await axiosClient.get("api/tasks", {
 </template>
 
 <style scoped>
-
-#schedule-view {
+@media(min-width: 992px){
+  #schedule-view {
   display: flex;
 }
-/* .header-mobile {
+}
+
+.header-mobile {
   height: 10vh;
   position: relative;
   z-index: 1;
-} */
+}
 
 .header-desktop {
   display: flex;
   flex-direction: column;
   padding: 2.5rem;
-  width: 30vw;
-  max-width: 250px;
-  height: calc(100vh - 5rem);
+  width: 25vw;
+  min-height: 100vh;
   position: -webkit-sticky;
   position: sticky;
   background-color: var(--white);
@@ -94,7 +95,7 @@ const allTasks = await axiosClient.get("api/tasks", {
 @media (min-width: 992px) {
 
   #schedule{
-    flex: 1;
+    width: 75vw;
   }
   /* .weekly-box {
     display: flex;

@@ -52,6 +52,10 @@ import BaseButton from './BaseButton.vue';
 </template>
 
 <style scoped>
+
+.router {
+    margin: 0;
+}
 .bouton {
     cursor: pointer;
 }
