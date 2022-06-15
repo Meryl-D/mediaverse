@@ -8,7 +8,7 @@ import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
 import BaseGrille from "./subComponents/BaseGrid.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
 import TheHeaderDesktop from "./subComponents/TheHeaderDesktop.vue";
-import { useWindowSize } from 'vue-window-size';
+import { useWindowSize } from "vue-window-size";
 
 const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
@@ -18,7 +18,7 @@ const allTasks = await axiosClient.get("api/tasks", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
-const { width, height } = useWindowSize()
+const { width, height } = useWindowSize();
 const isMobile = ref();
 
 watchEffect(() => {
@@ -31,37 +31,46 @@ watchEffect(() => {
 </script>
 
 <template>
-<div>
-    <the-header-mobile v-if="isMobile" class="header-mobile"></the-header-mobile>
-    <the-header-desktop v-if="!isMobile" class="header-desktop"></the-header-desktop>
+  <div>
+    <the-header-mobile
+      v-if="isMobile"
+      class="header-mobile"
+    ></the-header-mobile>
+    <the-header-desktop
+      v-if="!isMobile"
+      class="header-desktop"
+    ></the-header-desktop>
 
-  <div class="weekly-box horaire" v-if="isActive.weekly">
-    <the-weekly-schedule
-      :schedule="data.weekDaysSchedule"
-      :today="data.today"
-      :nextMonday="data.nextMonday"
-      :isMobile="isMobile"
-      :tasks="allTasks.data"
-    ></the-weekly-schedule>
-  </div>
+    <div class="weekly-box horaire" v-if="isActive.weekly">
+      <the-weekly-schedule
+        :schedule="data.weekDaysSchedule"
+        :today="data.today"
+        :nextMonday="data.nextMonday"
+        :isMobile="isMobile"
+        :tasks="allTasks.data"
+      ></the-weekly-schedule>
+    </div>
 
     <div class="horaire">
       <the-daily-schedule
         v-if="isActive.daily"
         :days="data.allDaysSchedule"
-        :today="data.today"
-        :tasks="allTasks.data">
+        :tasks="allTasks.data"
+      >
       </the-daily-schedule>
     </div>
 
-  <the-monthly-schedule
-    class="monthly-schedule"
-    v-if="isActive.monthly"
-    :schedule="data.allDaysSchedule"
-    :days="data.allDaysSchedule"
-    :tasks="allTasks.data"
-  >
-  </the-monthly-schedule>
+    <div class="horaire">
+      <the-monthly-schedule
+        class="monthly-schedule horaire"
+        v-if="isActive.monthly"
+        :schedule="data.allDaysSchedule"
+        :days="data.allDaysSchedule"
+        :tasks="allTasks.data"
+      >
+      </the-monthly-schedule>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -81,7 +90,6 @@ watchEffect(() => {
   transform: none;
   visibility: visible;
   /* z-index: 1; */
-
 }
 
 /* .weekly-box {
@@ -107,7 +115,6 @@ watchEffect(() => {
     padding-top: 200px;
     padding-right: 80px;
     /* z-index: 1; */
-
   }
 }
 </style>

@@ -1,11 +1,5 @@
 <script setup>
-const props = defineProps({
-  type: {
-    type: String,
-    default: "validate",
-    required: true,
-  },
-});
+
 //console.log(props.type);
 </script>
 
