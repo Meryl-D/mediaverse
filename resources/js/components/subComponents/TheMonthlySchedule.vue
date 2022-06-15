@@ -11,6 +11,7 @@ import {
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
+import switchViewButton from "./switchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -44,7 +45,7 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
-//event listener for chosen day 
+//event listener for chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -58,17 +59,16 @@ const currentMonth = ref(selectedDate.value.monthNb);
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
-const monthlySchedule=[];
+const monthlySchedule = [];
 props.days.forEach((d) => {
   if (currentMonth.value == d.monthNb) {
     monthlySchedule.push(d);
   }
 });
-console.log(monthlySchedule);
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
-console.log(monthlySchedule);
+
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -87,14 +87,20 @@ if (firstDay.dayShort == "Sa") {
 if (firstDay.dayShort == "Di") {
   monthlySchedule.unshift("Lu", "Ma", "Me", "Je", "Ve", "Sa");
 }
+console.log(courseToShow);
+const CourseTab = courseToShow.value.courses;
+CourseTab.forEach(e => {
+  console.log(e)
+});
+console.log(CourseTab);
 </script>
 
 
 <template>
   <div id="MonthlyCalendar">
     <section>
-    <base-back-button ></base-back-button>
-    <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+      <base-back-button></base-back-button>
+      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </section>
     <section class="calendar">
       <div class="daysOfWeek">
@@ -285,12 +291,20 @@ if (firstDay.dayShort == "Di") {
       <div class="chosenDay p bold">
         <p>{{ currentDate }}</p>
       </div>
-      <div class="maxWidth">
-        <div>
-          <p>{{ courseToShow.timeStart }}</p>
-          <p>{{ courseToShow.timeEnd }}</p>
+      <div>
+        <!-- <div v-for="course in CourseTab" :key="course">
+          <p>{{ course.timeStart }}</p>
+          <p>{{ course.timeEnd }}</p>
+        </div> -->
+        <div class="maxWidth">
+          <div v-for="course in CourseTab" :key="course" class="courseTC">
+            <div class="timeStartEnd">
+              <p>{{ course.timeStart }}</p>
+              <p>{{ course.timeEnd }}</p>
+            </div>
+            <base-course :lesson="course" class="course"></base-course>
+          </div>
         </div>
-        <base-course :lessonDay="courseToShow" class="course"></base-course>
       </div>
       <hr />
     </section>
@@ -298,7 +312,6 @@ if (firstDay.dayShort == "Di") {
 </template>
 
 <style scoped>
-
 #MonthlyCalendar {
   background-color: var(--white);
   align-content: center;

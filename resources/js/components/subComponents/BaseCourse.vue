@@ -6,17 +6,25 @@ import BaseBox from "./BaseBox.vue";
 const props = defineProps({
   lessonDay: {
     type: Object,
-    required: true,
+    required: false,
+  },
+  lesson: {
+    type: Object,
+    required: false,
   },
 });
 //console.log(props.lessonDay);
+console.log(typeof(lessonDay))
 
 const courseExists = ref("");
 const holidayExists = ref("");
-
+console.log("dans base course ", props.lessonDay);
 function check() {
+  if(typeof(props.lessonDay) != "undefined"){
   courseExists.value = propExists("courses", props.lessonDay);
   holidayExists.value = propExists("holiday", props.lessonDay);
+  }
+
 }
 
 check();
@@ -26,7 +34,7 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div >
+  <div>
     <div v-if="courseExists" class="displayCourse">
       <div
         v-for="course in props.lessonDay.courses"
@@ -53,6 +61,15 @@ watchEffect(() => {
         </p>
       </div>
     </div>
+    <div v-if="(typeof(props.lesson) != undefined)"><div class="border"></div>
+        <div class="DailyCourseBox">
+          <p class="p bold course-name">
+            {{ props.lesson.name }}
+          </p>
+          <p class="p course-room">
+            {{ props.lesson.room }}
+          </p>
+        </div></div>
   </div>
 </template>
 
@@ -74,9 +91,8 @@ div {
   background-color: #e3cec2;
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
-.displayCourse{
+.displayCourse {
   flex-direction: column;
   width: 100%;
 }
-
 </style>
