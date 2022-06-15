@@ -21,20 +21,8 @@ onMounted(() => {
   watchEffect(() => {
       props.courseToShow
 
-      const tasks = tasksOfDay.value.taskRefs;
-
       for (let i = 0; i < gridLines.value.length; i++) {
         gridLines.value[i].style.gridRowStart = i + 1
-      }
-
-      if (tasks.length) {
-        for (let i = 0; i < tasks.length; i++) {
-          const taskHourStart = selectedTasks.value[i].hourStart
-          const taskHourEnd = selectedTasks.value[i].hourEnd
-          console.log(taskHourEnd)
-          tasks[i].style.gridRowStart = parseInt(taskHourStart) + 1
-          tasks[i].style.gridRowEnd = parseInt(taskHourEnd) + 1
-        }
       }
   })
 });

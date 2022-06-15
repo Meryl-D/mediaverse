@@ -244,6 +244,10 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
             justify-content: space-between;
         }
 
+        .circles {
+            flex-wrap: nowrap;
+        }
+
         .course-circle, .task-circle {
             margin-bottom: 0;
             width: 1rem;
@@ -258,6 +262,7 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
         .course-ctn {
             flex-direction: column;
             padding: 0 0 1rem 0;
+            line-height: 1.4;
         }
 
         .course-room {

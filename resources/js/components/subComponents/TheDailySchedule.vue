@@ -7,10 +7,11 @@ import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
+import TheEditTask from './TheEditTask.vue';
 
 //-------------------------------------------------------------------------------------------------
 
-console.log(isMobile.value)
+//console.log(isMobile.value)
 
 const props = defineProps({
   days: {
@@ -59,6 +60,7 @@ function getDay(d) {
       selectedTasks.value.push(task);
     }
   });
+  //console.log(selectedTasks.value)
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -142,7 +144,7 @@ function closeEditTask() {
     </div>
   </div>
   <div id="file">
-    <section>
+    <section class="daily-nav">
       <base-back-button></base-back-button>
       <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </section>
@@ -178,12 +180,12 @@ function closeEditTask() {
     <div class="grid-container">
         <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
-    <!-- <div class="grid">
+    <!-- <div class="grid"> -->
       <div class="course">
         <h1>Cours</h1>
         <base-course :lessonDay="courseToShow"> </base-course>
       </div>
-      <div class="task">
+      <!-- <div class="task">
         <h1>Tâches</h1>
         <the-tasks :day="courseToShow"></the-tasks> -->
 
@@ -307,7 +309,7 @@ h1 {
 }
 
 .grid-container {
-  width: 86vw;
+  width: 90%;
   height: 50vh;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
@@ -319,7 +321,21 @@ h1 {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
-@media(max-width: 992px){
+@media(min-width: 992px){
+  #rect {
+    width: 75%;
+  }
 
+  #container {
+    width: 75%;
+  }
+
+  .daily-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 2rem 0;
+    align-items: center;
+  }
 }
 </style>

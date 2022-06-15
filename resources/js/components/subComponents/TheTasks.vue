@@ -15,17 +15,20 @@ const emit = defineEmits(["editTask"])
 
 const taskRefs = ref([]);
 
-defineExpose({
-  taskRefs,
-});
-
-onMounted(() => {
-  //console.log(selectedTasks.value)
   watchEffect(() => {
-    // tasksTmpl.value = taskRefs
-    // console.log(taskRefs.value)
-  });
-});
+  console.log(taskRefs.value)
+  // if (taskRefs.value) {
+  for (let i = 0; i < taskRefs.value.length; i++) {
+    const taskHourStart = selectedTasks.value[i].hourStart
+    const taskHourEnd = selectedTasks.value[i].hourEnd
+    console.log(taskHourEnd)
+    taskRefs.value[i].style.gridRowStart = parseInt(taskHourStart) + 1
+    taskRefs.value[i].style.gridRowEnd = parseInt(taskHourEnd) + 1
+  }
+  // }
+
+})
+
 </script>
 <template>
   <div
