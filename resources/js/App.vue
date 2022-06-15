@@ -73,6 +73,8 @@ async function logout() {
 
 #organiz {
   background-color: var(--white);
+  width: 100vw;
+  height: 100vh;
 }
 
 h1 {

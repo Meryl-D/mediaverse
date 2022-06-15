@@ -15,7 +15,7 @@ const props = defineProps({
   },
   tasks: {
     type: Object,
-  }
+  },
 });
 
 selectedTasks.value = []
@@ -86,19 +86,25 @@ const popUp = ref(false);
 
 function addTask() {
   popUp.value = true;
-  console.log(popUp.value);
+  console.log(document.getElementById("rect").classList.add("hidden"));
   return popUp;
 }
 function closeTask() {
   popUp.value = false;
+  document.getElementById("rect").classList.remove("hidden");
   return popUp;
 }
 </script>
 
 <template>
+  <div id="rect"></div>
   <div id="container">
     <div v-if="popUp" class="ctn-popUp">
-      <the-add-task @close="closeTask" class="popUp"></the-add-task>
+      <the-add-task
+        @close="callback"
+        class="popUp"
+        @add="callback"
+      ></the-add-task>
     </div>
   </div>
   <div id="file">
@@ -141,24 +147,32 @@ function closeTask() {
       </div>
       <div class="task">
         <h1>Tâches</h1>
-        <the-tasks :day="courseToShow"></the-tasks>
+        <the-tasks :day="courseToShow"></the-tasks> -->
 
-        
-
-        <div class="icone">
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-          />
-          <span class="material-icons" @click="addTask()">add_circle</span>
-        </div>
-      </div>
+    <div class="icone">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+      />
+      <span class="material-icons" @click="addTask()">add_circle</span>
+    </div>
+    <!-- </div>
     </div> -->
   </div>
 </template>
 
 
 <style scoped>
+
+.hidden {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 50%;
+  z-index: 50;
+}
 #file {
   display: flex;
   flex-direction: column;
@@ -203,7 +217,7 @@ function closeTask() {
   color: var(--orange);
 }
 .choosenDay {
-  text-align: center; 
+  text-align: center;
   margin: 0.6rem 0;
 }
 #separate {
@@ -236,16 +250,16 @@ h1 {
   cursor: pointer;
 }
 .popUp {
-   width: 100%;
+  width: 100%;
 }
-#container{
+#container {
   display: flex;
   position: absolute;
   width: 100%;
   justify-content: center;
   z-index: 100;
 }
-.ctn-popUp{
+.ctn-popUp {
   flex-basis: 80%;
 }
 

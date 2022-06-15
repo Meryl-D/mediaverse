@@ -9,7 +9,9 @@ import {
   selectedDate,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
-import  BaseDropdown  from "./BaseDropdown.vue";
+import BaseDropdown from "./BaseDropdown.vue";
+import BaseBackButton from "./BaseBackButton.vue";
+
 
 const props = defineProps({
   schedule: {
@@ -57,8 +59,11 @@ function getDay(d) {
 
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
-
-
+function changeMonth(month) {
+  console.log(month);
+  selectedDate.value = month;
+  console.log(month);
+}
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
@@ -72,6 +77,7 @@ props.days.forEach((d) => {
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
+console.log(monthlySchedule);
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -95,7 +101,11 @@ if (firstDay.dayShort == "Di") {
 
 <template>
   <div id="MonthlyCalendar">
-    <base-dropdown :schedule="props.schedule"></base-dropdown>
+    <base-back-button :lessonDay="props.schedule"></base-back-button>
+    <base-dropdown
+      :schedule="props.schedule"
+      @getMonth="changeMonth"
+    ></base-dropdown>
     <section class="calendar">
       <div class="daysOfWeek">
         <p>Lu</p>
@@ -280,19 +290,20 @@ if (firstDay.dayShort == "Di") {
       </div>
     </section>
 
-    <div class="agenda">
+    <hr />
+    <section class="agenda">
       <div class="chosenDay p bold">
         <p>{{ currentDate }}</p>
       </div>
-      <div>
+      <div class="maxWidth">
         <div>
           <p>{{ courseToShow.timeStart }}</p>
           <p>{{ courseToShow.timeEnd }}</p>
         </div>
         <base-course :lessonDay="courseToShow" class="course"></base-course>
       </div>
-    </div>
-    <hr />
+      <hr />
+    </section>
   </div>
 </template>
 
@@ -323,13 +334,13 @@ h1 {
   flex-wrap: wrap;
 }
 .course {
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-basis: 100%;
 }
 .chosenDay {
   margin-top: 1rem;
   padding-left: 1rem;
   flex-basis: 100%;
+  margin-bottom: 0;
 }
 .selected-day p {
   color: var(--orange);
@@ -340,15 +351,16 @@ h1 {
 }
 .lineSpace {
   margin: 0;
-  height: 0;
-  border-top: 1px solid var(--green);
+  border-top: 0.2rem solid var(--green);
 }
 .lineOrange {
   margin: 0;
-  height: 0;
-  border-top: 2px solid var(--orange);
+  border-top: 0.5rem solid var(--orange);
 }
 .time {
   height: 500px;
+}
+.maxWidth {
+  flex-basis: 100%;
 }
 </style>
