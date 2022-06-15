@@ -26,8 +26,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div>
-    <div v-if="courseExists">
+  <div >
+    <div v-if="courseExists" class="displayCourse">
       <div
         v-for="course in props.lessonDay.courses"
         :key="course.name"
@@ -59,6 +59,7 @@ watchEffect(() => {
 <style scoped>
 div {
   display: flex;
+  width: 100%;
 }
 .DailyCourseBox {
   flex-direction: column;
@@ -73,4 +74,9 @@ div {
   background-color: #e3cec2;
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
+.displayCourse{
+  flex-direction: column;
+  width: 100%;
+}
+
 </style>

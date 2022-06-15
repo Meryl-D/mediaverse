@@ -5,7 +5,8 @@ import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
-import TheEditTask from "./TheEditTask.vue";
+import BaseBackButton from "./BaseBackButton.vue";
+import switchViewButton from "./switchViewButton.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -21,12 +22,12 @@ const props = defineProps({
   },
 });
 
-selectedTasks.value = []
+selectedTasks.value = [];
 
-props.tasks.forEach(task => {
-  if( task.dateStart.substr(0,10) == selectedDate.value.fullDate){
-      selectedTasks.value.push(task)
-  }  
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
+  }
 });
 
 //-------------------------------------------------------------------------------------------------
@@ -53,10 +54,10 @@ function getDay(d) {
   // empty the selected tasks array
   selectedTasks.value = [];
   // add tasks of the selected day to selectedTasks array
-  props.tasks.forEach(task => {
-    if( task.dateStart.substr(0,10) == d.fullDate){
-        selectedTasks.value.push(task)
-    }  
+  props.tasks.forEach((task) => {
+    if (task.dateStart.substr(0, 10) == d.fullDate) {
+      selectedTasks.value.push(task);
+    }
   });
 }
 
@@ -141,6 +142,10 @@ function closeEditTask() {
     </div>
   </div>
   <div id="file">
+    <section>
+      <base-back-button></base-back-button>
+      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+    </section>
     <div id="calendar">
       <div
         v-for="(group, index) in weeksSchedule"
@@ -196,7 +201,6 @@ function closeEditTask() {
 
 
 <style scoped>
-
 .hidden {
   position: absolute;
   top: 0;
@@ -312,7 +316,7 @@ h1 {
 }
 
 .grid-container::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, and Opera */
+  display: none; /* for Chrome, Safari, and Opera */
 }
 
 @media(max-width: 992px){

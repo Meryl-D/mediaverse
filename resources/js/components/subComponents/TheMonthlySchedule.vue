@@ -9,7 +9,8 @@ import {
   selectedDate,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
-import  BaseDropdown  from "./BaseDropdown.vue";
+import BaseDropdown from "./BaseDropdown.vue";
+import BaseBackButton from "./BaseBackButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -17,10 +18,6 @@ const props = defineProps({
     required: true,
   },
   days: {
-    type: Object,
-    required: true,
-  },
-  today: {
     type: Object,
     required: true,
   },
@@ -47,7 +44,7 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
-//event listener for day choose
+//event listener for chosen day 
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -58,20 +55,20 @@ function getDay(d) {
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
 
-
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
-
-let monthlySchedule = [];
+const monthlySchedule=[];
 props.days.forEach((d) => {
   if (currentMonth.value == d.monthNb) {
     monthlySchedule.push(d);
   }
 });
+console.log(monthlySchedule);
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
+console.log(monthlySchedule);
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -95,7 +92,10 @@ if (firstDay.dayShort == "Di") {
 
 <template>
   <div id="MonthlyCalendar">
-    <base-dropdown :schedule="props.schedule"></base-dropdown>
+    <section>
+    <base-back-button ></base-back-button>
+    <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+    </section>
     <section class="calendar">
       <div class="daysOfWeek">
         <p>Lu</p>
@@ -280,23 +280,25 @@ if (firstDay.dayShort == "Di") {
       </div>
     </section>
 
-    <div class="agenda">
+    <hr />
+    <section class="agenda">
       <div class="chosenDay p bold">
         <p>{{ currentDate }}</p>
       </div>
-      <div>
+      <div class="maxWidth">
         <div>
           <p>{{ courseToShow.timeStart }}</p>
           <p>{{ courseToShow.timeEnd }}</p>
         </div>
         <base-course :lessonDay="courseToShow" class="course"></base-course>
       </div>
-    </div>
-    <hr />
+      <hr />
+    </section>
   </div>
 </template>
 
 <style scoped>
+
 #MonthlyCalendar {
   background-color: var(--white);
   align-content: center;
@@ -323,13 +325,13 @@ h1 {
   flex-wrap: wrap;
 }
 .course {
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-basis: 100%;
 }
 .chosenDay {
   margin-top: 1rem;
   padding-left: 1rem;
   flex-basis: 100%;
+  margin-bottom: 0;
 }
 .selected-day p {
   color: var(--orange);
@@ -340,15 +342,16 @@ h1 {
 }
 .lineSpace {
   margin: 0;
-  height: 0;
-  border-top: 1px solid var(--green);
+  border-top: 0.1rem solid var(--green);
 }
 .lineOrange {
   margin: 0;
-  height: 0;
-  border-top: 2px solid var(--orange);
+  border-top: 0.2rem solid var(--orange);
 }
 .time {
   height: 500px;
+}
+.maxWidth {
+  flex-basis: 100%;
 }
 </style>
