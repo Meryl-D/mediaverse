@@ -35,5 +35,8 @@
 
     .login-box {
         padding: 2rem;
+        max-width: 600px;
+        border-radius: var(--big-radius);
+        box-shadow: var(--shadow);
     }
 </style>
