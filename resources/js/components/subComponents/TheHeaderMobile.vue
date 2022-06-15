@@ -1,17 +1,7 @@
 <script setup>
 import { ref } from 'vue'
+import BaseButton from './BaseButton.vue';
 
-// function animationStart() {
-
-//   document.querySelector('div').css("opacity", 0)
-//   // document.querySelector('.menu').addClass("fond")
-// }
-
-// function animationEnd() {
-//   document.querySelector('div').css("opacity", 1)
-//   // document.querySelector('.menu').removeClass("fond")
-
-// }
 
 
 const isActive = ref(false);
@@ -23,17 +13,13 @@ function menu() {
 
 }
 
-
-
-
-
 </script>
 
 <template>
   <div>
 
     <div>
-      <div :class="!isActive ? 'active' : ''" class="menuBurger" @click="menu(); animationStart()">
+      <div :class="!isActive ? 'active' : ''" class="menuBurger" @click="menu();">
         <span class="material-icons">menu</span>
         <span>
           <link
@@ -44,7 +30,7 @@ function menu() {
 
     <div :class="isActive ? 'shadow' : ''" class="fond"></div>
 
-    <div :class="isActive ? 'active' : ''" class="menu" @click="menu(); animationEnd()">
+    <div :class="isActive ? 'active' : ''" class="menu" @click="menu();">
       <div>
         <div>
           <span class="material-icons close">close</span>
@@ -81,16 +67,14 @@ function menu() {
           </div>
           <div id="separate">
             <hr />
-            <div></div>
-            <p class="routerLogout">
-            <div class="deconnexion">
-              <router-link to="/logout">Déconnexion</router-link>
-            </div>
-            </p>
+            <router-link to="/login">
+              <base-button class="bouton">
+                Déconnexion
+              </base-button>
+            </router-link>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -98,6 +82,10 @@ function menu() {
 <style scoped>
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.bouton {
+
+    width: 100%;
+}
 
 p {
   line-height: 3em;
@@ -110,7 +98,7 @@ p {
   transition: all 0.5s;
   -webkit-transition: all 0.25s;
   position: absolute;
-  
+
 }
 
 .close {
@@ -147,9 +135,9 @@ a {
   flex-direction: column;
   text-align: left;
   padding: 0.3em 0em 0 0em;
-  margin: 1em 5% 1em 5%;
+  margin: 1em 5%;
   background-color: var(--beige);
-  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
+  border-radius: 0.6rem;
   margin-bottom: 0%;
 
 }
@@ -158,20 +146,20 @@ a {
   width: 92vw;
   height: 100vh;
   background-color: #FFFCFA;
-
-  /* transition: margin-right 4s; */
+  top: 0;
   position: absolute;
   left: -100%;
   transition: 0.5s;
-  
- 
+
+
 }
 
 .menu.active {
   /* filter: drop-shadow(41px 0px 0px rgba(0, 0, 0, 0.5)); */
+  top: 0;
   left: 0;
   position: absolute;
-  
+
 }
 
 .fond.shadow {
@@ -184,8 +172,8 @@ a {
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.5s;
 
-  
-  
+
+
 
 }
 
@@ -193,17 +181,17 @@ a {
   display: grid;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 50%;
+  margin-top: 60%;
 }
 
 hr {
   height: 0;
   border: none;
-  border-top: 2px solid #EFE4DD;
+  border-top: 1px solid gray;
 
 }
 
-.deconnexion {
+/* .deconnexion {
   flex-direction: column;
   text-align: left;
   padding: 0.3em 0em 0 0em;
@@ -212,6 +200,6 @@ hr {
   border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
   margin-bottom: 0%;
   text-align: center;
-  filter: drop-shadow(0px 0px 10px #F1E3CD)
-}
+  filter: drop-shadow(0px 0px 10px #F1E3CD);
+} */
 </style>

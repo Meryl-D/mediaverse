@@ -57,7 +57,7 @@ async function logout() {
   --orange: #f9a228;
   --green: #2a3a30;
   --beige: #f1dfcd;
-  --white: #fffcfa;
+  --white: #FFFCFA;
   --red: #921b10;
 
   --shadow: 0px 0px 10px 0px #ffcfad;
@@ -72,6 +72,8 @@ async function logout() {
 
 #organiz {
   background-color: var(--white);
+  width: 100vw;
+  height: 100vh;
 }
 
 h1 {
