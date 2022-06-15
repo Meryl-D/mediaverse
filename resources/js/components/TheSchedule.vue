@@ -55,6 +55,7 @@ const allTasks = await axiosClient.get("api/tasks", {
         class="monthly-schedule horaire"
         v-if="isActive.monthly"
         :schedule="data.allDaysSchedule"
+        :nextMonth="data.nextMonth"
         :days="data.allDaysSchedule"
         :tasks="allTasks.data"
       >

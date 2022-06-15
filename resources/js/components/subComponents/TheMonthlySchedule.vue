@@ -1,6 +1,6 @@
 
 <script setup>
-import BaseCourse from "./BaseCourse.vue";
+import BaseCourseTime from "./BaseCourseTime.vue";
 import TheHeaderMobile from "./TheHeaderMobile.vue";
 import TheTasks from "./TheTasks.vue";
 import {
@@ -24,6 +24,10 @@ const props = defineProps({
   },
   tasks: {
     type: Object,
+    required: true,
+  },
+  nextMonth: {
+    type: String,
     required: true,
   },
 });
@@ -56,6 +60,7 @@ function getDay(d) {
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
 
+//console.log(props.nextMonth);
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
@@ -87,12 +92,8 @@ if (firstDay.dayShort == "Sa") {
 if (firstDay.dayShort == "Di") {
   monthlySchedule.unshift("Lu", "Ma", "Me", "Je", "Ve", "Sa");
 }
-console.log(courseToShow);
+
 const CourseTab = courseToShow.value.courses;
-CourseTab.forEach(e => {
-  console.log(e)
-});
-console.log(CourseTab);
 </script>
 
 
@@ -291,20 +292,11 @@ console.log(CourseTab);
       <div class="chosenDay p bold">
         <p>{{ currentDate }}</p>
       </div>
-      <div>
-        <!-- <div v-for="course in CourseTab" :key="course">
-          <p>{{ course.timeStart }}</p>
-          <p>{{ course.timeEnd }}</p>
-        </div> -->
-        <div class="maxWidth">
-          <div v-for="course in CourseTab" :key="course" class="courseTC">
-            <div class="timeStartEnd">
-              <p>{{ course.timeStart }}</p>
-              <p>{{ course.timeEnd }}</p>
-            </div>
-            <base-course :lesson="course" class="course"></base-course>
-          </div>
-        </div>
+      <div class="maxWidth">
+        <base-course-time
+          :lessonDay="courseToShow"
+          class="course"
+        ></base-course-time>
       </div>
       <hr />
     </section>
@@ -312,6 +304,10 @@ console.log(CourseTab);
 </template>
 
 <style scoped>
+.nextMonth {
+  height: 50px;
+  width: 100%;
+}
 #MonthlyCalendar {
   background-color: var(--white);
   align-content: center;

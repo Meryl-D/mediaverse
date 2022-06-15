@@ -7,6 +7,7 @@ import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
+import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
@@ -178,12 +179,12 @@ function closeEditTask() {
     <div class="grid-container">
         <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
-    <!-- <div class="grid">
+    <!-- <div class="grid"> -->
       <div class="course">
         <h1>Cours</h1>
         <base-course :lessonDay="courseToShow"> </base-course>
       </div>
-      <div class="task">
+      <!-- <div class="task">
         <h1>Tâches</h1>
         <the-tasks :day="courseToShow"></the-tasks> -->
 
