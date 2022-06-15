@@ -2,15 +2,10 @@
 import { selectedDate, isActive } from "../../stores.js";
 
 
-const props = defineProps({
-  lessonDay: {
-    type: Object,
-    required: true,
-  },
-});
+
 
 function goBackWeeklyView() {
-  selectedDate.value = props.lessonDay;
+
   isActive.value.weekly = true;
   isActive.value.daily = false;
   isActive.value.monthly = false;

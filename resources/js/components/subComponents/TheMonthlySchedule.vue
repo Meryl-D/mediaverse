@@ -12,17 +12,12 @@ import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 
-
 const props = defineProps({
   schedule: {
     type: Object,
     required: true,
   },
   days: {
-    type: Object,
-    required: true,
-  },
-  today: {
     type: Object,
     required: true,
   },
@@ -49,7 +44,7 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
-//event listener for day choose
+//event listener for chosen day 
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -59,21 +54,17 @@ function getDay(d) {
 
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
-function changeMonth(month) {
-  console.log(month);
-  selectedDate.value = month;
-  console.log(month);
-}
+
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
-
-let monthlySchedule = [];
+const monthlySchedule=[];
 props.days.forEach((d) => {
   if (currentMonth.value == d.monthNb) {
     monthlySchedule.push(d);
   }
 });
+console.log(monthlySchedule);
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
@@ -101,11 +92,10 @@ if (firstDay.dayShort == "Di") {
 
 <template>
   <div id="MonthlyCalendar">
-    <base-back-button :lessonDay="props.schedule"></base-back-button>
-    <base-dropdown
-      :schedule="props.schedule"
-      @getMonth="changeMonth"
-    ></base-dropdown>
+    <section>
+    <base-back-button ></base-back-button>
+    <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+    </section>
     <section class="calendar">
       <div class="daysOfWeek">
         <p>Lu</p>
@@ -308,6 +298,7 @@ if (firstDay.dayShort == "Di") {
 </template>
 
 <style scoped>
+
 #MonthlyCalendar {
   background-color: var(--white);
   align-content: center;
@@ -351,11 +342,11 @@ h1 {
 }
 .lineSpace {
   margin: 0;
-  border-top: 0.2rem solid var(--green);
+  border-top: 0.1rem solid var(--green);
 }
 .lineOrange {
   margin: 0;
-  border-top: 0.5rem solid var(--orange);
+  border-top: 0.2rem solid var(--orange);
 }
 .time {
   height: 500px;

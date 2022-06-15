@@ -52,7 +52,6 @@ watchEffect(() => {
     v-if="isActive.monthly"
     :schedule="data.allDaysSchedule"
     :days="data.allDaysSchedule"
-    :today="data.today"
     :tasks="allTasks.data"
   >
   </the-monthly-schedule>
