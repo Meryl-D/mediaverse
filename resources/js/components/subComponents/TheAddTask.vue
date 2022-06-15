@@ -1,35 +1,40 @@
 <script setup>
 import BaseButton from "./BaseButton.vue";
-import { watch, ref, onMounted } from "vue";
+import { watch, ref, onMounted, watchEffect } from "vue";
 import { axiosClient } from "../../utils/axios.js";
-const emit = defineEmits(["close"]);
+import router from "../../router/index.js";
 
-let newTask = {
-  name: "",
-  dateStart: "",
-  dateEnd: "",
-  description: "",
-  user_id: 1,
-};
+const emit = defineEmits(["close", "add"]);
+
+const nameTask = ref("");
+const dateStartTask = ref("");
+const dateEndTask = ref("");
+const categorieTask = ref("");
+const descriptionTask = ref("");
 
 const errorMsg = ref("");
 async function addTask() {
+  let newTask = {
+    name: nameTask.value,
+    dateStart: dateStartTask.value,
+    dateEnd: dateEndTask.value,
+    description: descriptionTask.value,
+  };
+  console.log(newTask);
   await axiosClient.post("api/tasks/add", newTask);
 }
 
 async function submitForm() {
   try {
     await addTask();
-    router.push({
-      name: "Horaires",
-    });
+    emit("add");
+    // router.push({
+    //   name: "Horaires",
+    // });
   } catch (err) {
     // errorMsg.value = err.response.data.error;
   }
 }
-
-const name = ref("");
-const description = ref("");
 </script>
 <template>
   <div class="file">
@@ -46,32 +51,51 @@ const description = ref("");
       </div>
     </div>
     <form @submit.prevent="submitForm()">
-      <div class="form">
+      <div id="left">
         <input
-          v-model="name"
+          v-model="nameTask"
           type="text"
-          class="input basic name"
+          class="basic name"
           placeholder="Nom"
         />
+        <p>{{ nameTask }}</p>
         <div id="time">
-          <input type="datetime-local" class="input type" placeholder="Type" />
+          <input
+            v-model="dateStartTask"
+            type="datetime-local"
+            class="date"
+            placeholder="Type"
+          />
           <hr />
-          <input type="datetime-local" class="input type" placeholder="Type" />
+          <input
+            v-model="dateEndTask"
+            type="datetime-local"
+            class="date"
+            placeholder="Type"
+          />
           <hr />
-          <input type="label" class="input type" placeholder="Catégorie" />
+          <input
+            v-model="categorieTask"
+            type="label"
+            class="date"
+            placeholder="Catégorie"
+          />
         </div>
-        <input
-          v-model="description"
-          type="text"
-          class="input basic description"
-          placeholder="Description"
-        />
       </div>
-      <p v-if="errorMsg" class="error">
-        {{ errorMsg }}
-      </p>
-      <div id="btn-add">
-        <base-button type="submit" class="btn">Ajouter</base-button>
+      <div id="right">
+        <textarea
+          v-model="descriptionTask"
+          class="basic description"
+          placeholder="Description"
+          style="padding: 1rem"
+        />
+
+        <p v-if="errorMsg" class="error">
+          {{ errorMsg }}
+        </p>
+        <div id="btn-add">
+          <base-button type="submit" class="btn">Ajouter</base-button>
+        </div>
       </div>
     </form>
   </div>
@@ -83,72 +107,86 @@ const description = ref("");
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--white);
-  border-radius: 0.3rem;
-  padding-top: 5%;
+  background-color: white;
+  border-radius: 0.7rem;
+  padding-top: 3%;
+  padding-bottom: 4%;
+  margin-top: 12%;
 }
 .header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 95%;
-  margin-bottom: .5rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem; 
 }
 h2 {
   font-weight: bold;
 }
 form {
   width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  align-items: center;
+
+.basic {
+  width: 95%;
+  margin: 1rem;
+  padding-left: 2%;
+  border-radius: 0.7rem;
+  border: solid 0.1rem #e3cec2;
+  opacity: 50%;
+}
+.name {
+  height: 3rem;
+}
+.description {
+  height: 14rem;
+  margin-bottom: 4rem;
+  /* margin-bottom: 5rem; */
 }
 #time {
+  display: flex;
+  flex-direction: column;
   width: 95%;
+  height: 9rem;
   background-color: #e3cec2;
   opacity: 50%;
-  justify-content: center;
-  border-radius: 0.3rem;
+  /* justify-content: center; */
+  border-radius: 0.6rem;
+  padding-left: 2%;
+  margin: 1rem;
 }
-::placeholder {
-  color: black;
+.date {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  /* padding: 2rem; */
 }
+
+#right {
+  align-items: right;
+}
+
 #btn-add {
+  display: flex;
+  justify-content: right;
   width: 100%;
-  text-align: center;
+  padding-right: 1rem;
+  margin-bottom: 4rem;
 }
 .btn {
-  width: 95%;
-  margin-bottom: 15%;
+  width: 30%;
 }
 .material-symbols-outlined {
   color: var(--orange);
   filter: drop-shadow(0 0 0.75rem var(--orange));
   cursor: pointer;
 }
-
-.basic {
-  background-color: #e3cec2;
-  opacity: 50%;
-  border-radius: 0.3rem;
-  border: none;
-  padding: 2rem;
-  margin: 0.5rem;
-  width: 95%;
-}
-.name {
-  height: 1rem;
-}
-.description {
-  height: 3rem;
-}
-.type {
-  background-color: transparent;
-  border: none;
-  padding: 2rem;
+input:focus {
+  outline: 2px solid #e3cec2;
 }
 hr {
   height: 0;
