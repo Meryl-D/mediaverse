@@ -19,15 +19,15 @@ const props = defineProps({
   },
   tasks: {
     type: Object,
+  },
+});
+console.log(props.tasks);
+
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
   }
 });
-console.log(props.tasks)
-
- props.tasks.forEach(task => {
-    if( task.dateStart.substr(0,10) == selectedDate.value.fullDate){
-        selectedTasks.value.push(task)
-    }  
-  });
 
 //-------------------------------------------------------------------------------------------------
 
@@ -49,13 +49,13 @@ function getDay(d) {
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
-  console.log(courseToShow)
+  console.log(courseToShow);
 
   selectedTasks.value = [];
-  props.tasks.forEach(task => {
-    if( task.dateStart.substr(0,10) == d.fullDate){
-        selectedTasks.value.push(task)
-    }  
+  props.tasks.forEach((task) => {
+    if (task.dateStart.substr(0, 10) == d.fullDate) {
+      selectedTasks.value.push(task);
+    }
   });
 }
 
@@ -87,19 +87,25 @@ function isSelectedDate(day) {
 const popUp = ref(false);
 function addTask() {
   popUp.value = true;
-  console.log(popUp.value);
+  console.log(document.getElementById("rect").classList.add("hidden"));
   return popUp;
 }
 function callback() {
   popUp.value = false;
+  document.getElementById("rect").classList.remove("hidden");
   return popUp;
 }
 </script>
 
 <template>
+  <div id="rect"></div>
   <div id="container">
     <div v-if="popUp" class="ctn-popUp">
-      <the-add-task @close="callback" class="popUp"></the-add-task>
+      <the-add-task
+        @close="callback"
+        class="popUp"
+        @add="callback"
+      ></the-add-task>
     </div>
   </div>
   <div id="file">
@@ -132,7 +138,7 @@ function callback() {
     <div id="separate">
       <hr />
     </div>
-  <base-grille :day="courseToShow"></base-grille>
+    <!-- <base-grille :day="courseToShow"></base-grille> -->
     <!-- <div class="grid">
       <div class="course">
         <h1>Cours</h1>
@@ -140,24 +146,34 @@ function callback() {
       </div>
       <div class="task">
         <h1>Tâches</h1>
-        <the-tasks :day="courseToShow"></the-tasks>
+        <the-tasks :day="courseToShow"></the-tasks> -->
 
-        
-
-        <div class="icone">
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
-          />
-          <span class="material-icons" @click="addTask()">add_circle</span>
-        </div>
-      </div>
+    <div class="icone">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+      />
+      <span class="material-icons" @click="addTask()">add_circle</span>
+    </div>
+    <!-- </div>
     </div> -->
   </div>
 </template>
 
 
 <style scoped>
+.file {
+  z-index: 1;
+}
+.hidden {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 50%;
+  z-index: 50;
+}
 #calendar {
   display: flex;
   flex-flow: row nowrap;
@@ -196,7 +212,7 @@ function callback() {
   color: var(--orange);
 }
 .choosenDay {
-  text-align: center; 
+  text-align: center;
   margin: 0.6rem 0;
 }
 #separate {
@@ -235,16 +251,16 @@ h1 {
   cursor: pointer;
 }
 .popUp {
-   width: 100%;
+  width: 100%;
 }
-#container{
+#container {
   display: flex;
   position: absolute;
   width: 100%;
   justify-content: center;
   z-index: 100;
 }
-.ctn-popUp{
+.ctn-popUp {
   flex-basis: 80%;
 }
 </style>
