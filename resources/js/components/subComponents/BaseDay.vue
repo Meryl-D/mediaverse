@@ -1,5 +1,5 @@
 <script setup>
-import { propExists, selectedDate, isActive } from '../../stores.js'
+import { propExists, selectedDate, isActive, isMobile } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -8,17 +8,21 @@ const props = defineProps({
     required: true,
     },
     today: {
-        type: String,
+        type: Object,
         required: true
     },
     isMobile: {
         type: Boolean,
         required: true
+    },
+    tasks : {
+        type: Object,
+        required : true
     }
 });
 
 let isToday = false;
-if (props.today == props.lessonDay.fullDate) isToday = true;
+if (props.today.fullDate == props.lessonDay.fullDate) isToday = true;
 
 const courseExists = propExists('courses', props.lessonDay)
 const holidayExists = propExists('holiday', props.lessonDay)
@@ -29,6 +33,9 @@ function toDailyView() {
     isActive.value.weekly = false
     isActive.value.daily = true
 }
+const hasCourse = props.lessonDay.courses ? true : false;
+
+const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.lessonDay.fullDate || task.dateEnd.substr(0,10) == props.lessonDay.fullDate);
 </script>
 
 <template>
@@ -42,9 +49,15 @@ function toDailyView() {
                 {{ props.lessonDay.dayLong }}
             </p>
             <hr v-if="!isMobile" class="hr-date">
-            <p class="date">
-                {{ props.lessonDay.date }}
-            </p>
+            <div class="date-circles">
+                <p class="date">
+                    {{ props.lessonDay.date }}
+                </p>
+                <div class="circles">
+                    <div v-if="hasTask" class="task-circle"></div>
+                    <div v-if="hasCourse" class="course-circle"></div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="info-ctn">
@@ -67,7 +80,9 @@ function toDailyView() {
             </p>
         </div>
     </div>
-    <!-- <hr class="sep"> -->
+    <p v-if="!isMobile" class="more">
+        Voir plus...
+    </p>
 </div>
 </template>
 
@@ -88,19 +103,45 @@ function toDailyView() {
         align-items: center;
     }
 
-    .date {
-        font-size: 1.5rem; 
-        font-weight: 900;
-    }
-
-    .day {
-        font-size: 1rem;
-    }
-
     .day-date {
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+    
+    .day {
+        font-size: 1rem;
+        line-height: 1rem;
+    }
+
+    .date-circles {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .date {
+        font-size: 1.5rem; 
+        line-height: 1.5rem;
+        margin: .3rem 0;
+        font-weight: 900;
+    }
+
+    .circles {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .task-circle, .course-circle {
+        width: .7rem;
+        height: .7rem;
+        margin: 0 .1rem .1rem .1rem;
+        background-color: var(--brown);
+        border-radius: 5rem;
+    }
+
+    .course-circle {
+        background-color: var(--beige);
     }
 
     .info-ctn {
@@ -154,10 +195,18 @@ function toDailyView() {
 
         .day {
             font-size: 1.1rem;
+            line-height: 1.1rem;
         }
 
         .date {
             font-size: 1.8rem;
+            line-height: 1.8rem;
+        }
+
+        .task-circle, .course-circle {
+            width: .8rem;
+            height: .8rem;
+            margin: 0 .15rem .15rem .15rem;
         }
     }
     @media (min-width: 992px) {
@@ -170,6 +219,12 @@ function toDailyView() {
         .day-date {
             flex-basis: 100%;
             align-items: start;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .day {
+            margin-bottom: .3rem;
         }
 
         .hr-date {
@@ -180,6 +235,20 @@ function toDailyView() {
 
         .today .hr-date {
             border-color: var(--orange);
+        }
+
+        .date-circles {
+            width: 100%;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .course-circle, .task-circle {
+            margin-bottom: 0;
+            width: 1rem;
+            height: 1rem;
+
         }
 
         .info-ctn {
@@ -194,6 +263,12 @@ function toDailyView() {
         .course-room {
             text-align: start;
             order: 3;
+        }
+
+        .more {
+            text-decoration: underline;
+            text-align: end;
+            text-underline-offset: 2px;
         }
 
     }

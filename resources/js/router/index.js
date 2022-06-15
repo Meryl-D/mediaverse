@@ -8,7 +8,7 @@ import TheReviews from '../components/TheReviews.vue';
 import TheLogin from '../components/TheLogin.vue';
 import TheTasks from '../components/subComponents/TheTasks.vue';
 
-console.log()
+
 
 const routes = [
     {

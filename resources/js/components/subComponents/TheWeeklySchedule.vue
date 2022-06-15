@@ -2,7 +2,7 @@
     import BaseDay from './BaseDay.vue'
     import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
-    import { chunkArrayInGroups } from '../../stores.js'
+    import { chunkArrayInGroups, isMobile } from '../../stores.js'
 
     const props = defineProps({
         schedule : {
@@ -10,7 +10,7 @@
             required : true
         },
         today : {
-            type : String,
+            type : Object,
             required : true
         },
         nextMonday : {
@@ -20,6 +20,10 @@
         isMobile : {
             type : Boolean,
             required : true
+        },
+        tasks : {
+            type : Object,
+            required : true
         }
     });
 
@@ -28,7 +32,7 @@
 
     // Get the index of the current week when today is a week day
     for (let i = 0; i < weeksSchedule.length; i++) {
-            if (weeksSchedule[i].some(day => day.fullDate == props.today)) currWeekIndex = i
+            if (weeksSchedule[i].some(day => day.fullDate == props.today.fullDate)) currWeekIndex = i
     }
 
     // Get the index of next week when today is a week-end day
@@ -41,36 +45,67 @@
     // scroll to current week once the app is mounted
     onMounted(() => {
         const currWeek = (document.getElementsByClassName('curr-week'))[0]
-        currWeek.scrollIntoView()
+        currWeek.scrollIntoView({ block: "nearest", inline: "nearest" })
     })
 </script>
 
 <template>
-<base-box class="week-box">
-    <div 
-        v-for="(week, i1) in weeksSchedule" 
-        :key="week" class="week-ctn" 
-        :class="{ 'curr-week' : i1 == currWeekIndex}"
-    >
+<header v-if="!isMobile" class="weekly-header">
+    <h1>Horaires et tâches</h1>
+    <h2>{{today.month}} {{today.year}}</h2>
+</header>
+
+<main class="weekly-main">
+    <base-box class="week-box">
         <div 
-            v-for="(lessonDay, i2) in week" 
-            :key="lessonDay" 
-            class="day-ctn"
+            v-for="(week, i1) in weeksSchedule" 
+            :key="week" class="week-ctn" 
+            :class="{ 'curr-week' : i1 == currWeekIndex}"
         >
-            <base-day 
-                :lessonDay="lessonDay"
-                :today="props.today"
-                :isMobile="isMobile"
+            <div 
+                v-for="(lessonDay, i2) in week" 
+                :key="lessonDay" 
+                class="day-ctn"
             >
-            </base-day>
-            <hr v-if="i2 + 1 != week.length && isMobile" class="sep">
+                <base-day 
+                    :lessonDay="lessonDay"
+                    :today="props.today"
+                    :isMobile="isMobile"
+                    :tasks="props.tasks"
+                >
+                </base-day>
+                <hr v-if="i2 + 1 != week.length && isMobile" class="sep">
+            </div>
         </div>
-    </div>
-</base-box>
+    </base-box>
+</main>
 </template>
 
 <style scoped>
     /* hide scrollbar but allow scrolling */
+
+    .weekly-header {
+        height: 15vh;
+        width: 90%;
+        display: flex;
+        align-items: basline;
+        justify-content: space-between;
+    }
+
+    .weekly-header {
+        margin-top: 4vh;
+    }
+
+    .weekly-header h2 {
+        color: var(--orange);
+    }
+
+    .weekly-main {
+        width: 100%;
+        height: 85vh;
+        display: flex;
+        justify-content: center;
+    }
     .week-box {
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
@@ -111,7 +146,7 @@
     @media (min-width: 992px) {
 
         .week-box {
-            height: calc(100% - 12vh)
+            height: calc(100% - 6vh)
         } 
 
         .week-ctn {

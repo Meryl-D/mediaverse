@@ -62,7 +62,7 @@ function menu() {
           </div>
           <div class="linkBox">
             <p class="router">
-              <router-link to="/profil">Profil</router-link>
+              <router-link to="/compte">Compte</router-link>
             </p>
           </div>
           <div id="separate">

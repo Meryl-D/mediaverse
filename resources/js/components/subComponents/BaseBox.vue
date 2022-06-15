@@ -25,7 +25,7 @@ div {
     div {
         box-shadow: none;
         border-radius: 0;
-        width: 96%;
+        width: 90%;
         max-width: 1000px; 
     }
 }

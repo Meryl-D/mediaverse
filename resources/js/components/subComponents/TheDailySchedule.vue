@@ -1,12 +1,16 @@
 <script setup>
-import { chunkArrayInGroups, selectedDate, selectedTasks } from "../../stores.js";
+import { chunkArrayInGroups, selectedDate, selectedTasks, isMobile } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
+import BaseBackButton from "./BaseBackButton.vue";
+import switchViewButton from "./switchViewButton.vue";
 
 //-------------------------------------------------------------------------------------------------
+
+console.log(isMobile.value)
 
 const props = defineProps({
   days: {
@@ -18,12 +22,12 @@ const props = defineProps({
   },
 });
 
-selectedTasks.value = []
+selectedTasks.value = [];
 
-props.tasks.forEach(task => {
-  if( task.dateStart.substr(0,10) == selectedDate.value.fullDate){
-      selectedTasks.value.push(task)
-  }  
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
+  }
 });
 
 //-------------------------------------------------------------------------------------------------
@@ -50,10 +54,10 @@ function getDay(d) {
   // empty the selected tasks array
   selectedTasks.value = [];
   // add tasks of the selected day to selectedTasks array
-  props.tasks.forEach(task => {
-    if( task.dateStart.substr(0,10) == d.fullDate){
-        selectedTasks.value.push(task)
-    }  
+  props.tasks.forEach((task) => {
+    if (task.dateStart.substr(0, 10) == d.fullDate) {
+      selectedTasks.value.push(task);
+    }
   });
 }
 
@@ -81,12 +85,13 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
+//-------------------------------------------------------------------------------------
 //add task on click
 const popUp = ref(false);
 
 function addTask() {
   popUp.value = true;
-  console.log(document.getElementById("rect").classList.add("hidden"));
+  document.getElementById("rect").classList.add("hidden");
   return popUp;
 }
 function closeTask() {
@@ -94,6 +99,25 @@ function closeTask() {
   document.getElementById("rect").classList.remove("hidden");
   return popUp;
 }
+//-------------------------------------------------------------------------------------
+
+const editPopUp = ref(false)
+
+const toEditTask = ref("") 
+function popUpEdit(task){
+  editPopUp.value = true;
+  toEditTask.value = task
+  document.getElementById("rect").classList.add("hidden")
+  return editPopUp
+}
+
+function closeEditTask() {
+  editPopUp.value = false;
+  document.getElementById("rect").classList.remove("hidden");
+  return editPopUp
+}
+
+
 </script>
 
 <template>
@@ -101,13 +125,27 @@ function closeTask() {
   <div id="container">
     <div v-if="popUp" class="ctn-popUp">
       <the-add-task
-        @close="callback"
+        @close="closeTask"
         class="popUp"
-        @add="callback"
+        @add="closeTask"
       ></the-add-task>
     </div>
   </div>
+    <div id="container">
+    <div v-if="editPopUp" class="ctn-editPopUp">
+      <the-edit-task
+        @close="closeEditTask"
+        class="popUpEdit"
+        @add="closeEditTask"
+        :task = "toEditTask"
+      ></the-edit-task>
+    </div>
+  </div>
   <div id="file">
+    <section>
+      <base-back-button></base-back-button>
+      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+    </section>
     <div id="calendar">
       <div
         v-for="(group, index) in weeksSchedule"
@@ -138,7 +176,7 @@ function closeTask() {
       <hr />
     </div>
     <div class="grid-container">
-        <base-grid :courseToShow="courseToShow"></base-grid>
+        <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
     <!-- <div class="grid">
       <div class="course">
@@ -163,7 +201,6 @@ function closeTask() {
 
 
 <style scoped>
-
 .hidden {
   position: absolute;
   top: 0;
@@ -252,6 +289,9 @@ h1 {
 .popUp {
   width: 100%;
 }
+.popUpEdit {
+  width: 100%;
+}
 #container {
   display: flex;
   position: absolute;
@@ -260,7 +300,10 @@ h1 {
   z-index: 100;
 }
 .ctn-popUp {
-  flex-basis: 80%;
+  flex-basis: 90%;
+}
+.ctn-editPopUp{
+  flex-basis: 90%;
 }
 
 .grid-container {
@@ -273,6 +316,10 @@ h1 {
 }
 
 .grid-container::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, and Opera */
+  display: none; /* for Chrome, Safari, and Opera */
+}
+
+@media(max-width: 992px){
+
 }
 </style>

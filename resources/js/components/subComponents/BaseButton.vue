@@ -1,11 +1,5 @@
 <script setup>
-const props = defineProps({
-  type: {
-    type: String,
-    default: "validate",
-    required: true,
-  },
-});
+
 //console.log(props.type);
 </script>
 
@@ -23,7 +17,7 @@ button {
   border: none;
   border-radius: var(--small-radius);
   box-shadow: var(--shadow);
-  padding: .3rem .6rem;
+  padding: .3rem .9rem;
 }
 
 button:hover, button:active {

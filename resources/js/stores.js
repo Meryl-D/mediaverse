@@ -1,4 +1,5 @@
 import { useLocalstorage } from "./composables/localStorage";
+import { ref } from "vue";
 
 export const { value : user } = useLocalstorage('user', {
     firstName : '',
@@ -8,10 +9,11 @@ export const { value : user } = useLocalstorage('user', {
 });
 
 export const { value : isActive } = useLocalstorage('isActive', {
-    weekly : false,
-    monthly : true,
+    weekly : true,
+    monthly : false,
     daily : false
 })
+export const isMobile =  ref();
 
 export const { value : selectedDate } = useLocalstorage('selectedDate', '')
 

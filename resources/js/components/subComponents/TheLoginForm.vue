@@ -57,7 +57,7 @@ async function submitForm() {
       <p v-if="errorMsg" class="error">
         {{ errorMsg }}
       </p>
-      <base-button type="submit" class="btn">Envoyer</base-button>
+      <base-button type="submit" class="btn-login">Envoyer</base-button>
     </form>
 </template>
 
@@ -68,9 +68,7 @@ async function submitForm() {
   }
 
   input {
-    /* border: 2px solid var(--beige); */
-    border: none;
-    background-color: var(--beige);
+    border: 2px solid var(--beige);
     border-radius: var(--small-radius);
     margin-bottom: 1rem;
     height: 2rem;
@@ -81,14 +79,14 @@ async function submitForm() {
     outline: 2px solid var(--orange);
   }
 
-  .btn {
+  .btn-login {
     align-self: end;
     margin-top: 1rem;
   }
 
   input:-webkit-autofill {
     background-color: transparent !important;
-    --webkit-box-shadow: 0 0 0 50px var(--beige) inset;
+    --webkit-box-shadow: 0 0 0 50px var(--white) inset;
   }
 
 </style>

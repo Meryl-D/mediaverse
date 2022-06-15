@@ -58,28 +58,25 @@ async function submitForm() {
           class="basic name"
           placeholder="Nom"
         />
-        <p>{{ nameTask }}</p>
         <div id="time">
-          <input
-            v-model="dateStartTask"
-            type="datetime-local"
-            class="date"
-            placeholder="Type"
-          />
-          <hr />
-          <input
-            v-model="dateEndTask"
-            type="datetime-local"
-            class="date"
-            placeholder="Type"
-          />
-          <hr />
+          <div class="dateStart">
+            <input
+              v-model="dateStartTask"
+              type="datetime-local"
+              class="date"
+            />
+          </div>
+          <hr /> 
+          <div class="dateEnd">
+            <input v-model="dateEndTask" type="datetime-local" class="date" />
+          </div>
+          <!-- <hr />
           <input
             v-model="categorieTask"
             type="label"
             class="date"
             placeholder="Catégorie"
-          />
+          /> -->
         </div>
       </div>
       <div id="right">
@@ -120,7 +117,7 @@ async function submitForm() {
   width: 100%;
   margin-bottom: 0.5rem;
   padding-left: 1rem;
-  padding-right: 1rem; 
+  padding-right: 1rem;
 }
 h2 {
   font-weight: bold;
@@ -154,20 +151,23 @@ form {
   height: 9rem;
   background-color: #e3cec2;
   opacity: 50%;
-  /* justify-content: center; */
+  justify-content: center;
   border-radius: 0.6rem;
   padding-left: 2%;
   margin: 1rem;
 }
+
 .date {
   background-color: transparent;
   border: none;
   outline: none;
+  padding-right: 1rem;  
+  width: 100%;
   /* padding: 2rem; */
 }
 
 #right {
-  align-items: right;
+  align-items: right;   
 }
 
 #btn-add {
@@ -190,9 +190,76 @@ input:focus {
 }
 hr {
   height: 0;
-  width: 100%;
+  width: 97%;
   border: none;
   border-top: 2px solid white;
   background-color: transparent;
+}
+
+@media (max-width: 992px) {
+  .file {
+    margin-top: 0;
+  }
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .header {
+    margin-top: 1rem;
+  }
+  .basic {
+    width: 100%;
+    /* margin: 1rem; */
+    border-radius: 0.7rem;
+    border: solid 0.1rem #e3cec2;
+    opacity: 50%;
+  }
+  .name {
+    height: 3rem;
+    margin: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  .description {
+    height: 9rem;
+    margin: 0;
+    margin-bottom: 2rem;
+    /* margin-bottom: 5rem; */
+  }
+  #time {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 9rem;
+    margin: 0;
+    background-color: #e3cec2;
+    opacity: 50%;
+    /* justify-content: center; */
+    border-radius: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  #right {
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  #left {
+    display: flex;
+    flex-direction: column;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  #btn-add {
+    display: flex;
+    width: 100%;
+    margin-bottom: 3rem;
+    padding: 0;
+  }
+  .btn {
+    width: 100%;
+    margin: 0;
+  }
 }
 </style>

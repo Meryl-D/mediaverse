@@ -194,7 +194,12 @@ class ScheduleController extends Controller
         $allDaysSchedule = $this->prepAgendaSchedule($lessons, $holidays); // needed for the agenda view
         $weekDaysSchedule = $this->prepWeeklySchedule($allDaysSchedule); // needed for the weekly view
 
-        $today = (Carbon::now())->format('Y-m-d');
+        $today = collect([
+            'fullDate' => (Carbon::now())->format('Y-m-d'),
+            'month' => ucfirst((Carbon::now())->isoFormat('MMMM')),
+            'year' => (Carbon::now())->format('Y')
+        ]);
+
         $nextMonday = ((Carbon::now())->next(Carbon::MONDAY))->format('Y-m-d');
         $daysInMonth = Carbon::now()->daysInMonth; //get nb of days in the current month
         $nextMonth = Carbon::createFromFormat('m/d/Y', '11/02/2020')->addMonthsNoOverflow();
