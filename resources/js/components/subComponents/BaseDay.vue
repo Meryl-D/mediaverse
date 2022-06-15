@@ -1,5 +1,5 @@
 <script setup>
-import { propExists, selectedDate, isActive } from '../../stores.js'
+import { propExists, selectedDate, isActive, isMobile } from '../../stores.js'
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -8,7 +8,7 @@ const props = defineProps({
     required: true,
     },
     today: {
-        type: String,
+        type: Object,
         required: true
     },
     isMobile: {

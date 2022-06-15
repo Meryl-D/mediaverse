@@ -2,7 +2,7 @@
     import BaseDay from './BaseDay.vue'
     import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
-    import { chunkArrayInGroups } from '../../stores.js'
+    import { chunkArrayInGroups, isMobile } from '../../stores.js'
 
     const props = defineProps({
         schedule : {
@@ -10,7 +10,7 @@
             required : true
         },
         today : {
-            type : String,
+            type : Object,
             required : true
         },
         nextMonday : {

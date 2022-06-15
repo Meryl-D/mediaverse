@@ -86,7 +86,7 @@ async function submitForm() {
 
   input:-webkit-autofill {
     background-color: transparent !important;
-    -webkit-box-shadow: 0 0 0 50px var(--white) inset;
+    --webkit-box-shadow: 0 0 0 50px var(--white) inset;
   }
 
 </style>

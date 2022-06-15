@@ -1,9 +1,19 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watchEffect, onMounted } from "vue";
 import { axiosClient } from "./utils/axios";
-import { user } from "./stores.js";
+import { user, isMobile } from "./stores.js";
 import router from "./router/index.js";
+import { useWindowSize } from "vue-window-size";
 
+const { width, height } = useWindowSize();
+
+watchEffect(() => {
+  if (width.value < 992) {
+    isMobile.value = true;
+  } else {
+    isMobile.value = false;
+  }
+});
 
 // const message = ref('hello from vue');
 // const message2 = ref(data);
@@ -40,18 +50,17 @@ async function logout() {
 </template>
 
 <style>
-
-@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap");
 
 * {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 :root {
-    /**
+  /**
     * Colors
     */
   --orange: #f9a228;
@@ -62,7 +71,7 @@ async function logout() {
   --red: #921b10;
 
   --shadow: 0px 0px 10px 0px #ffcfad;
-  --small-radius: .6rem;
+  --small-radius: 0.6rem;
   --big-radius: 1.2rem;
 
   /** 
@@ -94,12 +103,12 @@ h2 {
 }
 
 p {
-  font-size: .8rem;
+  font-size: 0.8rem;
   color: var(--green);
 }
 
 .psmall {
-  font-size: .5rem;
+  font-size: 0.5rem;
   color: var(--green);
 }
 
@@ -108,8 +117,8 @@ p {
 }
 
 .DailyCourseBox {
-    display: inline-block;
-    background-color: #7f726a;
+  display: inline-block;
+  background-color: #7f726a;
 }
 
 .error {
@@ -119,13 +128,13 @@ p {
 
 @media (min-width: 576px) {
   p {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 }
 
 @media (min-width: 992px) {
   p {
-    font-size: .9rem;
+    font-size: 0.9rem;
   }
 }
 </style>
