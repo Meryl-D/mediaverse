@@ -1,13 +1,12 @@
 <script setup>
 import { onMounted, ref, watchEffect } from "vue";
 import { axiosClient } from "../utils/axios.js";
-import { user, isActive } from "../stores.js";
+import { user, isActive, isMobile } from "../stores.js";
 import TheWeeklySchedule from "./subComponents/TheWeeklySchedule.vue";
 import TheDailySchedule from "./subComponents/TheDailySchedule.vue";
 import TheMonthlySchedule from "./subComponents/TheMonthlySchedule.vue";
 import BaseGrille from "./subComponents/BaseGrid.vue";
 import TheHeaderMobile from "./subComponents/TheHeaderMobile.vue";
-import { useWindowSize } from "vue-window-size";
 
 const { data } = await axios.get("/api/lessons", {
   headers: { Authorization: `Bearer ${user.value.token}` },
@@ -17,16 +16,6 @@ const allTasks = await axiosClient.get("api/tasks", {
   headers: { Authorization: `Bearer ${user.value.token}` },
 });
 
-const { width, height } = useWindowSize();
-const isMobile = ref();
-
-watchEffect(() => {
-  if (width.value < 992) {
-    isMobile.value = true;
-  } else {
-    isMobile.value = false;
-  }
-});
 </script>
 
 <template>
@@ -37,7 +26,6 @@ watchEffect(() => {
       :schedule="data.weekDaysSchedule"
       :today="data.today"
       :nextMonday="data.nextMonday"
-      :isMobile="isMobile"
     ></the-weekly-schedule>
   </div>
 

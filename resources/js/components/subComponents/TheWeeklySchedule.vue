@@ -2,7 +2,7 @@
     import BaseDay from './BaseDay.vue'
     import BaseBox from './BaseBox.vue'
     import { onMounted, ref, watchEffect } from 'vue'
-    import { chunkArrayInGroups } from '../../stores.js'
+    import { chunkArrayInGroups, isMobile } from '../../stores.js'
 
     const props = defineProps({
         schedule : {
@@ -17,10 +17,6 @@
             type : String,
             required : true
         },
-        isMobile : {
-            type : Boolean,
-            required : true
-        }
     });
 
     const weeksSchedule = chunkArrayInGroups(props.schedule, 5)
@@ -60,7 +56,6 @@
             <base-day 
                 :lessonDay="lessonDay"
                 :today="props.today"
-                :isMobile="isMobile"
             >
             </base-day>
             <hr v-if="i2 + 1 != week.length && isMobile" class="sep">

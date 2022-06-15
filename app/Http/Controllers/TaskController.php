@@ -32,7 +32,8 @@ class TaskController extends Controller
                 'dateStart' => $task['dateStart'],
                 'dateEnd' => $task['dateEnd'],
                 'hourStart' => (new Carbon($task['dateStart']))->format('H'),
-                'hourEnd' => (new Carbon($task['dateEnd']))->format('H')
+                'hourEnd' => (new Carbon($task['dateEnd']))->format('H'),
+                'id' => $task['id'],
             ]);
         }
 
@@ -78,10 +79,14 @@ class TaskController extends Controller
      * 
      * @return json
      */
-    public function update($id, TaskRequest $request)
+    public function update(TaskRequest $request)
     {
-        $task = Task::find($id);
-        $task->update($request->all());
+        $task = Task::find($request->input('id'));
+        $task->name = $request->input('name');
+        $task->dateStart = $request->input('dateStart');
+        $task->dateEnd = $request->input('dateEnd');
+        $task->description = $request->input('description');
+        $task->update();
 
         return response()->json('Tâche modifiée avec succès');
     }

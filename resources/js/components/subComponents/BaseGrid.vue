@@ -50,7 +50,7 @@ onMounted(() => {
       <hr v-if="n - 1 < 10" :class="`grid-hr-0${n - 1}`"/>
       <hr v-if="n - 1 >= 10" :class="`grid-hr-${n - 1}`"/>
     </div>
-    <the-tasks ref="tasksOfDay"></the-tasks>
+    <the-tasks ref="tasksOfDay" @editTask="$emit('editTask', $event)"></the-tasks>
     <!-- <base-course :lessonDay="selectedDate"> </base-course> -->
   </div>
 </template>
