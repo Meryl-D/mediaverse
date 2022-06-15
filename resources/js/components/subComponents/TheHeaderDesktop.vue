@@ -11,9 +11,7 @@ import BaseButton from './BaseButton.vue';
             <h1 class="titreTexte">Organiz</h1>
             <hr class="ligne1" />
         </div>
-
         <div class="liens">
-
             <div class="linkBox">
                 <router-link to="/">
                     <p class="router">Horaires</p>
@@ -71,7 +69,7 @@ p:hover {
 }
 
 .liens {
-   
+
     float: left;
 
 }
@@ -92,6 +90,7 @@ a {
 }
 
 .linkBox {
+    display: flex;
     flex-direction: column;
     text-align: left;
     padding: 0.3em 0em;
@@ -141,5 +140,4 @@ a {
 
 
 }
-
 </style>
