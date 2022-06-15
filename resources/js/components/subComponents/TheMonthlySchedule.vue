@@ -1,6 +1,6 @@
 
 <script setup>
-import BaseCourse from "./BaseCourse.vue";
+import BaseCourseTime from "./BaseCourseTime.vue";
 import TheHeaderMobile from "./TheHeaderMobile.vue";
 import TheTasks from "./TheTasks.vue";
 import {
@@ -11,6 +11,7 @@ import {
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
+import switchViewButton from "./switchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -23,6 +24,10 @@ const props = defineProps({
   },
   tasks: {
     type: Object,
+    required: true,
+  },
+  nextMonth: {
+    type: String,
     required: true,
   },
 });
@@ -44,7 +49,7 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
-//event listener for chosen day 
+//event listener for chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -55,20 +60,20 @@ function getDay(d) {
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
 
+//console.log(props.nextMonth);
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
-const monthlySchedule=[];
+const monthlySchedule = [];
 props.days.forEach((d) => {
   if (currentMonth.value == d.monthNb) {
     monthlySchedule.push(d);
   }
 });
-console.log(monthlySchedule);
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
-console.log(monthlySchedule);
+
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -87,14 +92,16 @@ if (firstDay.dayShort == "Sa") {
 if (firstDay.dayShort == "Di") {
   monthlySchedule.unshift("Lu", "Ma", "Me", "Je", "Ve", "Sa");
 }
+
+const CourseTab = courseToShow.value.courses;
 </script>
 
 
 <template>
   <div id="MonthlyCalendar">
     <section>
-    <base-back-button ></base-back-button>
-    <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+      <base-back-button></base-back-button>
+      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </section>
     <section class="calendar">
       <div class="daysOfWeek">
@@ -286,11 +293,10 @@ if (firstDay.dayShort == "Di") {
         <p>{{ currentDate }}</p>
       </div>
       <div class="maxWidth">
-        <div>
-          <p>{{ courseToShow.timeStart }}</p>
-          <p>{{ courseToShow.timeEnd }}</p>
-        </div>
-        <base-course :lessonDay="courseToShow" class="course"></base-course>
+        <base-course-time
+          :lessonDay="courseToShow"
+          class="course"
+        ></base-course-time>
       </div>
       <hr />
     </section>
@@ -298,7 +304,10 @@ if (firstDay.dayShort == "Di") {
 </template>
 
 <style scoped>
-
+.nextMonth {
+  height: 50px;
+  width: 100%;
+}
 #MonthlyCalendar {
   background-color: var(--white);
   align-content: center;

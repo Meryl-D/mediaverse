@@ -202,7 +202,7 @@ class ScheduleController extends Controller
 
         $nextMonday = ((Carbon::now())->next(Carbon::MONDAY))->format('Y-m-d');
         $daysInMonth = Carbon::now()->daysInMonth; //get nb of days in the current month
-        $nextMonth = Carbon::createFromFormat('m/d/Y', '11/02/2020')->addMonthsNoOverflow();
+        // $nextMonth = (Carbon::createFromFormat('Y-m-d', $today('fullDate')))->addMonthsNoOverflow();
 
         $data = [
             'allDaysSchedule' => $allDaysSchedule,
@@ -210,7 +210,7 @@ class ScheduleController extends Controller
             'today' => $today,
             'nextMonday' => $nextMonday,
             'daysInMonth' => $daysInMonth,
-            'nextMonth' => $nextMonth,
+            // 'nextMonth' => $nextMonth,
         ];
 
         return $data;

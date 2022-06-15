@@ -11,9 +11,7 @@ import BaseButton from './BaseButton.vue';
             <h1 class="titreTexte">Organiz</h1>
             <hr class="ligne1" />
         </div>
-
         <div class="liens">
-
             <div class="linkBox">
                 <router-link to="/">
                     <p class="router">Horaires</p>
@@ -112,5 +110,4 @@ a {
     border: none;
     border-top: 2px solid #b8b8b8;
 }
-
 </style>
