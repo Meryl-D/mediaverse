@@ -13,7 +13,7 @@ import {
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
+import SwitchViewButton from "./SwitchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -125,16 +125,19 @@ function checkTask(d) {
 <template>
   <div id="MonthlyCalendar">
     <div v-if="!isMobile" class="titleDesktop">
-      <h1>{{ monthToShow }} {{ yearToShow }}</h1>
       <div class="navMonth">
-        <p class="pLink">Horaire</p>
+        <base-back-button></base-back-button>
+        <div class="flexTitle">
+          <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+          <switch-view-button
+            ><span class="material-icons icalendar"
+              >calendar_today</span
+            ></switch-view-button
+          >
+        </div>
+        <!-- <p class="pLink">Horaire</p>
         <p class="sLink">></p>
-        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
-        <switch-view-button
-          ><span class="material-icons icalendar"
-            >calendar_today</span
-          ></switch-view-button
-        >
+        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p> -->
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
@@ -487,6 +490,12 @@ function checkTask(d) {
     width: auto;
     padding: 0;
     margin: 0 0 0.7rem 0;
+  }
+  .flexTitle {
+    display: flex;
+    /* flex-basis: 100%; */
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 </style>

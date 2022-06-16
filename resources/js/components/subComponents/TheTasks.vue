@@ -80,7 +80,7 @@ div {
   flex-direction: row;
   flex-wrap: wrap;
   /* margin: 1rem 1rem 1rem 0rem; */
-  background-color: #f1dfcd79;
+  background-color: var(--beige-transp);
   border-radius: 0rem 0.3rem 0.3rem 0rem;
   cursor: pointer;
 }
@@ -88,7 +88,7 @@ div {
 .border {
   width: 1rem;
   /* margin: 1rem 0rem 1rem 1rem; */
-  background-color: #f1dfcd;
+  background-color: var(--brown);
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 

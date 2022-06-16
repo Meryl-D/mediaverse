@@ -65,13 +65,13 @@ div {
   flex-direction: column;
   padding: 1em;
   margin: 1rem 1rem 1rem 0rem;
-  background-color: #e3cec279;
+  background-color: var(--beige-transp);
   border-radius: 0rem 0.3rem 0.3rem 0rem;
 }
 .border {
   width: 1rem;
   margin: 1rem 0rem 1rem 1rem;
-  background-color: #e3cec2;
+  background-color: var(--beige);
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 .displayCourse{
