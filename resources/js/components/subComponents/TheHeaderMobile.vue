@@ -30,39 +30,48 @@ function menu() {
 
     <div :class="isActive ? 'shadow' : ''" class="fond"></div>
 
-    <div :class="isActive ? 'active' : ''" class="menu" @click="menu();">
+    <div :class="isActive ? 'active' : ''" class="menu">
       <div>
         <div>
-          <span class="material-icons close">close</span>
+          <img class="logo" src="../../../.././public/img/logo_organiz.svg" />
+          <span class="material-icons close" @click="menu();">close</span>
           <span>
             <link
               href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
           </span>
         </div>
         <div class="liens">
-          <div class="linkBox">
+          <div class="linkBox" @click="menu();">
             <p class="router">
-              <router-link to="/"><a>Horaire</a></router-link>
+              <router-link to="/">Horaire</router-link>
             </p>
           </div>
           <div class="linkBox">
             <p class="router">
-              <router-link to="/absences">Absences</router-link>
+              <!-- <router-link to=""> -->
+              Absences
+              <!-- </router-link> -->
             </p>
           </div>
           <div class="linkBox">
             <p class="router">
-              <router-link to="/notes">Notes</router-link>
+              <!-- <router-link to=""> -->
+              Notes
+              <!-- </router-link> -->
             </p>
           </div>
           <div class="linkBox">
             <p class="router">
-              <router-link to="/reviews">Evaluation des cours</router-link>
+              <!-- <router-link to=""> -->
+              Evaluation des cours
+              <!-- </router-link> -->
             </p>
           </div>
           <div class="linkBox">
             <p class="router">
-              <router-link to="/compte">Compte</router-link>
+              <!-- <router-link to=""> -->
+              Compte
+              <!-- </router-link> -->
             </p>
           </div>
           <div id="separate">
@@ -82,13 +91,25 @@ function menu() {
 <style scoped>
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.logo {
+
+  width: 30%;
+  position: absolute;
+  margin-top: 5.3%;
+  margin-left: 5%;
+
+}
+
 .bouton {
 
-    width: 100%;
+  width: 100%;
 }
 
 p {
   line-height: 3em;
+  color: var(--green);
+  text-decoration: none;
+  font-weight: bold;
 }
 
 
