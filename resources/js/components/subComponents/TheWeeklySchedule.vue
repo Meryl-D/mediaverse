@@ -89,6 +89,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        height: calc(100vh - 6rem)
+
     }
 
     .weekly-header {
@@ -106,15 +108,16 @@
 
     .weekly-main {
         width: 100%;
-        height: calc(100vh - 7rem);
+        height: calc(100% - 6vw - .3rem);
         display: flex;
         justify-content: center;
+        margin-top: .3rem;
     }
     .week-box {
         -ms-overflow-style: none; /* for Internet Explorer, Edge */
         scrollbar-width: none; /* for Firefox */
         overflow-y: scroll;
-        height: calc(100% - 7vw);
+        /* height: calc(100% - 7vw); */
         scroll-snap-type: y mandatory;
     }
 
@@ -148,6 +151,14 @@
     }
 
     @media (min-width: 992px) {
+        .weekly-schedule {
+            height: 100%;
+        }
+
+        .weekly-main {
+            height: calc(100vh - 7.3rem);
+        }
+
 
         .week-box {
             height: calc(100% - 6vh);

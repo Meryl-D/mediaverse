@@ -16,26 +16,41 @@ import BaseButton from './BaseButton.vue';
                 <router-link to="/">
                     <p class="router">Horaires</p>
                 </router-link>
+                <span class="material-icons chevron">
+                    chevron_right
+                </span>
             </div>
             <div class="linkBox">
                 <router-link to="/">
                     <p class="router">Absences</p>
                 </router-link>
+                <span class="material-icons chevron">
+                    chevron_right
+                </span>
             </div>
             <div class="linkBox">
                 <!-- <router-link to="/"> -->
                     <p class="router">Notes</p>
                 <!-- </router-link> -->
+                <span class="material-icons chevron">
+                    chevron_right
+                </span>
             </div>
             <div class="linkBox">
                 <router-link to="/">
                     <p class="router">Evaluation des cours</p>
                 </router-link>
+                <span class="material-icons chevron">
+                    chevron_right
+                </span>
             </div>
             <div class="linkBox">
                 <router-link to="/">
                     <p class="router">Compte</p>
                 </router-link>
+                <span class="material-icons chevron">
+                    chevron_right
+                </span>
             </div>
         </div>
         <div id="separate">
@@ -54,6 +69,7 @@ import BaseButton from './BaseButton.vue';
 
 .router {
     margin: 0;
+    font-size: .8rem;
 }
 
 
@@ -91,12 +107,14 @@ a {
 }
 
 .linkBox {
-    padding: .7rem;
+    padding: .7rem 1rem;
     margin-bottom: 2vh;
     background-color: var(--beige-transp);
     border-radius: var(--small-radius);
     cursor: pointer;
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ligne2 {

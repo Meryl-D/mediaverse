@@ -138,4 +138,11 @@ p {
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 991px) {
+  .material-icons {
+    font-size: 32px;
+    cursor: pointer;
+  }
+}
 </style>
