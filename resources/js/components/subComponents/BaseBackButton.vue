@@ -13,19 +13,16 @@ function goBackWeeklyView() {
 </script>
 
 <template>
-  <span class="go-back"
-    ><button @click="goBackWeeklyView()">Horaire et tâches</button></span
+  <span 
+    ><button class="go-back bold" @click="goBackWeeklyView()">&lt Horaires et tâches</button></span
   >
 </template>
 
 <style scoped>
-button {
+.go-back {
   color: var(--green);
   background-color: var(--white);
   border: none;
-  border-radius: var(--small-radius);
-  box-shadow: var(--shadow);
-  padding: 0.3rem 0.6rem;
 }
 
 button:hover,
