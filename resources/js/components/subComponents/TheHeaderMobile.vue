@@ -13,7 +13,7 @@ function menu() {
 
 }
 
-function horaireWeekly() {
+function horaireWeeklyMobile() {
 
   if (isActive.value.monthly) {
     isActive.value.monthly = false;
@@ -57,7 +57,7 @@ function horaireWeekly() {
     <div :class="isMenuActive ? 'active' : ''" class="menu">
       <div>
         <div>
-          <img @click="horaireWeekly();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
+          <img @click="horaireWeeklyMobile();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
           <span class="material-icons close" @click="menu();">close</span>
           <span>
             <link
