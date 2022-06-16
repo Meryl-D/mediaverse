@@ -4,15 +4,17 @@ import {
   selectedDate,
   selectedTasks,
   isMobile,
+   isActive,
+   goToWeeklyView,
+   goToMonthlyView
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
-import BaseBackButton from "./BaseBackButton.vue";
-import SwitchViewButton from "./SwitchViewButton.vue";
-import TheEditTask from "./TheEditTask.vue";
+
+
 
 //-------------------------------------------------------------------------------------------------
 
@@ -140,6 +142,8 @@ function checkTask(d) {
 
 const monthToShow = ref(courseToShow.value.month);
 const yearToShow = ref(courseToShow.value.year);
+//-------------------------------------------------------------------------------------------------
+
 </script>
 
 <template>
@@ -166,17 +170,16 @@ const yearToShow = ref(courseToShow.value.year);
   <div id="file">
     <div v-if="!isMobile" class="daily-nav">
       <div class="mainTitle">
-        <base-back-button></base-back-button>
         <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
         </div>
-        <!-- <div class="navMonth">
-          <p class="pLink">Horaire</p>
+        <div class="navMonth">
+          <p class="pLink" @click="goToWeeklyView()">Horaire</p>
           <p class="sLink">></p>
-          <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+          <p class="pLink" @click="goToMonthlyView()">{{ monthToShow }} {{ yearToShow }}</p>
           <p class="sLink">></p>
           <p class="pLink">{{ simpleCurrentDate }}</p>
-        </div> -->
+        </div>
       </div>
       <div class="mainIcone">
         <div class="icone">
@@ -186,16 +189,18 @@ const yearToShow = ref(courseToShow.value.year);
           />
           <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
-        <switch-view-button
-          ><span class="material-icons icalendar"
+        <div @click="goToMonthlyView()"><span class="material-icons icalendar"
             >calendar_today</span
-          ></switch-view-button
-        >
+          ></div>
       </div>
     </div>
-    <div v-if="isMobile" class="titleMobileDay">
-      <base-back-button></base-back-button>
-      <switch-view-button>{{ monthToShow }}</switch-view-button>
+    <div v-if="isMobile" class="titleMobile">
+      <button class="go-back bold" @click="goToWeeklyView()">
+        &lt Horaires et tâches
+      </button>
+      <button class="bold switch" @click="goToMonthlyView()">
+        {{ monthToShow }}
+      </button>
     </div>
     <div id="calendar">
       <div
@@ -272,13 +277,7 @@ const yearToShow = ref(courseToShow.value.year);
   display: flex;
   flex-direction: row;
 } */
-.daily-nav {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  padding: 2rem 0;
-  align-items: center;
-}
+
 .mainTitle {
   display: flex;
   flex-direction: column;
