@@ -31,6 +31,15 @@ const props = defineProps({
 });
 
 //-------------------------------------------------------------------------------------------------
+// get tasks
+selectedTasks.value = [];
+
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
+  }
+});
+//-------------------------------------------------------------------------------------------------
 // get current day
 const currentDate = ref("");
 const courseToShow = ref(Object);
@@ -53,6 +62,14 @@ function getDay(d) {
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
+
+// get tasks
+  selectedTasks.value = [];
+  props.tasks.forEach((task) => {
+    if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+      selectedTasks.value.push(task);
+    }
+  });
 }
 
 // get current month
@@ -96,15 +113,6 @@ const monthToShow = ref(courseToShow.value.month);
 const yearToShow = ref(courseToShow.value.year);
 
 //-------------------------------------------------------------------------------------------------
-
-// get tasks
-selectedTasks.value = [];
-
-props.tasks.forEach((task) => {
-  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
-    selectedTasks.value.push(task);
-  }
-});
 
 // marks for task and courses under each day
 function checkCourse(d) {
@@ -497,5 +505,25 @@ function checkTask(d) {
     flex-direction: row;
     justify-content: space-between;
   }
+}
+.circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.task-circle-day {
+  background-color: var(--brown);
+  border-radius: 5rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+}
+.course-circle-day {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  background-color: var(--beige);
+  border-radius: 5rem;
 }
 </style>
