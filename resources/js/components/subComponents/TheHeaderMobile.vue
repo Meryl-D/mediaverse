@@ -1,11 +1,15 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import BaseButton from './BaseButton.vue';
-import { isActive}  from "../../stores.js";
+import { isActive }  from "../../stores.js";
 
 
 
 const isMenuActive = ref(false);
+
+const isWeeklySchedule = computed(() => {
+  return isActive.value.weekly && window.location.pathname == '/'
+})
 
 function menu() {
 
@@ -34,41 +38,31 @@ function horaireWeeklyMobile() {
   menu();
 
 }
-
-
-
 </script>
 
 <template>
   <div>
-
-    <div>
-      <div :class="!isMenuActive ? 'active' : ''" class="menuBurger" @click="menu();">
-        <span class="material-icons">menu</span>
-        <span>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        </span>
-      </div>
+    <div class="header-menu">
+      <span class="material-icons menuBurger" :class="!isMenuActive ? 'active' : ''" @click="menu()">menu</span>
+      <h1 v-if="isWeeklySchedule" class="schedule-title">Horaires et tâches</h1>
+      <span class="material-icons">notifications</span>
     </div>
 
     <div :class="isMenuActive ? 'shadow' : ''" class="fond"></div>
 
     <div :class="isMenuActive ? 'active' : ''" class="menu">
-      <div>
-        <div>
-          <img @click="horaireWeeklyMobile();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
+        <div class="close-icon-ctn">
           <span class="material-icons close" @click="menu();">close</span>
-          <span>
-            <link
-              href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-          </span>
         </div>
+          <img @click="horaireWeekly();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
         <div class="liens">
           <div class="linkBox" @click="menu();">
             <p class="router">
               <router-link to="/">Horaire</router-link>
             </p>
+            <span class="material-icons chevron">
+              chevron_right
+            </span>
           </div>
           <div class="linkBox">
             <p class="router">
@@ -76,6 +70,9 @@ function horaireWeeklyMobile() {
               Absences
               <!-- </router-link> -->
             </p>
+            <span class="material-icons chevron">
+              chevron_right
+            </span>
           </div>
           <div class="linkBox">
             <p class="router">
@@ -83,6 +80,9 @@ function horaireWeeklyMobile() {
               Notes
               <!-- </router-link> -->
             </p>
+            <span class="material-icons chevron">
+              chevron_right
+            </span>
           </div>
           <div class="linkBox">
             <p class="router">
@@ -90,6 +90,9 @@ function horaireWeeklyMobile() {
               Evaluation des cours
               <!-- </router-link> -->
             </p>
+            <span class="material-icons chevron">
+              chevron_right
+            </span>
           </div>
           <div class="linkBox">
             <p class="router">
@@ -97,8 +100,12 @@ function horaireWeeklyMobile() {
               Compte
               <!-- </router-link> -->
             </p>
+            <span class="material-icons chevron">
+              chevron_right
+            </span>
           </div>
-          <div id="separate">
+        </div>
+        <div id="separate">
             <hr />
             <router-link to="/login">
               <base-button class="bouton">
@@ -106,21 +113,40 @@ function horaireWeeklyMobile() {
               </base-button>
             </router-link>
           </div>
-        </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
 
+.chevron {
+  font-size: 24px;
+}
+
+.close-icon-ctn {
+display:flex;
+justify-content: flex-end;
+}
+
+.header-menu {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.schedule-title {
+  margin: 0;
+  font-size: clamp(1.7rem, 4vw, 2rem);
+}
+
 .logo {
 
-  width: 30%;
-  position: absolute;
-  margin-top: 5.3%;
-  margin-left: 5%;
+  width: 60%;
+  max-width: 250px;
+  cursor: pointer;
+  margin: 5vh 0;
 
 }
 
@@ -130,7 +156,7 @@ function horaireWeeklyMobile() {
 }
 
 p {
-  line-height: 3em;
+  line-height: 1.4;
   color: var(--green);
   text-decoration: none;
   font-weight: bold;
@@ -138,31 +164,23 @@ p {
 
 
 .menuBurger {
-  margin: 3% 0 0 2%;
   cursor: pointer;
   transition: all 0.5s;
   -webkit-transition: all 0.25s;
-  position: absolute;
+}
 
+.material-icons {
+  color: var(--green);
 }
 
 .close {
-  margin: 5% 0 10% 88%;
   cursor: pointer;
   color: var(--orange);
 }
 
-/* .liens {
-
-  margin: 0 0 0 8%;
-
-} */
-
 .router {
-
-  margin-left: 5%;
-
-
+  margin-bottom: 0;
+  font-size: .9rem;
 }
 
 a {
@@ -176,26 +194,32 @@ a {
   text-align: center;
 }
 
-.linkBox {
-  flex-direction: column;
-  text-align: left;
-  padding: 0.3em 0em 0 0em;
-  margin: 1em 5%;
-  background-color: var(--beige-transp);
-  border-radius: 0.6rem;
-  margin-bottom: 0%;
+.liens {
+  flex: 1;
+}
 
+.linkBox {
+  padding: .7rem 1rem;
+  margin-bottom: 3vh;
+  background-color: var(--beige-transp);
+  border-radius: var(--small-radius);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .menu {
-  width: 92vw;
+  display: flex;
+  flex-direction: column;
+  width: 93vw;
   height: 100vh;
   background-color: #FFFCFA;
   top: 0;
   position: absolute;
   left: -100%;
   transition: 0.5s;
-
+  padding: clamp(30px, 12%, 60px);
 
 }
 
@@ -221,27 +245,16 @@ a {
 
 #separate {
   display: grid;
-  margin-left: 5%;
+  /* margin-left: 5%;
   margin-right: 5%;
-  margin-top: 60%;
+  margin-top: 60%; */
 }
 
-hr {
+#separate hr {
+  margin: 0 0 4vh 0;
   height: 0;
   border: none;
-  border-top: 1px solid gray;
+  border-top: 2px solid #b8b8b8;
 
 }
-
-/* .deconnexion {
-  flex-direction: column;
-  text-align: left;
-  padding: 0.3em 0em 0 0em;
-  margin: 1em 5% 1em 5%;
-  background-color: #FFFCFA;
-  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
-  margin-bottom: 0%;
-  text-align: center;
-  filter: drop-shadow(0px 0px 10px #F1E3CD);
-} */
 </style>

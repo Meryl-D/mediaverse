@@ -13,6 +13,7 @@ import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
+import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 

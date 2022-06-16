@@ -98,5 +98,9 @@ span {
   margin: .3rem; 
   color:var(--green);
 }
-
+@media (max-width: 992px){
+  .TaskBox{
+    flex-direction: column;
+  }
+}
 </style>
