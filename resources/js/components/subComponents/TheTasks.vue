@@ -13,30 +13,35 @@ import { selectedTasks, tasksTmpl, isMobile } from "../../stores.js";
 // }
 const emit = defineEmits(["editTask"])
 
-const taskRefs = ref([]);
+function formatGridVal(val) {
+  return parseInt(val) + 1
+}
 
-  watchEffect(() => {
-  console.log(taskRefs.value)
-  // if (taskRefs.value) {
-  for (let i = 0; i < taskRefs.value.length; i++) {
-    const taskHourStart = selectedTasks.value[i].hourStart
-    const taskHourEnd = selectedTasks.value[i].hourEnd
-    console.log(taskHourEnd)
-    taskRefs.value[i].style.gridRowStart = parseInt(taskHourStart) + 1
-    taskRefs.value[i].style.gridRowEnd = parseInt(taskHourEnd) + 1
-  }
-  // }
+const gridSelectedTasks = computed(() => {
+  const tasks = []
+  selectedTasks.value.forEach(task => {
+    tasks.push(
+      {
+      gridRowStart: formatGridVal(task.hourStart),
+      gridRowEnd: formatGridVal(task.hourEnd)
+    }
+    )
+  });
 
+  return tasks
 })
-
 </script>
+
 <template>
   <div
     v-for="(task, index) in selectedTasks"
     :key="task"
-    ref="taskRefs"
     class="task-ctn"
     :class="`task-${index + 1}`"
+    :style="{
+      gridRowStart: `${gridSelectedTasks[index].gridRowStart}`,
+      gridRowEnd: `${gridSelectedTasks[index].gridRowEnd}`
+    }"
   >
     <div class="border"></div>
     <div class="TaskBox" @click="$emit('editTask', task)">

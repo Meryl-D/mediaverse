@@ -69,7 +69,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * format holidays dates.
+     * Format holidays dates.
      *
      * @param Collection $holidays
      *
