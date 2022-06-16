@@ -58,7 +58,7 @@ import BaseButton from './BaseButton.vue';
 
 p {
     line-height: 3em;
-    color: black;
+    color: var(--green);
     text-decoration: none;
     font-weight: bold;
 }
