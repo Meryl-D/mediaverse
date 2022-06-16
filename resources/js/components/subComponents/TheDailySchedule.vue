@@ -246,8 +246,6 @@ const yearToShow = ref(courseToShow.value.year);
       />
       <span class="material-icons" @click="addTask()">add_circle</span>
     </div>
-    <!-- </div>
-    </div> -->
   </div>
 </template>
 
@@ -425,7 +423,11 @@ hr {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
+<<<<<<< HEAD
 @media (max-width: 992px) {
+=======
+@media (min-width: 992px) {
+>>>>>>> 724116ca233a2f2ea276b3c7bd8e9da11928b0cb
   #rect {
     width: 75%;
   }
