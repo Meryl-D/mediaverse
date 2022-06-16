@@ -146,7 +146,7 @@ function checkTask(d) {
       </div>
       <div class="mainIcone">
         <div @click="goToDailyView()">
-          <span class="material-icons icalendar">calendar_today</span>
+          <span class="material-icons icalendar sizeDesktopIcone">calendar_today</span>
         </div>
       </div>
     </div>
@@ -413,7 +413,7 @@ function checkTask(d) {
         </div>
       </div>
 
-      <section>
+      <section class="agenda-container">
         <div class="agenda">
           <div class="chosenDay p bold material-icons"  @click="goToDailyView()">
             <p>{{ currentDate }}</p>
@@ -436,9 +436,7 @@ function checkTask(d) {
   flex-direction: column;
   background-color: var(--white);
   height: 100%;
-  padding: 2.5rem 1rem 0 1rem;
-  /* align-content: center;
-  justify-content: center; */
+  align-items: center;
 }
 .titleDesktop {
   width: 100%;
@@ -457,10 +455,9 @@ function checkTask(d) {
   cursor: pointer;
 }
 .bodyMonth {
-  display: grid;
-  grid-template-columns: 55% 45%;
-  /* flex-direction: row; */
-  /* height: 100%; */
+    width: 90%;
+    display: flex;
+    gap: 3rem;
 }
 
 .nextMonth {
@@ -472,28 +469,25 @@ function checkTask(d) {
   display: flex;
   align-content: flex-start;
   justify-content: flex-start;
+  flex: 3;
 }
 .daysOfWeek {
-  /* border-bottom: 1em var(--orange); */
   text-align: center;
-  margin: 1rem;
   align-content: center;
+  width: 100%;
 }
+
+.agenda-container {
+  flex: 2;
+}
+
 .agenda {
   display: flex;
   flex-direction: column;
   width: 100%;
   /* flex-wrap: wrap; */
 }
-.course {
-  padding-right: 0.7rem;
-}
-/* .chosenDay {
-  margin-top: 1rem;
-  padding-left: 1rem;
-  flex-basis: 100%;
-  margin-bottom: 0;
-} */
+
 .selected-day p {
   color: var(--orange);
 }
@@ -518,28 +512,28 @@ function checkTask(d) {
 }
 @media (max-width: 992px) {
   #MonthlyCalendar {
-    padding: 0 1rem 0 1rem;
     height: 100vw;
   }
   .titleMobile {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-bottom: 0.3rem;
+    margin-bottom: 1rem;
+    width: 86%;
   }
   .bodyMonth {
     display: flex;
     flex-direction: column;
+    width: 86%;
   }
   .daysOfWeek {
     margin: 0;
   }
   .day {
-    margin: 0 1rem 0.8rem 1rem;
+    margin: .8rem 1rem 0.5rem 1rem;
     cursor: pointer;
   }
   .calendar {
-    margin-bottom: 2rem;
     justify-content: space-evenly;
   }
   .course {

@@ -87,6 +87,11 @@ async function logout() {
   min-height: 100vh;
 }
 
+.timeStartEnd {
+  display: flex;
+  flex-direction: column;
+}
+
 h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -147,6 +152,43 @@ p {
   flex-direction: row;
 }
 
+.form {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  padding: 0 1rem;
+}
+
+.basic {
+  width: 95%;
+  padding-left: 2%;
+  border-radius: 0.7rem;
+  border: solid 0.1rem #e3cec2;
+  opacity: 50%;
+}
+
+#time {
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  height: 9rem;
+  background-color: #e3cec2;
+  opacity: 50%;
+  justify-content: space-evenly;
+  border-radius: 0.6rem;
+  padding-left: 2%;
+}
+
+#time hr {
+  margin: 0;
+}
+
+.description {
+  height: 13rem;
+  margin-bottom: 4rem;
+  width: 100%;
+  padding: 1rem;
+}
 @media (min-width: 576px) {
   p {
     font-size: 0.85rem;
@@ -157,9 +199,33 @@ p {
   p {
     font-size: 0.9rem;
   }
+
+  .sizeDesktopIcone {
+    font-size: 40px;
+    margin-right: 40%;
+  }
 }
 
 @media (max-width: 991px) {
+  .form {
+    display: flex;
+    padding: 0;
+  }
+
+  .basic, #time {
+    width: 100%;
+  }
+
+  .timeStartEnd {
+    margin-right: 1rem;
+    justify-content: center;
+    gap: .3rem;
+  }
+
+  .ptimeEnd, .ptimeStart {
+    margin: 0;
+  }
+
   .material-icons {
     font-size: 32px;
     cursor: pointer;
@@ -170,7 +236,7 @@ p {
     flex-direction: row;
     justify-content: space-between;
     margin-bottom: 0.3rem;
-    width: 95vw;
+    width: 86%;
   }
 
   .switch {
@@ -214,7 +280,7 @@ p {
 .course-circle-day {
   width: 0.7rem;
   height: 0.7rem;
-  margin: 0.1rem 0.1rem 0.5rem 0.1rem;
+  margin: 0.1rem 0.1rem 0.8rem 0.1rem;
   background-color: var(--beige);
   border-radius: 5rem;
 }
@@ -222,7 +288,7 @@ p {
   background-color: transparent;
   width: 0;
   height: 0.7rem;
-  margin: 0.1rem 0.1rem 0.5rem 0.1rem;
+  margin: 0.1rem 0.1rem 0.8rem 0.1rem;
   border-radius: 5rem;
 }
 </style>

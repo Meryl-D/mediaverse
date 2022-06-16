@@ -73,6 +73,11 @@ div {
   background-color: var(--beige-transp);
   border-radius: 0rem 0.3rem 0.3rem 0rem;
 }
+
+.DailyCourseBox p {
+  margin: 0;
+}
+
 .border {
   width: 1rem;
   margin: 1rem 0rem 1rem 0rem;
@@ -83,37 +88,26 @@ div {
   flex-direction: column;
   width: 100%;
 }
-.timeStartEnd {
-  display: flex;
-  flex-direction: column;
-}
+
 @media (max-width: 992px) {
   .timeStart {
     display: inline;
   }
-  .ptimeEnd {
-    display: inline;
-  }
-  .ptimeStart {
-    display: inline;
-  }
+
   .course-ctn {
     margin: .7rem 0 .7rem 0;
-    height: 4rem;
+    min-height: 4rem;
   }
   .DailyCourseBox {
     width: 100%;
     margin: 0;
-    padding: 0 0 0 .3rem;
+    display: flex;
+    justify-content: center;
   }
   .border {
     margin: 0;
   }
-  .timeStartEnd {
-    /* display: flex;
-    flex-direction: column; */
-    margin-right: 1rem;
-  }
+
   .p{
     display: inline;
   }

@@ -69,14 +69,14 @@ const allTasks = await axiosClient.get("api/tasks", {
 
 .header-mobile {
   display: flex;
-  height: 6rem;
+  height: 5rem;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1;
   background-color: var(--white);
   align-items: center;
-  padding: 0 6% 0 6%;
+  padding: 0 7% 0 7%;
 }
 
 .header-desktop {
@@ -100,7 +100,7 @@ const allTasks = await axiosClient.get("api/tasks", {
 } */
 @media (max-width: 991px) {
   #schedule {
-    min-height: calc(100vh - 6rem);
+    min-height: calc(100vh - 5rem);
   }
 }
 

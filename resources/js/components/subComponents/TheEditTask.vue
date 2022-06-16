@@ -92,7 +92,7 @@ console.log(props.task);
         </span>
       </div>
     </div>
-    <form @submit.prevent="submitForm()">
+    <form @submit.prevent="submitForm()" class="form">
       <div id="left">
         <input v-model="nameTask" type="text" class="basic name" />
         <div id="time">
@@ -160,39 +160,10 @@ console.log(props.task);
 h2 {
   font-weight: bold;
 }
-form {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 50% 50%;
-}
 
-.basic {
-  width: 95%;
-  margin: 1rem;
-  padding-left: 2%;
-  border-radius: 0.7rem;
-  border: solid 0.1rem #e3cec2;
-  opacity: 50%;
-}
 .name {
   height: 3rem;
-}
-.description {
-  height: 14rem;
-  margin-bottom: 4rem;
-  /* margin-bottom: 5rem; */
-}
-#time {
-  display: flex;
-  flex-direction: column;
-  width: 95%;
-  height: 9rem;
-  background-color: #e3cec2;
-  opacity: 50%;
-  justify-content: center;
-  border-radius: 0.6rem;
-  padding-left: 2%;
-  margin: 1rem;
+  margin-bottom: 1rem;
 }
 
 .dateTask {
@@ -212,8 +183,6 @@ form {
   display: flex;
   justify-content: right;
   width: 100%;
-  padding-right: 1rem;
-  /* margin-bottom: 4rem; */
 }
 #btn-delete-task {
   display: flex;
@@ -323,15 +292,12 @@ hr {
   }
   #btn-delete-task {
     display: flex;
-    width: 100%;
-    margin: 1rem 0 0 0;
+    width: 90%;
     justify-content: center;
-    /* margin-top: 1rem;
-  padding-right: 1rem;
-  margin-bottom: 3rem; */
+    padding: 0;
   }
   .delete {
-    width: 92%;
+    width: 100%;
   }
 }
 </style>

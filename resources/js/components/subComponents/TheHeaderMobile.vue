@@ -138,7 +138,7 @@ justify-content: flex-end;
 
 .schedule-title {
   margin: 0;
-  font-size: clamp(1.7rem, 4vw, 2rem);
+  font-size: clamp(1.5rem, 4vw, 2rem);
 }
 
 .logo {

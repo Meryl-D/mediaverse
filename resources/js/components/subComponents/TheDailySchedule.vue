@@ -260,7 +260,7 @@ const yearToShow = ref(courseToShow.value.year);
         <h1>Tâches</h1>
         <the-tasks :day="courseToShow"></the-tasks> -->
 
-    <div v-if="isMobile" class="icone">
+    <div v-if="isMobile" class="icone icon-add-task">
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
@@ -318,14 +318,15 @@ const yearToShow = ref(courseToShow.value.year);
   flex-direction: row;
 }
 .sizeDesktopIcone {
-  font-size: 40px;
   margin-right: 40%;
 }
-.sizeMobileIcone {
-  font-size: 24px;
-}
+
 .icalendar {
   margin-left: 0.5rem;
+}
+
+.day p {
+  margin-bottom: .3rem;
 }
 
 
@@ -334,7 +335,7 @@ const yearToShow = ref(courseToShow.value.year);
   display: flex;
   flex-flow: row nowrap;
   height: fit-content;
-  width: 100%;
+  width: 93%;
   overflow: auto;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
@@ -382,7 +383,7 @@ const yearToShow = ref(courseToShow.value.year);
 }
 .dailyHr {
   height: 0%;
-  width: 90%;
+  width: 86%;
   border-radius: 6rem;
   border-top: 6px solid var(--orange);
   background-color: transparent;
@@ -449,7 +450,7 @@ const yearToShow = ref(courseToShow.value.year);
 
 .grid-container {
   width: 90%;
-  height: 60vh;
+  height: 57vh;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
   overflow-y: scroll;
@@ -484,6 +485,7 @@ const yearToShow = ref(courseToShow.value.year);
   }
   #containerEdit {
     width: 100%;
+    height: auto;
   }
 
   .titleMobileDay {
@@ -498,7 +500,7 @@ const yearToShow = ref(courseToShow.value.year);
     height: 14vh;
   }
   .grid-container {
-    width: 90%;
+    width: 86%;
     height: 55vh;
   }
   .icone {
@@ -512,6 +514,10 @@ const yearToShow = ref(courseToShow.value.year);
   .choosenDay {
     text-align: center;
     margin: 0.5rem 0 0 0;
+  }
+
+  .icon-add-task {
+    margin: 3vh;
   }
 }
 </style>
