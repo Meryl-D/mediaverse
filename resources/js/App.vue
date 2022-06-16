@@ -41,7 +41,7 @@ async function logout() {
   };
 }
 
-//navigator.serviceWorker.register('/workerCacheFetched.js');
+navigator.serviceWorker.register('/workerCacheFetched.js');
 </script>
 
 

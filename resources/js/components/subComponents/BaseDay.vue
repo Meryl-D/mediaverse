@@ -91,10 +91,15 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
         margin: 0;
     }
 
+    .course-ctn p, .more, .holiday p {
+        line-height: 1.4;
+        font-size: clamp(.75rem, 1vw, .9rem);
+    }
+
     .lesson-ctn {
         display: flex;
         flex: 1;
-        padding: 0rem 1.5rem;
+        padding: 0rem 5vw;
     }
 
     .date-ctn {
@@ -189,9 +194,6 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
     }
 
     @media (min-width: 576px) {
-        .lesson-ctn {
-            padding: 0rem 2.5rem;
-        }
 
         .day {
             font-size: 1.1rem;
@@ -264,11 +266,6 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
         .course-ctn {
             flex-direction: column;
             padding: 0 0 .9vh 0;
-        }
-
-        .course-ctn p, .more, .holiday p {
-            line-height: 1.4;
-            font-size: clamp(.7rem, 1vw, .9rem);
         }
 
         .course-room {
