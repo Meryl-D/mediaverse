@@ -308,18 +308,21 @@ const yearToShow = ref(courseToShow.value.year);
   justify-content: center;
 }
 
-.task-circle-day,
+.task-circle-day {
+  background-color: var(--brown);
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  border-radius: 5rem;
+}
 .course-circle-day {
   width: 0.7rem;
   height: 0.7rem;
   margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--brown);
+  background-color: var(--beige);
   border-radius: 5rem;
 }
 
-.course-circle-day {
-  background-color: var(--beige);
-}
 #calendar {
   display: flex;
   flex-flow: row nowrap;
