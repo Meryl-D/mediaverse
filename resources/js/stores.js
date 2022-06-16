@@ -41,3 +41,7 @@ export function chunkArrayInMonth(days,currentMonth) {
     }   
     return chunksArray;
 }
+
+export function formatHourForGrid(val) {
+    return parseInt(val) + 1
+}

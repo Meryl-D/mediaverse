@@ -157,7 +157,7 @@ a {
   text-align: left;
   padding: 0.3em 0em 0 0em;
   margin: 1em 5%;
-  background-color: var(--beige);
+  background-color: var(--beige-transp);
   border-radius: 0.6rem;
   margin-bottom: 0%;
 

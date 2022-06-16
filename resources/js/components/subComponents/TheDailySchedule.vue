@@ -11,11 +11,10 @@ import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
+import SwitchViewButton from "./SwitchViewButton.vue";
 import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
-
 
 const props = defineProps({
   days: {
@@ -68,7 +67,6 @@ function getDay(d) {
       selectedTasks.value.push(task);
     }
   });
-  
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -168,14 +166,17 @@ const yearToShow = ref(courseToShow.value.year);
   <div id="file">
     <div v-if="!isMobile" class="daily-nav">
       <div class="mainTitle">
-        <h1>{{ monthToShow }} {{ yearToShow }}</h1>
-        <div class="navMonth">
+        <base-back-button></base-back-button>
+        <div>
+          <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+        </div>
+        <!-- <div class="navMonth">
           <p class="pLink">Horaire</p>
           <p class="sLink">></p>
           <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
           <p class="sLink">></p>
           <p class="pLink">{{ simpleCurrentDate }}</p>
-        </div>
+        </div> -->
       </div>
       <div class="mainIcone">
         <div class="icone">
@@ -185,12 +186,16 @@ const yearToShow = ref(courseToShow.value.year);
           />
           <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
-        <switch-view-button ><span class="material-icons icalendar">calendar_today</span></switch-view-button>
+        <switch-view-button
+          ><span class="material-icons icalendar"
+            >calendar_today</span
+          ></switch-view-button
+        >
       </div>
     </div>
     <div v-if="isMobile" class="titleMobileDay">
       <base-back-button></base-back-button>
-      <switch-view-button >{{ monthToShow }}</switch-view-button>
+      <switch-view-button>{{ monthToShow }}</switch-view-button>
     </div>
     <div id="calendar">
       <div
@@ -267,13 +272,13 @@ const yearToShow = ref(courseToShow.value.year);
   display: flex;
   flex-direction: row;
 } */
-  .daily-nav {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
-    padding: 2rem 0;
-    align-items: center;
-  }
+.daily-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  padding: 2rem 0;
+  align-items: center;
+}
 .mainTitle {
   display: flex;
   flex-direction: column;
@@ -303,18 +308,21 @@ const yearToShow = ref(courseToShow.value.year);
   justify-content: center;
 }
 
-.task-circle-day,
+.task-circle-day {
+  background-color: var(--brown);
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  border-radius: 5rem;
+}
 .course-circle-day {
   width: 0.7rem;
   height: 0.7rem;
   margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--brown);
+  background-color: var(--beige);
   border-radius: 5rem;
 }
 
-.course-circle-day {
-  background-color: var(--beige);
-}
 #calendar {
   display: flex;
   flex-flow: row nowrap;
@@ -425,7 +433,7 @@ hr {
   #rect {
     width: 75%;
   }
-    /* #container {
+  /* #container {
       width: 100%;
     } */
 
@@ -437,24 +445,24 @@ hr {
     width: 100%;
     padding: 0 1rem 1rem 1rem;
   }
-  #calendar{
+  #calendar {
     height: 14vh;
   }
   .grid-container {
-  width: 90%;
-  height: 60vh;
-}
-.icone {
-  display: flex;
-  justify-content: right;
-  width: 100%;
-  padding-right: 3%;
-  /* display: inline-block; */
-  text-align: right;
-}
-.choosenDay {
-  text-align: center;
-  margin: .5rem 0 0 0;
-}
+    width: 90%;
+    height: 60vh;
+  }
+  .icone {
+    display: flex;
+    justify-content: right;
+    width: 100%;
+    padding-right: 3%;
+    /* display: inline-block; */
+    text-align: right;
+  }
+  .choosenDay {
+    text-align: center;
+    margin: 0.5rem 0 0 0;
+  }
 }
 </style>

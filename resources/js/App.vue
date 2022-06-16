@@ -65,7 +65,7 @@ async function logout() {
     */
   --orange: #f9a228;
   --green: #2a3a30;
-  --beige: #F1DFCD;
+  --beige: #E3CEC2;
   --beige-transp: rgba(227, 206, 194, 0.5);
   --brown: #645C4E;
   --white: #fffcfa;

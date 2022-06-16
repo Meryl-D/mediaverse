@@ -58,7 +58,7 @@ import BaseButton from './BaseButton.vue';
 
 
 p {
-    line-height: 3em;
+    line-height: 1.4;
     color: var(--green);
     text-decoration: none;
     font-weight: bold;
@@ -112,8 +112,6 @@ a {
     flex-direction: column;
     align-items: center;
     width: 100%;
-    margin-bottom: 3em;
-    margin-top: 2em;
 }
 
 

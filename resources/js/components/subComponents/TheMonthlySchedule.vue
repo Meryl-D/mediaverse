@@ -13,7 +13,7 @@ import {
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
+import SwitchViewButton from "./SwitchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -30,6 +30,15 @@ const props = defineProps({
   },
 });
 
+//-------------------------------------------------------------------------------------------------
+// get tasks
+selectedTasks.value = [];
+
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
+  }
+});
 //-------------------------------------------------------------------------------------------------
 // get current day
 const currentDate = ref("");
@@ -53,6 +62,14 @@ function getDay(d) {
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
+
+// get tasks
+  selectedTasks.value = [];
+  props.tasks.forEach((task) => {
+    if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+      selectedTasks.value.push(task);
+    }
+  });
 }
 
 // get current month
@@ -97,15 +114,6 @@ const yearToShow = ref(courseToShow.value.year);
 
 //-------------------------------------------------------------------------------------------------
 
-// get tasks
-selectedTasks.value = [];
-
-props.tasks.forEach((task) => {
-  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
-    selectedTasks.value.push(task);
-  }
-});
-
 // marks for task and courses under each day
 function checkCourse(d) {
   return d.courses ? true : false;
@@ -125,16 +133,19 @@ function checkTask(d) {
 <template>
   <div id="MonthlyCalendar">
     <div v-if="!isMobile" class="titleDesktop">
-      <h1>{{ monthToShow }} {{ yearToShow }}</h1>
       <div class="navMonth">
-        <p class="pLink">Horaire</p>
+        <base-back-button></base-back-button>
+        <div class="flexTitle">
+          <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+          <switch-view-button
+            ><span class="material-icons icalendar"
+              >calendar_today</span
+            ></switch-view-button
+          >
+        </div>
+        <!-- <p class="pLink">Horaire</p>
         <p class="sLink">></p>
-        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
-        <switch-view-button
-          ><span class="material-icons icalendar"
-            >calendar_today</span
-          ></switch-view-button
-        >
+        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p> -->
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
@@ -488,5 +499,31 @@ function checkTask(d) {
     padding: 0;
     margin: 0 0 0.7rem 0;
   }
+  .flexTitle {
+    display: flex;
+    /* flex-basis: 100%; */
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+.circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.task-circle-day {
+  background-color: var(--brown);
+  border-radius: 5rem;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+}
+.course-circle-day {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  background-color: var(--beige);
+  border-radius: 5rem;
 }
 </style>
