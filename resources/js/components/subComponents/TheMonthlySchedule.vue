@@ -7,13 +7,13 @@ import {
   chunkArrayInGroups,
   chunkArrayInMonth,
   selectedDate,
+  selectedTasks,
   isMobile,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
-
 
 const props = defineProps({
   schedule: {
@@ -58,7 +58,6 @@ function getDay(d) {
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
 
-//console.log(props.nextMonth);
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
@@ -95,6 +94,31 @@ const CourseTab = courseToShow.value.courses;
 
 const monthToShow = ref(courseToShow.value.month);
 const yearToShow = ref(courseToShow.value.year);
+
+//-------------------------------------------------------------------------------------------------
+
+// get tasks
+selectedTasks.value = [];
+
+props.tasks.forEach((task) => {
+  if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
+    selectedTasks.value.push(task);
+  }
+});
+
+// marks for task and courses under each day
+function checkCourse(d) {
+  return d.courses ? true : false;
+}
+
+function checkTask(d) {
+  const hasTask = props.tasks.some(
+    (task) =>
+      task.dateStart.substr(0, 10) == d.fullDate ||
+      task.dateEnd.substr(0, 10) == d.fullDate
+  );
+  return hasTask;
+}
 </script>
 
 
@@ -106,11 +130,16 @@ const yearToShow = ref(courseToShow.value.year);
         <p class="pLink">Horaire</p>
         <p class="sLink">></p>
         <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+        <switch-view-button
+          ><span class="material-icons icalendar"
+            >calendar_today</span
+          ></switch-view-button
+        >
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
-     <base-back-button></base-back-button>
-      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+      <base-back-button></base-back-button>
+      <switch-view-button>{{ monthToShow }}</switch-view-button>
     </div>
     <div class="bodyMonth">
       <div class="calendar">
@@ -135,6 +164,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -161,6 +194,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -187,6 +224,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -213,6 +254,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -239,6 +284,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -265,6 +314,10 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -291,31 +344,29 @@ const yearToShow = ref(courseToShow.value.year);
               <p class="day">
                 <strong>{{ day.date }}</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
         </div>
       </div>
 
-      <!-- <hr /> -->
-      <div class="agenda">
-        <div class="chosenDay p bold">
-          <p>{{ currentDate }}</p>
-          <hr v-if="!isMobile" class="lineSpace" />
+      <section>
+        <div class="agenda">
+          <div class="chosenDay p bold">
+            <p>{{ currentDate }}</p>
+            <hr v-if="!isMobile" class="lineSpace" />
+          </div>
+          <base-course-time
+            :lessonDay="courseToShow"
+            class="course"
+          ></base-course-time>
+          <the-tasks></the-tasks>
         </div>
-        <!-- <div class="maxWidth"> -->
-        <base-course-time
-          :lessonDay="courseToShow"
-          class="course"
-        ></base-course-time>
-        <the-tasks></the-tasks>
-        <!-- </div> -->
-        <!-- <hr />
-        <div class="task">
-          <h1>Tâches</h1>
-          <the-tasks :day="courseToShow"></the-tasks>
-        </div> -->
-      </div>
+      </section>
     </div>
   </div>
 </template>
@@ -425,7 +476,7 @@ const yearToShow = ref(courseToShow.value.year);
     margin: 0;
   }
   .day {
-    margin: .8rem 1rem .8rem 1rem;
+    margin: 0.8rem 1rem 0.8rem 1rem;
     cursor: pointer;
   }
   .calendar {
@@ -435,7 +486,7 @@ const yearToShow = ref(courseToShow.value.year);
   .course {
     width: auto;
     padding: 0;
-    margin: 0 0 .7rem 0;
+    margin: 0 0 0.7rem 0;
   }
 }
 </style>

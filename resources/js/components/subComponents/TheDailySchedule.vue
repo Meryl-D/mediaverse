@@ -16,7 +16,6 @@ import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
-//console.log(isMobile.value)
 
 const props = defineProps({
   days: {
@@ -69,7 +68,7 @@ function getDay(d) {
       selectedTasks.value.push(task);
     }
   });
-  //console.log(selectedTasks.value)
+  
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -186,13 +185,12 @@ const yearToShow = ref(courseToShow.value.year);
           />
           <span class="material-icons" @click="addTask()">add_circle</span>
         </div>
-        <span class="material-icons icalendar">calendar_today</span>
-        <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+        <switch-view-button ><span class="material-icons icalendar">calendar_today</span></switch-view-button>
       </div>
     </div>
     <div v-if="isMobile" class="titleMobileDay">
       <base-back-button></base-back-button>
-      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+      <switch-view-button >{{ monthToShow }}</switch-view-button>
     </div>
     <div id="calendar">
       <div
