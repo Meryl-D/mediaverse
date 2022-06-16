@@ -1,5 +1,10 @@
 <script setup>
-import { chunkArrayInGroups, selectedDate, selectedTasks, isMobile } from "../../stores.js";
+import {
+  chunkArrayInGroups,
+  selectedDate,
+  selectedTasks,
+  isMobile,
+} from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
@@ -7,10 +12,11 @@ import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
 import switchViewButton from "./switchViewButton.vue";
+import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
 
-console.log(isMobile.value)
+//console.log(isMobile.value)
 
 const props = defineProps({
   days: {
@@ -34,6 +40,7 @@ props.tasks.forEach((task) => {
 
 //reactive variable for the selected day with the date of the day
 const currentDate = ref("");
+const simpleCurrentDate = ref("");
 const courseToShow = ref(Object);
 
 props.days.forEach((d) => {
@@ -41,6 +48,8 @@ props.days.forEach((d) => {
     currentDate.value =
       d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
     courseToShow.value = d;
+    simpleCurrentDate.value =
+      d.date + " " + d.month.toLowerCase() + " " + d.year;
   }
 });
 
@@ -50,6 +59,7 @@ function getDay(d) {
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
   courseToShow.value = d;
   selectedDate.value = d;
+  simpleCurrentDate.value = d.date + " " + d.month.toLowerCase() + " " + d.year;
 
   // empty the selected tasks array
   selectedTasks.value = [];
@@ -59,6 +69,7 @@ function getDay(d) {
       selectedTasks.value.push(task);
     }
   });
+  //console.log(selectedTasks.value)
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -101,23 +112,37 @@ function closeTask() {
 }
 //-------------------------------------------------------------------------------------
 
-const editPopUp = ref(false)
+const editPopUp = ref(false);
 
-const toEditTask = ref("") 
-function popUpEdit(task){
+const toEditTask = ref("");
+function popUpEdit(task) {
   editPopUp.value = true;
-  toEditTask.value = task
-  document.getElementById("rect").classList.add("hidden")
-  return editPopUp
+  toEditTask.value = task;
+  document.getElementById("rect").classList.add("hidden");
+  return editPopUp;
 }
 
 function closeEditTask() {
   editPopUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
-  return editPopUp
+  return editPopUp;
 }
 
+function checkCourse(d) {
+  return d.courses ? true : false;
+}
 
+function checkTask(d) {
+  const hasTask = props.tasks.some(
+    (task) =>
+      task.dateStart.substr(0, 10) == d.fullDate ||
+      task.dateEnd.substr(0, 10) == d.fullDate
+  );
+  return hasTask;
+}
+
+const monthToShow = ref(courseToShow.value.month);
+const yearToShow = ref(courseToShow.value.year);
 </script>
 
 <template>
@@ -131,21 +156,44 @@ function closeEditTask() {
       ></the-add-task>
     </div>
   </div>
-    <div id="container">
+  <div id="container">
     <div v-if="editPopUp" class="ctn-editPopUp">
       <the-edit-task
         @close="closeEditTask"
         class="popUpEdit"
         @add="closeEditTask"
-        :task = "toEditTask"
+        :task="toEditTask"
       ></the-edit-task>
     </div>
   </div>
   <div id="file">
-    <section>
-      <base-back-button></base-back-button>
+    <div v-if="!isMobile" class="daily-nav">
+      <div class="mainTitle">
+        <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+        <div class="navMonth">
+          <p class="pLink">Horaire</p>
+          <p class="sLink">></p>
+          <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+          <p class="sLink">></p>
+          <p class="pLink">{{ simpleCurrentDate }}</p>
+        </div>
+      </div>
+      <div class="mainIcone">
+        <div class="icone">
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+          />
+          <span class="material-icons" @click="addTask()">add_circle</span>
+        </div>
+        <span class="material-icons icalendar">calendar_today</span>
+        <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+      </div>
+    </div>
+    <div v-if="isMobile" class="titleMobileDay">
+      <h2>&lt Horaires et tâches</h2>
       <switch-view-button :lessonDay="courseToShow"></switch-view-button>
-    </section>
+    </div>
     <div id="calendar">
       <div
         v-for="(group, index) in weeksSchedule"
@@ -161,9 +209,13 @@ function closeEditTask() {
           @click="getDay(day)"
         >
           <p>{{ day.dayShort }}</p>
-          <p>
-            <strong>{{ day.date }}</strong>
+          <p class="dDay">
+            {{ day.date }}
           </p>
+          <div class="circles">
+            <div v-if="checkTask(day)" class="task-circle-day"></div>
+            <div v-if="checkCourse(day)" class="course-circle-day"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -172,30 +224,28 @@ function closeEditTask() {
         {{ currentDate }}
       </p>
     </div>
-    <div id="separate">
+    <!-- <div id="separate">
       <hr />
-    </div>
+    </div> -->
     <div class="grid-container">
-        <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
+      <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
-    <!-- <div class="grid">
-      <div class="course">
-        <h1>Cours</h1>
-        <base-course :lessonDay="courseToShow"> </base-course>
-      </div>
-      <div class="task">
+    <!-- <div class="grid"> -->
+    <!-- <div class="course">
+      <h1>Cours</h1>
+      <base-course :lessonDay="courseToShow"> </base-course>
+    </div> -->
+    <!-- <div class="task">
         <h1>Tâches</h1>
         <the-tasks :day="courseToShow"></the-tasks> -->
 
-    <div class="icone">
+    <div v-if="isMobile" class="icone">
       <link
         rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
       />
       <span class="material-icons" @click="addTask()">add_circle</span>
     </div>
-    <!-- </div>
-    </div> -->
   </div>
 </template>
 
@@ -215,11 +265,62 @@ function closeEditTask() {
   flex-direction: column;
   align-items: center;
 }
+/* .daily-nav {
+  display: flex;
+  flex-direction: row;
+} */
+  .daily-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    padding: 2rem 0;
+    align-items: center;
+  }
+.mainTitle {
+  display: flex;
+  flex-direction: column;
+}
+.pLink {
+  display: inline;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 75%;
+  cursor: pointer;
+}
+.sLink {
+  display: inline;
+  opacity: 75%;
+  cursor: pointer;
+}
+.mainIcone {
+  display: flex;
+  flex-direction: row;
+}
+.icalendar {
+  margin-left: 0.5rem;
+}
+.circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
+.task-circle-day,
+.course-circle-day {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  background-color: var(--brown);
+  border-radius: 5rem;
+}
+
+.course-circle-day {
+  background-color: var(--beige);
+}
 #calendar {
   display: flex;
   flex-flow: row nowrap;
-  height: 10vh;
+  height: 12vh;
   width: 100%;
   overflow: auto;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -250,6 +351,10 @@ function closeEditTask() {
   margin-top: 1%; */
   cursor: pointer;
 }
+.dDay {
+  font-size: 1rem;
+  font-weight: 900;
+}
 .select {
   color: var(--orange);
 }
@@ -272,12 +377,11 @@ hr {
 .selected-day p {
   color: var(--orange);
 }
-
-h1 {
-  margin-left: 1rem;
-}
 .icone {
-  margin: 3%;
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  padding-right: 3%;
   /* display: inline-block; */
   text-align: right;
 }
@@ -302,13 +406,13 @@ h1 {
 .ctn-popUp {
   flex-basis: 90%;
 }
-.ctn-editPopUp{
+.ctn-editPopUp {
   flex-basis: 90%;
 }
 
 .grid-container {
-  width: 86vw;
-  height: 50vh;
+  width: 90%;
+  height: 60vh;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
   scrollbar-width: none; /* for Firefox */
   overflow-y: scroll;
@@ -319,7 +423,40 @@ h1 {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
-@media(max-width: 992px){
+@media (max-width: 992px) {
+  #rect {
+    width: 75%;
+  }
+    /* #container {
+      width: 100%;
+    } */
 
+  .titleMobileDay {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0 0 0.3rem 0;
+    width: 100%;
+    padding: 0 1rem 1rem 1rem;
+  }
+  #calendar{
+    height: 14vh;
+  }
+  .grid-container {
+  width: 90%;
+  height: 60vh;
+}
+.icone {
+  display: flex;
+  justify-content: right;
+  width: 100%;
+  padding-right: 3%;
+  /* display: inline-block; */
+  text-align: right;
+}
+.choosenDay {
+  text-align: center;
+  margin: .5rem 0 0 0;
+}
 }
 </style>

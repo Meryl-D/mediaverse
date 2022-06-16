@@ -1,16 +1,19 @@
 
 <script setup>
-import BaseCourse from "./BaseCourse.vue";
+import BaseCourseTime from "./BaseCourseTime.vue";
 import TheHeaderMobile from "./TheHeaderMobile.vue";
 import TheTasks from "./TheTasks.vue";
 import {
   chunkArrayInGroups,
   chunkArrayInMonth,
   selectedDate,
+  isMobile,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
+import switchViewButton from "./switchViewButton.vue";
+
 
 const props = defineProps({
   schedule: {
@@ -23,6 +26,10 @@ const props = defineProps({
   },
   tasks: {
     type: Object,
+    required: true,
+  },
+  nextMonth: {
+    type: String,
     required: true,
   },
 });
@@ -44,7 +51,7 @@ function isSelectedDate(day) {
   return day.fullDate == selectedDate.value.fullDate ? true : false;
 }
 
-//event listener for chosen day 
+//event listener for chosen day
 function getDay(d) {
   currentDate.value =
     d.dayLong + ", " + d.date + " " + d.month.toLowerCase() + " " + d.year;
@@ -55,20 +62,20 @@ function getDay(d) {
 // get current month
 const currentMonth = ref(selectedDate.value.monthNb);
 
+//console.log(props.nextMonth);
 //-------------------------------------------------------------------------------------------------
 
 //group days by month
-const monthlySchedule=[];
+const monthlySchedule = [];
 props.days.forEach((d) => {
   if (currentMonth.value == d.monthNb) {
     monthlySchedule.push(d);
   }
 });
-console.log(monthlySchedule);
 
 //if beginning of the month isn't a monday
 const firstDay = monthlySchedule[0];
-console.log(monthlySchedule);
+
 if (firstDay.dayShort == "Ma") {
   monthlySchedule.unshift("Lu");
 }
@@ -87,258 +94,307 @@ if (firstDay.dayShort == "Sa") {
 if (firstDay.dayShort == "Di") {
   monthlySchedule.unshift("Lu", "Ma", "Me", "Je", "Ve", "Sa");
 }
+
+const CourseTab = courseToShow.value.courses;
+
+const monthToShow = ref(courseToShow.value.month);
+const yearToShow = ref(courseToShow.value.year);
 </script>
 
 
 <template>
   <div id="MonthlyCalendar">
-    <section>
-    <base-back-button ></base-back-button>
-    <switch-view-button :lessonDay="courseToShow"></switch-view-button>
-    </section>
-    <section class="calendar">
-      <div class="daysOfWeek">
-        <p>Lu</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Lu'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
+    <div v-if="!isMobile" class="titleDesktop">
+      <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+      <div class="navMonth">
+        <p class="pLink">Horaire</p>
+        <p class="sLink">></p>
+        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+      </div>
+    </div>
+    <div v-if="isMobile" class="titleMobile">
+      <h2>&lt Horaires et tâches</h2>
+      <switch-view-button :lessonDay="courseToShow"></switch-view-button>
+    </div>
+    <div class="bodyMonth">
+      <div class="calendar">
+        <div class="daysOfWeek">
+          <p>Lu</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Lu'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Lu'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
           </div>
         </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Lu'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
+
+        <div class="daysOfWeek">
+          <p>Ma</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Ma'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Ma'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+        </div>
+
+        <div class="daysOfWeek">
+          <p>Me</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Me'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Me'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+        </div>
+
+        <div class="daysOfWeek">
+          <p>Je</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Je'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Je'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+        </div>
+
+        <div class="daysOfWeek">
+          <p>Ve</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Ve'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Ve'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+        </div>
+
+        <div class="daysOfWeek">
+          <p>Sa</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Sa'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Sa'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+        </div>
+
+        <div class="daysOfWeek">
+          <p>Di</p>
+          <hr class="lineOrange" />
+          <div v-for="day in monthlySchedule">
+            <div v-if="day == 'Di'">
+              <p class="day">
+                <strong>-</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
+          </div>
+          <div
+            v-for="day in monthlySchedule"
+            :key="day"
+            :class="{ 'selected-day': isSelectedDate(day) }"
+            @click="getDay(day)"
+          >
+            <div v-if="day.dayShort == 'Di'">
+              <p class="day">
+                <strong>{{ day.date }}</strong>
+              </p>
+              <hr class="lineSpace" />
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="daysOfWeek">
-        <p>Ma</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Ma'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
+      <!-- <hr /> -->
+      <div class="agenda">
+        <div class="chosenDay p bold">
+          <p>{{ currentDate }}</p>
+          <hr v-if="!isMobile" class="lineSpace" />
         </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Ma'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
+        <!-- <div class="maxWidth"> -->
+        <base-course-time
+          :lessonDay="courseToShow"
+          class="course"
+        ></base-course-time>
+        <the-tasks></the-tasks>
+        <!-- </div> -->
+        <!-- <hr />
+        <div class="task">
+          <h1>Tâches</h1>
+          <the-tasks :day="courseToShow"></the-tasks>
+        </div> -->
       </div>
-
-      <div class="daysOfWeek">
-        <p>Me</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Me'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Me'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-      </div>
-
-      <div class="daysOfWeek">
-        <p>Je</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Je'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Je'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-      </div>
-
-      <div class="daysOfWeek">
-        <p>Ve</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Ve'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Ve'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-      </div>
-
-      <div class="daysOfWeek">
-        <p>Sa</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Sa'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Sa'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-      </div>
-
-      <div class="daysOfWeek">
-        <p>Di</p>
-        <hr class="lineOrange" />
-        <div v-for="day in monthlySchedule">
-          <div v-if="day == 'Di'">
-            <p class="day">
-              <strong>-</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-        <div
-          v-for="day in monthlySchedule"
-          :key="day"
-          :class="{ 'selected-day': isSelectedDate(day) }"
-          @click="getDay(day)"
-        >
-          <div v-if="day.dayShort == 'Di'">
-            <p class="day">
-              <strong>{{ day.date }}</strong>
-            </p>
-            <hr class="lineSpace" />
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <hr />
-    <section class="agenda">
-      <div class="chosenDay p bold">
-        <p>{{ currentDate }}</p>
-      </div>
-      <div class="maxWidth">
-        <div>
-          <p>{{ courseToShow.timeStart }}</p>
-          <p>{{ courseToShow.timeEnd }}</p>
-        </div>
-        <base-course :lessonDay="courseToShow" class="course"></base-course>
-      </div>
-      <hr />
-    </section>
+    </div>
   </div>
 </template>
 
 <style scoped>
-
 #MonthlyCalendar {
-  background-color: var(--white);
-  align-content: center;
-  justify-content: center;
-}
-h1 {
   display: flex;
-  align-content: center;
-  justify-content: center;
+  flex-direction: column;
+  background-color: var(--white);
+  height: 100%;
+  padding: 2.5rem 1rem 0 1rem;
+  /* align-content: center;
+  justify-content: center; */
 }
+.titleDesktop {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.pLink {
+  display: inline;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 75%;
+  cursor: pointer;
+}
+.sLink {
+  display: inline;
+  opacity: 75%;
+  cursor: pointer;
+}
+.bodyMonth {
+  display: grid;
+  grid-template-columns: 55% 45%;
+  /* flex-direction: row; */
+  /* height: 100%; */
+}
+
+.nextMonth {
+  height: 50px;
+  width: 100%;
+}
+
 .calendar {
   display: flex;
-  align-content: center;
-  justify-content: center;
+  align-content: flex-start;
+  justify-content: flex-start;
 }
 .daysOfWeek {
   /* border-bottom: 1em var(--orange); */
   text-align: center;
-  /* margin: 1rem; */
+  margin: 1rem;
   align-content: center;
 }
 .agenda {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  width: 100%;
+  /* flex-wrap: wrap; */
 }
 .course {
-  flex-basis: 100%;
+  padding-right: 0.7rem;
 }
-.chosenDay {
+/* .chosenDay {
   margin-top: 1rem;
   padding-left: 1rem;
   flex-basis: 100%;
   margin-bottom: 0;
-}
+} */
 .selected-day p {
   color: var(--orange);
 }
 
 .day {
   margin: 1rem;
+  cursor: pointer;
 }
 .lineSpace {
   margin: 0;
@@ -353,5 +409,37 @@ h1 {
 }
 .maxWidth {
   flex-basis: 100%;
+}
+@media (max-width: 992px) {
+  #MonthlyCalendar {
+    padding: 0 1rem 0 1rem;
+    height: 100vw;
+  }
+  .titleMobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
+  .bodyMonth {
+    display: flex;
+    flex-direction: column;
+  }
+  .daysOfWeek {
+    margin: 0;
+  }
+  .day {
+    margin: .8rem 1rem .8rem 1rem;
+    cursor: pointer;
+  }
+  .calendar {
+    margin-bottom: 2rem;
+    justify-content: center;
+  }
+  .course {
+    width: auto;
+    padding: 0;
+    margin: 0 0 .7rem 0;
+  }
 }
 </style>

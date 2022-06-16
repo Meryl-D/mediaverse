@@ -4,23 +4,28 @@ import { watch, ref, onMounted, watchEffect } from "vue";
 import { axiosClient } from "../../utils/axios.js";
 import router from "../../router/index.js";
 
-
 const props = defineProps({
   task: {
     type: Object,
     required: true,
-  }
+  },
 });
 
-console.log(props.task)
+console.log(props.task);
 const emit = defineEmits(["close", "add"]);
 
-
 const nameTask = ref(props.task.name);
-const dateStartTask = ref(new Date(props.task.dateStart).toISOString().substring(0, new Date(props.task.dateStart).toISOString().length - 1));
-const dateEndTask = ref(new Date(props.task.dateEnd).toISOString().substring(0, new Date(props.task.dateEnd).toISOString().length - 1));
+const dateStartTask = ref(
+  new Date(props.task.dateStart)
+    .toISOString()
+    .substring(0, new Date(props.task.dateStart).toISOString().length - 1)
+);
+const dateEndTask = ref(
+  new Date(props.task.dateEnd)
+    .toISOString()
+    .substring(0, new Date(props.task.dateEnd).toISOString().length - 1)
+);
 const descriptionTask = ref(props.task.description);
-
 
 const errorMsg = ref("");
 
@@ -30,9 +35,9 @@ async function editTask() {
     dateStart: dateStartTask.value,
     dateEnd: dateEndTask.value,
     description: descriptionTask.value,
-    id: props.task.id
+    id: props.task.id,
   };
-  console.log("tâche modifiée",task);
+  console.log("tâche modifiée", task);
   const url = "api/tasks/update";
   await axiosClient.post(url, task);
 }
@@ -48,7 +53,28 @@ async function submitForm() {
     // errorMsg.value = err.response.data.error;
   }
 }
-console.log(props.task)
+
+async function deleteTask() {
+  let idTask = props.task.id;
+
+  const urlDelete = "api/tasks/delete/{" + idTask + "}";
+  console.log(urlDelete);
+  await axiosClient.delete(urlDelete);
+}
+
+async function deleteTaskForm() {
+  try {
+    await deleteTask();
+    // emit("add");
+    // router.push({
+    //   name: "Horaires",
+    // });
+  } catch (err) {
+    // errorMsg.value = err.response.data.error;
+  }
+}
+
+console.log(props.task);
 </script>
 <template>
   <div class="file">
@@ -66,21 +92,12 @@ console.log(props.task)
     </div>
     <form @submit.prevent="submitForm()">
       <div id="left">
-        <input
-          v-model="nameTask"
-          type="text"
-          class="basic name"
-          
-        />
+        <input v-model="nameTask" type="text" class="basic name" />
         <div id="time">
           <div class="dateStart">
-            <input
-              v-model="dateStartTask"
-              type="datetime-local"
-              class="date"
-            />
+            <input v-model="dateStartTask" type="datetime-local" class="date" />
           </div>
-          <hr /> 
+          <hr />
           <div class="dateEnd">
             <input v-model="dateEndTask" type="datetime-local" class="date" />
           </div>
@@ -104,11 +121,16 @@ console.log(props.task)
         <p v-if="errorMsg" class="error">
           {{ errorMsg }}
         </p>
-        <div id="btn-add">
+        <div id="btn-add-task">
           <base-button type="submit" class="btn">Modifier</base-button>
         </div>
       </div>
     </form>
+    <div id="btn-delete-task">
+      <button type="submit" class="delete" @click="deleteTaskForm">
+        Supprimer
+      </button>
+    </div>
   </div>
 </template>
 
@@ -175,24 +197,45 @@ form {
   background-color: transparent;
   border: none;
   outline: none;
-  padding-right: 1rem;  
+  padding-right: 1rem;
   width: 100%;
   /* padding: 2rem; */
 }
 
 #right {
-  align-items: right;   
+  align-items: right;
 }
 
-#btn-add {
+#btn-add-task {
   display: flex;
   justify-content: right;
   width: 100%;
   padding-right: 1rem;
-  margin-bottom: 4rem;
+  /* margin-bottom: 4rem; */
+}
+#btn-delete-task {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 3rem;
 }
 .btn {
   width: 30%;
+}
+.delete {
+  width: 15%;
+  color: var(--green);
+  background-color: var(--white);
+  border: none;
+  border-radius: var(--small-radius);
+  box-shadow: var(--shadow);
+  padding: 0.3rem 0.9rem;
+}
+.delete:hover,
+.delete:active {
+  color: var(--orange);
 }
 .material-symbols-outlined {
   color: var(--orange);
@@ -271,9 +314,22 @@ hr {
     margin-bottom: 3rem;
     padding: 0;
   }
+
   .btn {
     width: 100%;
     margin: 0;
+  }
+  #btn-delete-task {
+    display: flex;
+    width: 100%;
+    margin: 1rem 0 0 0;
+    justify-content: center;
+    /* margin-top: 1rem;
+  padding-right: 1rem;
+  margin-bottom: 3rem; */
+  }
+  .delete {
+    width: 92%;
   }
 }
 </style>

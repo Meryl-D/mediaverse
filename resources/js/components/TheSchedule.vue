@@ -21,49 +21,51 @@ const allTasks = await axiosClient.get("api/tasks", {
 </script>
 
 <template>
-  <div>
-    <the-header-mobile
-      v-if="isMobile"
-      class="header-mobile"
-    ></the-header-mobile>
-    <the-header-desktop
-      v-if="!isMobile"
-      class="header-desktop"
-    ></the-header-desktop>
+<div id="schedule-view">
+  <the-header-mobile
+    v-if="isMobile"
+    class="header-mobile"
+  ></the-header-mobile>
+  <the-header-desktop
+    v-if="!isMobile"
+    class="header-desktop"
+  ></the-header-desktop>
 
-    <div class="weekly-box horaire" v-if="isActive.weekly">
-      <the-weekly-schedule
-        :schedule="data.weekDaysSchedule"
-        :today="data.today"
-        :nextMonday="data.nextMonday"
-        :isMobile="isMobile"
-        :tasks="allTasks.data"
-      ></the-weekly-schedule>
-    </div>
+  <section id="schedule">
+      <the-weekly-schedule v-if="isActive.weekly"
+      :schedule="data.weekDaysSchedule"
+      :today="data.today"
+      :nextMonday="data.nextMonday"
+      :isMobile="isMobile"
+      :tasks="allTasks.data"
+    ></the-weekly-schedule>
 
-    <div class="horaire">
-      <the-daily-schedule
-        v-if="isActive.daily"
-        :days="data.allDaysSchedule"
-        :tasks="allTasks.data"
-      >
-      </the-daily-schedule>
-    </div>
+    <the-daily-schedule
+      v-if="isActive.daily"
+      :days="data.allDaysSchedule"
+      :tasks="allTasks.data"
+    >
+    </the-daily-schedule>
 
-    <div class="horaire">
-      <the-monthly-schedule
-        class="monthly-schedule horaire"
-        v-if="isActive.monthly"
-        :schedule="data.allDaysSchedule"
-        :days="data.allDaysSchedule"
-        :tasks="allTasks.data"
-      >
-      </the-monthly-schedule>
-    </div>
-  </div>
+    <the-monthly-schedule
+      class="monthly-schedule horaire"
+      v-if="isActive.monthly"
+      :schedule="data.allDaysSchedule"
+      :days="data.allDaysSchedule"
+      :tasks="allTasks.data"
+    >
+    </the-monthly-schedule>
+  </section>
+</div>
 </template>
 
 <style scoped>
+@media(min-width: 992px){
+  #schedule-view {
+  display: flex;
+}
+}
+
 .header-mobile {
   height: 10vh;
   position: relative;
@@ -71,15 +73,16 @@ const allTasks = await axiosClient.get("api/tasks", {
 }
 
 .header-desktop {
-  width: 300px;
-  height: 100%;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem;
+  width: 25vw;
+  min-height: 100vh;
+  position: -webkit-sticky;
+  position: sticky;
   background-color: var(--white);
-  filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.3));
   z-index: 1;
-  transform: none;
-  visibility: visible;
-  /* z-index: 1; */
 }
 
 /* .weekly-box {
@@ -90,14 +93,18 @@ const allTasks = await axiosClient.get("api/tasks", {
 } */
 
 @media (min-width: 992px) {
-  .weekly-box {
+
+  #schedule{
+    width: 75vw;
+  }
+  /* .weekly-box {
     display: flex;
     height: 100vh;
     flex-direction: column;
-    align-items: center;
+    align-items: center; */
   }
 
-  .horaire {
+  /* .horaire {
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -105,6 +112,5 @@ const allTasks = await axiosClient.get("api/tasks", {
     padding-top: 200px;
     padding-right: 80px;
     /* z-index: 1; */
-  }
-}
+
 </style>
