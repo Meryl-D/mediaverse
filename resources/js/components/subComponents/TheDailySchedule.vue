@@ -28,11 +28,13 @@ const props = defineProps({
   },
 });
 
+console.log("avant", selectedTasks.value)
 selectedTasks.value = [];
 
 props.tasks.forEach((task) => {
   if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
     selectedTasks.value.push(task);
+    console.log("dans le premier if", selectedTasks.value)
   }
 });
 
@@ -102,11 +104,14 @@ const popUp = ref(false);
 function addTask() {
   popUp.value = true;
   document.getElementById("rect").classList.add("hidden");
+  //if(!isMobile)document.getElementById("containerAdd").style.display = "flex"
+  document.getElementById("containerAdd").style.display = "flex"
   return popUp;
 }
 function closeTask() {
   popUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
+  document.getElementById("containerAdd").style.display = "none"
   return popUp;
 }
 //-------------------------------------------------------------------------------------
@@ -118,12 +123,14 @@ function popUpEdit(task) {
   editPopUp.value = true;
   toEditTask.value = task;
   document.getElementById("rect").classList.add("hidden");
+  document.getElementById("containerEdit").style.display = "flex"
   return editPopUp;
 }
 
 function closeEditTask() {
   editPopUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
+  document.getElementById("containerEdit").style.display = "none"
   return editPopUp;
 }
 
@@ -148,7 +155,7 @@ const yearToShow = ref(courseToShow.value.year);
 
 <template>
   <div id="rect"></div>
-  <div id="container">
+  <div id="containerAdd">
     <div v-if="popUp" class="ctn-popUp">
       <the-add-task
         @close="closeTask"
@@ -157,7 +164,7 @@ const yearToShow = ref(courseToShow.value.year);
       ></the-add-task>
     </div>
   </div>
-  <div id="container">
+  <div id="containerEdit">
     <div v-if="editPopUp" class="ctn-editPopUp">
       <the-edit-task
         @close="closeEditTask"
@@ -187,7 +194,12 @@ const yearToShow = ref(courseToShow.value.year);
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
           />
-          <span class="material-icons" @click="addTask()">add_circle</span>
+          <span
+            class="material-icons"
+            :class="isMobile ? 'sizeMobileIcone' : 'sizeDesktopIcone'"
+            @click="addTask()"
+            >add_circle</span
+          >
         </div>
         <div @click="goToMonthlyView()"><span class="material-icons icalendar"
             >calendar_today</span
@@ -232,9 +244,9 @@ const yearToShow = ref(courseToShow.value.year);
         {{ currentDate }}
       </p>
     </div>
-    <!-- <div id="separate">
-      <hr />
-    </div> -->
+    <div class="separate">
+      <hr class="dailyHr" />
+    </div>
     <div class="grid-container">
       <base-grid :courseToShow="courseToShow" @editTask="popUpEdit"></base-grid>
     </div>
@@ -259,10 +271,17 @@ const yearToShow = ref(courseToShow.value.year);
 
 
 <style scoped>
+  #rect {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 50;
+  }
+
 .hidden {
   position: absolute;
   top: 0;
-  width: 100%;
+  width: calc(100vw - 280px);
   height: 100%;
   background-color: black;
   opacity: 50%;
@@ -277,7 +296,6 @@ const yearToShow = ref(courseToShow.value.year);
   display: flex;
   flex-direction: row;
 } */
-
 .mainTitle {
   display: flex;
   flex-direction: column;
@@ -297,6 +315,13 @@ const yearToShow = ref(courseToShow.value.year);
 .mainIcone {
   display: flex;
   flex-direction: row;
+}
+.sizeDesktopIcone {
+  font-size: 40px;
+  margin-right: 40%;
+}
+.sizeMobileIcone {
+  font-size: 24px;
 }
 .icalendar {
   margin-left: 0.5rem;
@@ -367,15 +392,16 @@ const yearToShow = ref(courseToShow.value.year);
   text-align: center;
   margin: 0.6rem 0;
 }
-#separate {
-  display: grid;
-  margin-left: 6.5%;
-  margin-right: 5%;
+.separate {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
-hr {
-  height: 0;
-  border: none;
-  border-top: 2px solid var(--orange);
+.dailyHr {
+  height: 0%;
+  width: 90%;
+  border-radius: 6rem;
+  border-top: 6px solid var(--orange);
   background-color: transparent;
   z-index: 0;
 }
@@ -391,25 +417,48 @@ hr {
   text-align: right;
 }
 .material-icons {
-  color: var(--orange);
-  filter: drop-shadow(0 0 0.75rem var(--orange));
+  color: var(--green);
+  /* filter: drop-shadow(0 0 0.75rem var(--orange)); */
   cursor: pointer;
 }
 .popUp {
-  width: 100%;
+  width: calc(92vw - 280px);
 }
 .popUpEdit {
   width: 100%;
 }
-#container {
+/* #container {
   display: flex;
   position: absolute;
-  width: 100%;
+  width: calc(100vw - 280px);
   justify-content: center;
   z-index: 100;
+} */
+.none{
+  display: none;
 }
+#containerAdd {
+  display: none;
+  position: absolute;
+  width: calc(100vw - 280px);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  height: 100%;
+}
+
+#containerEdit {
+  display: none;
+  position: absolute;
+  width: calc(100vw - 280px);
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  height: 100%;
+}
+
 .ctn-popUp {
-  flex-basis: 90%;
+  flex-basis: 70%;
 }
 .ctn-editPopUp {
   flex-basis: 90%;
@@ -430,11 +479,29 @@ hr {
 
 @media (max-width: 992px) {
   #rect {
-    width: 75%;
+    width: 100%;
   }
   /* #container {
       width: 100%;
     } */
+  .ctn-popUp {
+    width: 90%;
+    flex-basis: auto;
+  }
+  .popUp {
+    width: 100%;
+  }
+  #containerAdd {
+    display: none;
+    position: absolute;
+    justify-content: center;
+    z-index: 100;
+    width: 100%;
+    height: auto;
+  }
+  #containerEdit {
+    width: 100%;
+  }
 
   .titleMobileDay {
     display: flex;
@@ -449,7 +516,7 @@ hr {
   }
   .grid-container {
     width: 90%;
-    height: 60vh;
+    height: 55vh;
   }
   .icone {
     display: flex;

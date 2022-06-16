@@ -28,6 +28,7 @@ async function submitForm() {
   try {
     await addTask();
     emit("add");
+    location.reload();
     // router.push({
     //   name: "Horaires",
     // });
@@ -108,7 +109,7 @@ async function submitForm() {
   border-radius: 0.7rem;
   padding-top: 3%;
   padding-bottom: 4%;
-  margin-top: 12%;
+  /* margin-top: 12%; */
 }
 .header {
   display: flex;

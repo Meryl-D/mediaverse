@@ -45,6 +45,7 @@ async function editTask() {
 async function submitForm() {
   try {
     await editTask();
+    location.reload();
     // emit("add");
     // router.push({
     //   name: "Horaires",
@@ -57,7 +58,7 @@ async function submitForm() {
 async function deleteTask() {
   let idTask = props.task.id;
 
-  const urlDelete = "api/tasks/delete/{" + idTask + "}";
+  const urlDelete = "api/tasks/delete/" + idTask;
   console.log(urlDelete);
   await axiosClient.delete(urlDelete);
 }
@@ -65,6 +66,7 @@ async function deleteTask() {
 async function deleteTaskForm() {
   try {
     await deleteTask();
+    location.reload();
     // emit("add");
     // router.push({
     //   name: "Horaires",
@@ -95,11 +97,11 @@ console.log(props.task);
         <input v-model="nameTask" type="text" class="basic name" />
         <div id="time">
           <div class="dateStart">
-            <input v-model="dateStartTask" type="datetime-local" class="date" />
+            <input v-model="dateStartTask" type="datetime-local" class="dateTask" />
           </div>
           <hr />
           <div class="dateEnd">
-            <input v-model="dateEndTask" type="datetime-local" class="date" />
+            <input v-model="dateEndTask" type="datetime-local" class="dateTask" />
           </div>
           <!-- <hr />
           <input
@@ -144,7 +146,7 @@ console.log(props.task);
   border-radius: 0.7rem;
   padding-top: 3%;
   padding-bottom: 4%;
-  margin-top: 12%;
+  /* margin-top: 12%; */
 }
 .header {
   display: flex;
@@ -193,7 +195,7 @@ form {
   margin: 1rem;
 }
 
-.date {
+.dateTask {
   background-color: transparent;
   border: none;
   outline: none;
