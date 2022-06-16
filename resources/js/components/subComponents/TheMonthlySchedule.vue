@@ -146,7 +146,7 @@ function checkTask(d) {
       </div>
       <div class="mainIcone">
         <div @click="goToDailyView()">
-          <span class="material-icons icalendar">calendar_today</span>
+          <span class="material-icons icalendar sizeDesktopIcone">calendar_today</span>
         </div>
       </div>
     </div>
