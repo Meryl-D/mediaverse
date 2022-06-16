@@ -9,11 +9,12 @@ import {
   selectedDate,
   selectedTasks,
   isMobile,
+  isActive,
+  goToWeeklyView,
+  goToDailyView,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
-import BaseBackButton from "./BaseBackButton.vue";
-import SwitchViewButton from "./SwitchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -63,7 +64,7 @@ function getDay(d) {
   courseToShow.value = d;
   selectedDate.value = d;
 
-// get tasks
+  // get tasks
   selectedTasks.value = [];
   props.tasks.forEach((task) => {
     if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
@@ -132,25 +133,30 @@ function checkTask(d) {
 
 <template>
   <div id="MonthlyCalendar">
-    <div v-if="!isMobile" class="titleDesktop">
-      <div class="navMonth">
-        <base-back-button></base-back-button>
-        <div class="flexTitle">
+    <div v-if="!isMobile" class="daily-nav">
+      <div class="mainTitle">
+        <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
-          <switch-view-button
-            ><span class="material-icons icalendar"
-              >calendar_today</span
-            ></switch-view-button
-          >
         </div>
-        <!-- <p class="pLink">Horaire</p>
-        <p class="sLink">></p>
-        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p> -->
+        <div class="navMonth material-icons">
+          <p class="pLink" @click="goToWeeklyView()">Horaire</p>
+          <p class="sLink"> > </p>
+          <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+        </div>
+      </div>
+      <div class="mainIcone">
+        <div @click="goToDailyView()">
+          <span class="material-icons icalendar">calendar_today</span>
+        </div>
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
-      <base-back-button></base-back-button>
-      <switch-view-button>{{ monthToShow }}</switch-view-button>
+      <button class="go-back bold" @click="goToWeeklyView()">
+        &lt Horaires et tâches
+      </button>
+      <button class="bold switch" @click="goToDailyView()">
+        {{ monthToShow }}
+      </button>
     </div>
     <div class="bodyMonth">
       <div class="calendar">
@@ -162,6 +168,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -178,6 +189,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -192,6 +204,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -208,6 +225,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -222,6 +240,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -238,6 +261,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -252,6 +276,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -268,6 +297,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -282,6 +312,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -298,6 +333,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -312,6 +348,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -328,6 +369,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -342,6 +384,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -358,6 +405,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-if="checkCourse(day)==false" class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -367,7 +415,7 @@ function checkTask(d) {
 
       <section>
         <div class="agenda">
-          <div class="chosenDay p bold">
+          <div class="chosenDay p bold material-icons"  @click="goToDailyView()">
             <p>{{ currentDate }}</p>
             <hr v-if="!isMobile" class="lineSpace" />
           </div>
@@ -451,7 +499,7 @@ function checkTask(d) {
 }
 
 .day {
-  margin: 1rem;
+  margin: 0.5rem 1rem 0.1rem 1rem;;
   cursor: pointer;
 }
 .lineSpace {
@@ -487,43 +535,17 @@ function checkTask(d) {
     margin: 0;
   }
   .day {
-    margin: 0.8rem 1rem 0.8rem 1rem;
+    margin: 0 1rem 0.8rem 1rem;
     cursor: pointer;
   }
   .calendar {
     margin-bottom: 2rem;
-    justify-content: center;
+    justify-content: space-evenly;
   }
   .course {
     width: auto;
     padding: 0;
     margin: 0 0 0.7rem 0;
   }
-  .flexTitle {
-    display: flex;
-    /* flex-basis: 100%; */
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-.circles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.task-circle-day {
-  background-color: var(--brown);
-  border-radius: 5rem;
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-}
-.course-circle-day {
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--beige);
-  border-radius: 5rem;
 }
 </style>

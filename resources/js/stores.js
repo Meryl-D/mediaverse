@@ -45,3 +45,19 @@ export function chunkArrayInMonth(days,currentMonth) {
 export function formatHourForGrid(val) {
     return parseInt(val) + 1
 }
+
+export function goToWeeklyView() {
+    isActive.value.monthly = false;
+    isActive.value.daily = false;
+    isActive.value.weekly = true;
+  }
+  export function goToMonthlyView() {
+    isActive.value.monthly = true;
+    isActive.value.daily = false;
+    isActive.value.weekly = false;
+  }
+  export function goToDailyView() {
+    isActive.value.monthly = false;
+    isActive.value.daily = true;
+    isActive.value.weekly = false;
+  }

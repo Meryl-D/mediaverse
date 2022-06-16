@@ -27,13 +27,14 @@ function changeCalendarView() {
 <style scoped>
 #switchView {
   display: flex;
-  color: var(--orange);
+  color: var(--green);
   justify-content: flex-end;
   border: none;
 }
 .switch {
-  color: var(--orange);
-  background-color: var(--white);
+  /* color: var(--orange);
+  background-color: var(--white); */
+  color: var(--green);
   border: none;
 }
 </style>

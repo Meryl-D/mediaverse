@@ -1,14 +1,37 @@
 <script setup>
 import { ref } from 'vue'
+import { isActive } from "../../stores.js";
 
 import BaseButton from './BaseButton.vue';
+
+function horaireWeeklyDesktop() {
+
+    if (isActive.value.monthly) {
+        isActive.value.monthly = false;
+        isActive.value.daily = false;
+        isActive.value.weekly = true;
+    }
+    if (isActive.value.daily) {
+        isActive.value.monthly = false;
+        isActive.value.daily = false;
+        isActive.value.weekly = true;
+    }
+    if (isActive.value.weekly) {
+        isActive.value.monthly = false;
+        isActive.value.daily = false;
+        isActive.value.weekly = true;
+    }
+
+
+
+}
 </script>
 
 <template>
 
     <div>
         <div class="titre">
-            <img class="logo" src="../../../.././public/img/logo_organiz.svg" />
+            <img @click="horaireWeeklyDesktop();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
             <hr class="ligne1" />
         </div>
         <div class="liens">
@@ -30,7 +53,7 @@ import BaseButton from './BaseButton.vue';
             </div>
             <div class="linkBox">
                 <!-- <router-link to="/"> -->
-                    <p class="router">Notes</p>
+                <p class="router">Notes</p>
                 <!-- </router-link> -->
                 <span class="material-icons chevron">
                     chevron_right
@@ -65,7 +88,10 @@ import BaseButton from './BaseButton.vue';
 </template>
 
 <style scoped>
+.logo {
 
+    cursor: pointer;
+}
 
 .router {
     margin: 0;
@@ -79,6 +105,7 @@ p {
     text-decoration: none;
     font-weight: bold;
 }
+
 .bouton {
     cursor: pointer;
     width: 100%;
@@ -90,7 +117,7 @@ p:hover {
     color: var(--orange);
 }
 
-.liens { 
+.liens {
     flex: 1;
     padding-top: 5vh;
 }

@@ -17,7 +17,7 @@ function menu() {
 
 }
 
-function horaireWeekly() {
+function horaireWeeklyMobile() {
 
   if (isActive.value.monthly) {
     isActive.value.monthly = false;
@@ -257,16 +257,4 @@ a {
   border-top: 2px solid #b8b8b8;
 
 }
-
-/* .deconnexion {
-  flex-direction: column;
-  text-align: left;
-  padding: 0.3em 0em 0 0em;
-  margin: 1em 5% 1em 5%;
-  background-color: #FFFCFA;
-  border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
-  margin-bottom: 0%;
-  text-align: center;
-  filter: drop-shadow(0px 0px 10px #F1E3CD);
-} */
 </style>
