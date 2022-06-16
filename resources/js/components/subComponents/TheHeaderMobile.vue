@@ -121,7 +121,7 @@ p {
 }
 
 a {
-  color: black;
+  color: var(--green);
   text-decoration: none;
   font-weight: bold;
 }
@@ -171,9 +171,6 @@ a {
   /* right: 90; */
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.5s;
-
-
-
 
 }
 
