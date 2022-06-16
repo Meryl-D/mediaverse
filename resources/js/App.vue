@@ -158,6 +158,13 @@ p {
     font-size: 0.9rem;
   }
 }
+
+@media (max-width: 991px) {
+  .material-icons {
+    font-size: 32px;
+    cursor: pointer;
+  }
+
   .titleMobile {
     display: flex;
     flex-direction: row;
@@ -165,6 +172,7 @@ p {
     margin-bottom: 0.3rem;
     width: 95vw;
   }
+
   .switch {
     color: var(--orange);
     background-color:var(--white) ;
@@ -175,6 +183,7 @@ p {
   color: var(--green);
   background-color: var(--white);
   border: none;
+  }
 }
 .daily-nav {
   display: flex;
@@ -194,7 +203,6 @@ p {
   flex-wrap: wrap;
   justify-content: center;
 }
-
 
 .task-circle-day {
   background-color: var(--brown);
