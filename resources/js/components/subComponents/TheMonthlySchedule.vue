@@ -138,9 +138,9 @@ function checkTask(d) {
         <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
         </div>
-        <div class="navMonth">
+        <div class="navMonth material-icons">
           <p class="pLink" @click="goToWeeklyView()">Horaire</p>
-          <p class="sLink">></p>
+          <p class="sLink"> > </p>
           <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
         </div>
       </div>
@@ -415,7 +415,7 @@ function checkTask(d) {
 
       <section>
         <div class="agenda">
-          <div class="chosenDay p bold"  @click="goToDailyView()">
+          <div class="chosenDay p bold material-icons"  @click="goToDailyView()">
             <p>{{ currentDate }}</p>
             <hr v-if="!isMobile" class="lineSpace" />
           </div>

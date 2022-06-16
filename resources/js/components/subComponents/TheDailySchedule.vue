@@ -4,17 +4,15 @@ import {
   selectedDate,
   selectedTasks,
   isMobile,
-   isActive,
-   goToWeeklyView,
-   goToMonthlyView
+  isActive,
+  goToWeeklyView,
+  goToMonthlyView,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
-
-
 
 //-------------------------------------------------------------------------------------------------
 
@@ -28,13 +26,13 @@ const props = defineProps({
   },
 });
 
-console.log("avant", selectedTasks.value)
+console.log("avant", selectedTasks.value);
 selectedTasks.value = [];
 
 props.tasks.forEach((task) => {
   if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
     selectedTasks.value.push(task);
-    console.log("dans le premier if", selectedTasks.value)
+    console.log("dans le premier if", selectedTasks.value);
   }
 });
 
@@ -105,13 +103,13 @@ function addTask() {
   popUp.value = true;
   document.getElementById("rect").classList.add("hidden");
   //if(!isMobile)document.getElementById("containerAdd").style.display = "flex"
-  document.getElementById("containerAdd").style.display = "flex"
+  document.getElementById("containerAdd").style.display = "flex";
   return popUp;
 }
 function closeTask() {
   popUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
-  document.getElementById("containerAdd").style.display = "none"
+  document.getElementById("containerAdd").style.display = "none";
   return popUp;
 }
 //-------------------------------------------------------------------------------------
@@ -123,14 +121,14 @@ function popUpEdit(task) {
   editPopUp.value = true;
   toEditTask.value = task;
   document.getElementById("rect").classList.add("hidden");
-  document.getElementById("containerEdit").style.display = "flex"
+  document.getElementById("containerEdit").style.display = "flex";
   return editPopUp;
 }
 
 function closeEditTask() {
   editPopUp.value = false;
   document.getElementById("rect").classList.remove("hidden");
-  document.getElementById("containerEdit").style.display = "none"
+  document.getElementById("containerEdit").style.display = "none";
   return editPopUp;
 }
 
@@ -150,7 +148,6 @@ function checkTask(d) {
 const monthToShow = ref(courseToShow.value.month);
 const yearToShow = ref(courseToShow.value.year);
 //-------------------------------------------------------------------------------------------------
-
 </script>
 
 <template>
@@ -180,10 +177,12 @@ const yearToShow = ref(courseToShow.value.year);
         <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
         </div>
-        <div class="navMonth">
+        <div class="navMonth material-icons">
           <p class="pLink" @click="goToWeeklyView()">Horaire</p>
           <p class="sLink">></p>
-          <p class="pLink" @click="goToMonthlyView()">{{ monthToShow }} {{ yearToShow }}</p>
+          <p class="pLink" @click="goToMonthlyView()">
+            {{ monthToShow }} {{ yearToShow }}
+          </p>
           <p class="sLink">></p>
           <p class="pLink">{{ simpleCurrentDate }}</p>
         </div>
@@ -201,9 +200,9 @@ const yearToShow = ref(courseToShow.value.year);
             >add_circle</span
           >
         </div>
-        <div @click="goToMonthlyView()"><span class="material-icons icalendar"
-            >calendar_today</span
-          ></div>
+        <div @click="goToMonthlyView()">
+          <span class="material-icons icalendar sizeDesktopIcone">calendar_today</span>
+        </div>
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
@@ -235,6 +234,7 @@ const yearToShow = ref(courseToShow.value.year);
           <div class="circles">
             <div v-if="checkTask(day)" class="task-circle-day"></div>
             <div v-if="checkCourse(day)" class="course-circle-day"></div>
+            <div v-else class="no-circle-day"></div>
           </div>
         </div>
       </div>
@@ -271,12 +271,12 @@ const yearToShow = ref(courseToShow.value.year);
 
 
 <style scoped>
-  #rect {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    z-index: 50;
-  }
+#rect {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
 
 .hidden {
   position: absolute;
@@ -326,31 +326,13 @@ const yearToShow = ref(courseToShow.value.year);
 .icalendar {
   margin-left: 0.5rem;
 }
-.circles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
 
-.task-circle-day {
-  background-color: var(--brown);
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-  border-radius: 5rem;
-}
-.course-circle-day {
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--beige);
-  border-radius: 5rem;
-}
+
 
 #calendar {
   display: flex;
   flex-flow: row nowrap;
-  height: 12vh;
+  height: fit-content;
   width: 100%;
   overflow: auto;
   -ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -434,7 +416,7 @@ const yearToShow = ref(courseToShow.value.year);
   justify-content: center;
   z-index: 100;
 } */
-.none{
+.none {
   display: none;
 }
 #containerAdd {

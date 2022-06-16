@@ -184,15 +184,17 @@ p {
   align-items: center;
 }
 .material-icons {
-  color: var(--orange);
-  filter: drop-shadow(0 0 0.75rem var(--orange));
   cursor: pointer;
+}
+.material-icons:hover, .material-icons:active {
+  color: var(--orange)  ;
 }
 .circles {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
+
 
 .task-circle-day {
   background-color: var(--brown);
