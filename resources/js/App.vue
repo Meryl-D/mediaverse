@@ -183,4 +183,36 @@ p {
   padding: 2rem 0;
   align-items: center;
 }
+.material-icons {
+  color: var(--orange);
+  filter: drop-shadow(0 0 0.75rem var(--orange));
+  cursor: pointer;
+}
+.circles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.task-circle-day {
+  background-color: var(--brown);
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0.1rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+}
+.course-circle-day {
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0.1rem 0.1rem 0.5rem 0.1rem;
+  background-color: var(--beige);
+  border-radius: 5rem;
+}
+.no-circle-day{
+  background-color: transparent;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0.1rem 0.1rem 0.5rem 0.1rem;
+  border-radius: 5rem;
+}
 </style>

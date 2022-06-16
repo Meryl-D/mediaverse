@@ -11,7 +11,7 @@
     },
     "servers": [
         {
-            "url": "http://laravel.test"
+            "url": "http://localhost"
         }
     ],
     "paths": {

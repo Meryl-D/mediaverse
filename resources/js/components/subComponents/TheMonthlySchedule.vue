@@ -133,7 +133,7 @@ function checkTask(d) {
 
 <template>
   <div id="MonthlyCalendar">
-     <div v-if="!isMobile" class="daily-nav">
+    <div v-if="!isMobile" class="daily-nav">
       <div class="mainTitle">
         <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
@@ -145,9 +145,9 @@ function checkTask(d) {
         </div>
       </div>
       <div class="mainIcone">
-        <div @click="goToDailyView()"><span class="material-icons icalendar"
-            >calendar_today</span
-          ></div>
+        <div @click="goToDailyView()">
+          <span class="material-icons icalendar">calendar_today</span>
+        </div>
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
@@ -168,6 +168,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -184,6 +189,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -198,6 +204,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -214,6 +225,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -228,6 +240,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -244,6 +261,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -258,6 +276,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -274,6 +297,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -288,6 +312,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -304,6 +333,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -318,6 +348,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -334,6 +369,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -348,6 +384,11 @@ function checkTask(d) {
               <p class="day">
                 <strong>-</strong>
               </p>
+              <div class="circles">
+                <div v-if="checkTask(day)" class="task-circle-day"></div>
+                <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-else class="no-circle-day"></div>
+              </div>
               <hr class="lineSpace" />
             </div>
           </div>
@@ -364,6 +405,7 @@ function checkTask(d) {
               <div class="circles">
                 <div v-if="checkTask(day)" class="task-circle-day"></div>
                 <div v-if="checkCourse(day)" class="course-circle-day"></div>
+                <div v-if="checkCourse(day)==false" class="no-circle-day"></div>
               </div>
               <hr class="lineSpace" />
             </div>
@@ -373,7 +415,7 @@ function checkTask(d) {
 
       <section>
         <div class="agenda">
-          <div class="chosenDay p bold" @click="goToDailyView()">
+          <div class="chosenDay p bold"  @click="goToDailyView()">
             <p>{{ currentDate }}</p>
             <hr v-if="!isMobile" class="lineSpace" />
           </div>
@@ -389,7 +431,15 @@ function checkTask(d) {
 </template>
 
 <style scoped>
-
+#MonthlyCalendar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--white);
+  height: 100%;
+  padding: 2.5rem 1rem 0 1rem;
+  /* align-content: center;
+  justify-content: center; */
+}
 .titleDesktop {
   width: 100%;
   margin-bottom: 2rem;
@@ -413,10 +463,21 @@ function checkTask(d) {
   /* height: 100%; */
 }
 
+.nextMonth {
+  height: 50px;
+  width: 100%;
+}
+
 .calendar {
   display: flex;
   align-content: flex-start;
   justify-content: flex-start;
+}
+.daysOfWeek {
+  /* border-bottom: 1em var(--orange); */
+  text-align: center;
+  margin: 1rem;
+  align-content: center;
 }
 .agenda {
   display: flex;
@@ -427,13 +488,18 @@ function checkTask(d) {
 .course {
   padding-right: 0.7rem;
 }
-
+/* .chosenDay {
+  margin-top: 1rem;
+  padding-left: 1rem;
+  flex-basis: 100%;
+  margin-bottom: 0;
+} */
 .selected-day p {
   color: var(--orange);
 }
 
 .day {
-  margin: 1rem;
+  margin: 0.5rem 1rem 0.1rem 1rem;;
   cursor: pointer;
 }
 .lineSpace {
@@ -452,11 +518,15 @@ function checkTask(d) {
 }
 @media (max-width: 992px) {
   #MonthlyCalendar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    padding: 0 1rem 0 1rem;
+    height: 100vw;
   }
-
+  .titleMobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+  }
   .bodyMonth {
     display: flex;
     flex-direction: column;
@@ -465,48 +535,17 @@ function checkTask(d) {
     margin: 0;
   }
   .day {
-    margin: 0.8rem 1rem 0.8rem 1rem;
+    margin: 0 1rem 0.8rem 1rem;
     cursor: pointer;
   }
   .calendar {
     margin-bottom: 2rem;
-    justify-content: center;
+    justify-content: space-evenly;
   }
   .course {
     width: auto;
     padding: 0;
     margin: 0 0 0.7rem 0;
   }
-  .flexTitle {
-    display: flex;
-    /* flex-basis: 100%; */
-    flex-direction: row;
-    justify-content: space-between;
-  }
-}
-.circles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.task-circle-day {
-  background-color: var(--brown);
-  border-radius: 5rem;
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-}
-.course-circle-day {
-  width: 0.7rem;
-  height: 0.7rem;
-  margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--beige);
-  border-radius: 5rem;
-}
-.material-icons {
-  color: var(--orange);
-  filter: drop-shadow(0 0 0.75rem var(--orange));
-  cursor: pointer;
 }
 </style>
