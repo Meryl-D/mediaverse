@@ -212,7 +212,7 @@ p {
 }
 .no-circle-day{
   background-color: transparent;
-  width: 0.7rem;
+  width: 0;
   height: 0.7rem;
   margin: 0.1rem 0.1rem 0.5rem 0.1rem;
   border-radius: 5rem;
