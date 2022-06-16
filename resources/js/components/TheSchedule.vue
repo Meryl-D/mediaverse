@@ -76,7 +76,7 @@ const allTasks = await axiosClient.get("api/tasks", {
   display: flex;
   flex-direction: column;
   padding: 2.5rem;
-  width: 25vw;
+  width: 280px;
   min-height: 100vh;
   position: -webkit-sticky;
   position: sticky;
@@ -95,7 +95,7 @@ const allTasks = await axiosClient.get("api/tasks", {
 @media (min-width: 992px) {
 
   #schedule{
-    width: 75vw;
+    width: calc(100vw - 280px);
   }
   /* .weekly-box {
     display: flex;
