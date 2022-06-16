@@ -18,7 +18,7 @@ import TheLoginForm from './subComponents/TheLoginForm.vue'
 <style scoped>
 .logo {
 
-    width: 10vw;
+    width: 250px;
     margin-bottom: 2rem;
 
 }
