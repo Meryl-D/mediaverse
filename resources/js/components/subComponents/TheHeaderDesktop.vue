@@ -64,6 +64,7 @@ p {
 }
 .bouton {
     cursor: pointer;
+    width: 100%;
 
 }
 
@@ -80,6 +81,7 @@ p:hover {
 a {
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .routerLogout {
