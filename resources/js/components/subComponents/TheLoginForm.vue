@@ -57,7 +57,7 @@ async function submitForm() {
       <p v-if="errorMsg" class="error">
         {{ errorMsg }}
       </p>
-      <base-button type="submit" class="btn-login">Envoyer</base-button>
+      <base-button type="submit" class="btn-login bold">Envoyer</base-button>
     </form>
 </template>
 
@@ -71,7 +71,7 @@ async function submitForm() {
     border: 2px solid var(--beige);
     border-radius: var(--small-radius);
     margin-bottom: 1rem;
-    height: 2rem;
+    height: 2.5rem;
     padding: .3rem;
   }
 
@@ -82,6 +82,7 @@ async function submitForm() {
   .btn-login {
     align-self: end;
     margin-top: 1rem;
+    width: 100%;
   }
 
   input:-webkit-autofill {

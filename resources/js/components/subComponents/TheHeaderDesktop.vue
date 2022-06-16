@@ -54,8 +54,17 @@ import BaseButton from './BaseButton.vue';
 .router {
     margin: 0;
 }
+
+
+p {
+    line-height: 3em;
+    color: var(--green);
+    text-decoration: none;
+    font-weight: bold;
+}
 .bouton {
     cursor: pointer;
+
 }
 
 p:hover {

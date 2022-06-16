@@ -191,7 +191,7 @@ const yearToShow = ref(courseToShow.value.year);
       </div>
     </div>
     <div v-if="isMobile" class="titleMobileDay">
-      <h2>&lt Horaires et tâches</h2>
+      <base-back-button></base-back-button>
       <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </div>
     <div id="calendar">

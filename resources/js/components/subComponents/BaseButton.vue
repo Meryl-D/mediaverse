@@ -11,8 +11,10 @@
 </template>
 
 <style scoped>
+
 button {
-  color: var(--green)  ;
+  height: 2.5rem;
+  color: var(--green);
   background-color: var(--white);
   border: none;
   border-radius: var(--small-radius);
