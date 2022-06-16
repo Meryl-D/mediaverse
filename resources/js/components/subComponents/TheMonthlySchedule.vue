@@ -28,10 +28,6 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  nextMonth: {
-    type: String,
-    required: true,
-  },
 });
 
 //-------------------------------------------------------------------------------------------------
@@ -113,7 +109,7 @@ const yearToShow = ref(courseToShow.value.year);
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
-      <h2>&lt Horaires et tâches</h2>
+     <base-back-button></base-back-button>
       <switch-view-button :lessonDay="courseToShow"></switch-view-button>
     </div>
     <div class="bodyMonth">

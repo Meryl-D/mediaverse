@@ -9,23 +9,25 @@ const props = defineProps({
 });
 
 function changeCalendarView() {
+  if (isActive.value.monthly) {
+    isActive.value.monthly = false;
+    isActive.value.daily = true;
+  }
+  if (isActive.value.daily) {
+    isActive.value.monthly = true;
+    isActive.value.daily = false;
+  }
   console.log(isActive.value.daily, isActive.value.monthly);
-  isActive.value.monthly = true;
-  isActive.value.daily = false;
-  // selectedDate.value = props.lessonDay;
-  // isActive.value.daily = !isActive.value.daily;
-  // isActive.value.monthly = !isActive.value.monthly;
-  // console.log(isActive.value.daily, isActive.value.monthly)
 }
 </script>
 
 <template>
-  <div id="switchView">
-    <span class="dropdown"
-      ><button  @click="changeCalendarView()">
+  <div id="switchView" class="bold">
+    <span >
+      <button class="bold switch" @click="changeCalendarView()">
         {{ props.lessonDay.month }}
-      </button></span
-    >
+      </button>
+    </span>
   </div>
 </template>
 
@@ -34,10 +36,12 @@ function changeCalendarView() {
   display: flex;
   color: var(--orange);
   justify-content: flex-end;
+  border: none;
 }
-.dropdown {
+.switch {
   color: var(--orange);
   background-color: var(--white);
   border: none;
+ 
 }
 </style>
