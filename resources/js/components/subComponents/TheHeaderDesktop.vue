@@ -8,7 +8,7 @@ import BaseButton from './BaseButton.vue';
 
     <div>
         <div class="titre">
-            <h1 class="titreTexte">Organiz</h1>
+            <img class="logo" src="../../../.././public/img/logo_organiz.svg" />
             <hr class="ligne1" />
         </div>
         <div class="liens">
@@ -18,22 +18,22 @@ import BaseButton from './BaseButton.vue';
                 </router-link>
             </div>
             <div class="linkBox">
-                <router-link to="/absences">
+                <router-link to="/">
                     <p class="router">Absences</p>
                 </router-link>
             </div>
             <div class="linkBox">
-                <router-link to="/notes">
+                <!-- <router-link to="/"> -->
                     <p class="router">Notes</p>
-                </router-link>
+                <!-- </router-link> -->
             </div>
             <div class="linkBox">
-                <router-link to="/reviews">
+                <router-link to="/">
                     <p class="router">Evaluation des cours</p>
                 </router-link>
             </div>
             <div class="linkBox">
-                <router-link to="/compte">
+                <router-link to="/">
                     <p class="router">Compte</p>
                 </router-link>
             </div>
@@ -51,19 +51,21 @@ import BaseButton from './BaseButton.vue';
 
 <style scoped>
 
+
 .router {
     margin: 0;
 }
 
 
 p {
-    line-height: 3em;
+    line-height: 1.4;
     color: var(--green);
     text-decoration: none;
     font-weight: bold;
 }
 .bouton {
     cursor: pointer;
+    width: 100%;
 
 }
 
@@ -80,6 +82,7 @@ p:hover {
 a {
     text-decoration: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .routerLogout {
@@ -97,7 +100,7 @@ a {
 }
 
 .ligne2 {
-    margin-bottom: 5vh;
+    margin-bottom: 2vh;
     height: 0;
     border: none;
     border-top: 2px solid #b8b8b8;
@@ -113,7 +116,7 @@ a {
 
 
 .ligne1 {
-    margin-top: 5vh;
+    /* margin-top: 5vh; */
     height: 0;
     width: 100%;
     border: none;

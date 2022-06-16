@@ -1,13 +1,6 @@
 <script setup>
 import { selectedDate, isActive } from "../../stores.js";
 
-const props = defineProps({
-  lessonDay: {
-    type: Object,
-    required: true,
-  },
-});
-
 function changeCalendarView() {
   if (isActive.value.monthly) {
     isActive.value.monthly = false;
@@ -23,9 +16,9 @@ function changeCalendarView() {
 
 <template>
   <div id="switchView" class="bold">
-    <span >
+    <span>
       <button class="bold switch" @click="changeCalendarView()">
-        {{ props.lessonDay.month }}
+        <slot></slot>
       </button>
     </span>
   </div>
@@ -42,6 +35,5 @@ function changeCalendarView() {
   color: var(--orange);
   background-color: var(--white);
   border: none;
- 
 }
 </style>

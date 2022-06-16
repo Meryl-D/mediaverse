@@ -93,7 +93,7 @@
 
     .weekly-header {
         padding-top: 2.5rem;
-        /* height: 10vh; */
+        height: 7rem;
         width: 90%;
         display: flex;
         align-items: baseline;
@@ -106,7 +106,7 @@
 
     .weekly-main {
         width: 100%;
-        height: 90vh;
+        height: calc(100vh - 7rem);
         display: flex;
         justify-content: center;
     }
@@ -150,15 +150,15 @@
     @media (min-width: 992px) {
 
         .week-box {
-            height: calc(100% - 6vh)
+            height: calc(100% - 6vh);
+            gap: 2rem;
         } 
 
         .week-ctn {
             grid-template-rows: none;
             grid-template-columns: repeat(5, 1fr);
             grid-column-gap: 2rem;
-            height: calc(50% - 2rem);
-            margin-bottom: 2rem;
+            height: calc(50% - 1rem);
         }
 
         .lesson-ctn {

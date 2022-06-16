@@ -68,14 +68,14 @@ div {
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  background-color: #f1dfcd79;
+  background-color: var(--beige-transp);
   border-radius: 0rem 0.3rem 0.3rem 0rem;
   cursor: pointer;
 }
 
 .border {
   width: 1rem;
-  background-color: var(--beige);
+  background-color: var(--brown);
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 

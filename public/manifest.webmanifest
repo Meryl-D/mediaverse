@@ -3,9 +3,69 @@
   "name": "Organiz",
   "icons": [
     {
-      "src": "/organiz.png",
+      "src": "images/app-icons/android/android-launchericon-48-48.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "images/app-icons/android/android-launchericon-72-72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "images/app-icons/android/android-launchericon-96-96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "images/app-icons/android/android-launchericon-144-144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "images/app-icons/android/android-launchericon-192-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/app-icons/android/android-launchericon-512-512.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "images/app-icons/ios/50.png",
+      "type": "image/png",
+      "sizes": "50x50"
+    },
+    {
+      "src": "images/app-icons/ios/72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "images/app-icons/ios/100.png",
+      "type": "image/png",
+      "sizes": "100x100"
+    },
+    {
+      "src": "images/app-icons/ios/144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "images/app-icons/ios/192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/app-icons/ios/512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "images/app-icons/ios/1024.png",
+      "type": "image/png",
+      "sizes": "1024x1024"
     }
   ],
   "start_url": "/",
