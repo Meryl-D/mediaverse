@@ -126,6 +126,26 @@ p {
   color: var(--red);
   margin: 0;
 }
+.mainTitle {
+  display: flex;
+  flex-direction: column;
+}
+.pLink {
+  display: inline;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  opacity: 75%;
+  cursor: pointer;
+}
+.sLink {
+  display: inline;
+  opacity: 75%;
+  cursor: pointer;
+}
+.mainIcone {
+  display: flex;
+  flex-direction: row;
+}
 
 @media (min-width: 576px) {
   p {
@@ -137,5 +157,30 @@ p {
   p {
     font-size: 0.9rem;
   }
+}
+  .titleMobile {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+    width: 95vw;
+  }
+  .switch {
+    color: var(--orange);
+    background-color:var(--white) ;
+    justify-content: flex-end;
+    border: none;
+  }
+  .go-back {
+  color: var(--green);
+  background-color: var(--white);
+  border: none;
+}
+.daily-nav {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  padding: 2rem 0;
+  align-items: center;
 }
 </style>

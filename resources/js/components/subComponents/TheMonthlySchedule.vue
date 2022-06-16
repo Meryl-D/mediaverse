@@ -9,11 +9,12 @@ import {
   selectedDate,
   selectedTasks,
   isMobile,
+  isActive,
+  goToWeeklyView,
+  goToDailyView,
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
-import BaseBackButton from "./BaseBackButton.vue";
-import SwitchViewButton from "./SwitchViewButton.vue";
 
 const props = defineProps({
   schedule: {
@@ -63,7 +64,7 @@ function getDay(d) {
   courseToShow.value = d;
   selectedDate.value = d;
 
-// get tasks
+  // get tasks
   selectedTasks.value = [];
   props.tasks.forEach((task) => {
     if (task.dateStart.substr(0, 10) == selectedDate.value.fullDate) {
@@ -132,25 +133,30 @@ function checkTask(d) {
 
 <template>
   <div id="MonthlyCalendar">
-    <div v-if="!isMobile" class="titleDesktop">
-      <div class="navMonth">
-        <base-back-button></base-back-button>
-        <div class="flexTitle">
+     <div v-if="!isMobile" class="daily-nav">
+      <div class="mainTitle">
+        <div>
           <h1>{{ monthToShow }} {{ yearToShow }}</h1>
-          <switch-view-button
-            ><span class="material-icons icalendar"
-              >calendar_today</span
-            ></switch-view-button
-          >
         </div>
-        <!-- <p class="pLink">Horaire</p>
-        <p class="sLink">></p>
-        <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p> -->
+        <div class="navMonth">
+          <p class="pLink" @click="goToWeeklyView()">Horaire</p>
+          <p class="sLink">></p>
+          <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+        </div>
+      </div>
+      <div class="mainIcone">
+        <div @click="goToDailyView()"><span class="material-icons icalendar"
+            >calendar_today</span
+          ></div>
       </div>
     </div>
     <div v-if="isMobile" class="titleMobile">
-      <base-back-button></base-back-button>
-      <switch-view-button>{{ monthToShow }}</switch-view-button>
+      <button class="go-back bold" @click="goToWeeklyView()">
+        &lt Horaires et tâches
+      </button>
+      <button class="bold switch" @click="goToDailyView()">
+        {{ monthToShow }}
+      </button>
     </div>
     <div class="bodyMonth">
       <div class="calendar">
@@ -367,7 +373,7 @@ function checkTask(d) {
 
       <section>
         <div class="agenda">
-          <div class="chosenDay p bold">
+          <div class="chosenDay p bold" @click="goToDailyView()">
             <p>{{ currentDate }}</p>
             <hr v-if="!isMobile" class="lineSpace" />
           </div>
@@ -383,15 +389,7 @@ function checkTask(d) {
 </template>
 
 <style scoped>
-#MonthlyCalendar {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--white);
-  height: 100%;
-  padding: 2.5rem 1rem 0 1rem;
-  /* align-content: center;
-  justify-content: center; */
-}
+
 .titleDesktop {
   width: 100%;
   margin-bottom: 2rem;
@@ -415,21 +413,10 @@ function checkTask(d) {
   /* height: 100%; */
 }
 
-.nextMonth {
-  height: 50px;
-  width: 100%;
-}
-
 .calendar {
   display: flex;
   align-content: flex-start;
   justify-content: flex-start;
-}
-.daysOfWeek {
-  /* border-bottom: 1em var(--orange); */
-  text-align: center;
-  margin: 1rem;
-  align-content: center;
 }
 .agenda {
   display: flex;
@@ -440,12 +427,7 @@ function checkTask(d) {
 .course {
   padding-right: 0.7rem;
 }
-/* .chosenDay {
-  margin-top: 1rem;
-  padding-left: 1rem;
-  flex-basis: 100%;
-  margin-bottom: 0;
-} */
+
 .selected-day p {
   color: var(--orange);
 }
@@ -470,15 +452,11 @@ function checkTask(d) {
 }
 @media (max-width: 992px) {
   #MonthlyCalendar {
-    padding: 0 1rem 0 1rem;
-    height: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   }
-  .titleMobile {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 0.3rem;
-  }
+
   .bodyMonth {
     display: flex;
     flex-direction: column;
@@ -525,5 +503,10 @@ function checkTask(d) {
   margin: 0 0.1rem 0.1rem 0.1rem;
   background-color: var(--beige);
   border-radius: 5rem;
+}
+.material-icons {
+  color: var(--orange);
+  filter: drop-shadow(0 0 0.75rem var(--orange));
+  cursor: pointer;
 }
 </style>
