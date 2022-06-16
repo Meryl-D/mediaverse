@@ -1,6 +1,6 @@
 <script setup>
-import { propExists } from "../../stores.js";
-import { ref, watchEffect, onMounted } from "vue";
+import { propExists, formatHourForGrid } from "../../stores.js";
+import { ref, watchEffect, onMounted, computed } from "vue";
 import BaseBox from "./BaseBox.vue";
 
 const props = defineProps({
@@ -9,10 +9,11 @@ const props = defineProps({
     required: true,
   },
 });
-//console.log(props.lessonDay);
 
+console.log(props.lessonDay.courses)
 const courseExists = ref("");
 const holidayExists = ref("");
+
 
 function check() {
   courseExists.value = propExists("courses", props.lessonDay);
@@ -23,16 +24,34 @@ check();
 watchEffect(() => {
   check();
 });
+
+const gridCourses = computed(() => {
+
+  const courses = []
+  if (!courseExists) return
+
+  props.lessonDay.courses.forEach(course => {
+    courses.push(
+      {
+      gridRowStart: formatHourForGrid(course.timeStart.substring(0, 2)),
+      gridRowEnd: formatHourForGrid(course.timeEnd.substring(0, 2))
+    }
+    )
+  });
+  return courses
+})
 </script>
 
 <template>
-  <div >
-    <div v-if="courseExists" class="displayCourse">
       <div
-        v-for="course in props.lessonDay.courses"
+        v-for="(course, i) in props.lessonDay.courses"
         :key="course.name"
         class="course-ctn"
-        ref="courseDiv"
+        :style="{
+          display : courseExists ? 'flex' : 'none',
+          gridRowStart: `${gridCourses[i].gridRowStart}`,
+          gridRowEnd: `${gridCourses[i].gridRowEnd}`
+        }"
       >
         <div class="border"></div>
         <div class="DailyCourseBox">
@@ -44,7 +63,6 @@ watchEffect(() => {
           </p>
         </div>
       </div>
-    </div>
     <div v-if="holidayExists">
       <div class="border"></div>
       <div class="DailyCourseBox">
@@ -53,30 +71,37 @@ watchEffect(() => {
         </p>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
 div {
   display: flex;
-  width: 100%;
 }
 .DailyCourseBox {
-  flex-direction: column;
-  padding: 1em;
-  margin: 1rem 1rem 1rem 0rem;
-  background-color: #e3cec279;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: #f1dfcd79;
   border-radius: 0rem 0.3rem 0.3rem 0rem;
+  cursor: pointer;
 }
 .border {
   width: 1rem;
-  margin: 1rem 0rem 1rem 1rem;
-  background-color: #e3cec2;
+  background-color: var(--brown);
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 .displayCourse{
   flex-direction: column;
-  width: 100%;
 }
+
+.DailyCourseBox .course-name, .DailyCourseBox .course-room {
+    margin: 0.35rem;
+}
+
+.course-ctn {
+  min-height: 2rem;
+  grid-column-start: 2;
+}
+
 
 </style>

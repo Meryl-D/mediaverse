@@ -3,7 +3,7 @@ import { ref, computed, watchEffect, onMounted } from "vue";
 import { axiosClient } from "../../utils/axios.js";
 import BaseButton from "../../components/subComponents/BaseButton.vue";
 import BaseBox from "../../components/subComponents/BaseBox.vue";
-import { selectedTasks, tasksTmpl, isMobile } from "../../stores.js";
+import { selectedTasks, tasksTmpl, isMobile, formatHourForGrid } from "../../stores.js";
 
 // function getTask(d){
 //   if( d.dateStart.substr(0,10) == props.day.fullDate){
@@ -13,21 +13,16 @@ import { selectedTasks, tasksTmpl, isMobile } from "../../stores.js";
 // }
 const emit = defineEmits(["editTask"])
 
-function formatGridVal(val) {
-  return parseInt(val) + 1
-}
-
 const gridSelectedTasks = computed(() => {
   const tasks = []
   selectedTasks.value.forEach(task => {
     tasks.push(
       {
-      gridRowStart: formatGridVal(task.hourStart),
-      gridRowEnd: formatGridVal(task.hourEnd)
+      gridRowStart: formatHourForGrid(task.hourStart),
+      gridRowEnd: formatHourForGrid(task.hourEnd)
     }
     )
   });
-
   return tasks
 })
 </script>
@@ -64,12 +59,6 @@ const gridSelectedTasks = computed(() => {
 
 
 <style scoped>
-/* #body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-} */
 
 div {
   display: flex;
@@ -79,7 +68,6 @@ div {
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
-  /* margin: 1rem 1rem 1rem 0rem; */
   background-color: #f1dfcd79;
   border-radius: 0rem 0.3rem 0.3rem 0rem;
   cursor: pointer;
@@ -87,14 +75,12 @@ div {
 
 .border {
   width: 1rem;
-  /* margin: 1rem 0rem 1rem 1rem; */
-  background-color: #f1dfcd;
+  background-color: var(--beige);
   border-radius: 0.3rem 0rem 0rem 0.3rem;
 }
 
 .task-ctn {
   min-height: 2rem;
-  /* grid-row: 1 / 25; */
   grid-column-start: 2;
   /* transform: translateY(1rem) */
 }

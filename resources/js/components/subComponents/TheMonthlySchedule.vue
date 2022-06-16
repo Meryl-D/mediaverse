@@ -12,7 +12,7 @@ import {
 import { watchEffect, ref, onMounted } from "vue";
 import BaseDropdown from "./BaseDropdown.vue";
 import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
+import SwitchViewButton from "./SwitchViewButton.vue";
 
 
 const props = defineProps({

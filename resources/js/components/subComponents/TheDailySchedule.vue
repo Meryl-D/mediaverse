@@ -11,7 +11,7 @@ import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
 import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
+import SwitchViewButton from "./SwitchViewButton.vue";
 import TheEditTask from "./TheEditTask.vue";
 
 //-------------------------------------------------------------------------------------------------
