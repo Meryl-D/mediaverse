@@ -50,7 +50,7 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
             </p>
             <hr v-if="!isMobile" class="hr-date">
             <div class="date-circles">
-                <p class="date">
+                <p class="date-ws">
                     {{ props.lessonDay.date }}
                 </p>
                 <div class="circles">
@@ -119,7 +119,7 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
         flex-direction: column;
     }
 
-    .date {
+    .date-ws {
         font-size: 1.5rem; 
         line-height: 1.5rem;
         margin: .3rem 0;
@@ -180,7 +180,7 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
         align-items: center;
     }
 
-    .today .date, .today .day {
+    .today .date-ws, .today .day {
         color : var(--orange);
     }
 
@@ -198,7 +198,7 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
             line-height: 1.1rem;
         }
 
-        .date {
+        .date-ws {
             font-size: 1.8rem;
             line-height: 1.8rem;
         }
@@ -257,12 +257,18 @@ const hasTask = props.tasks.some(task => task.dateStart.substr(0,10) == props.le
 
         .info-ctn {
             align-items: start;
+            flex: 0 1 auto;
+            margin-bottom: 10%;
         }
 
         .course-ctn {
             flex-direction: column;
-            padding: 0 0 1rem 0;
+            padding: 0 0 .9vh 0;
+        }
+
+        .course-ctn p, .more, .holiday p {
             line-height: 1.4;
+            font-size: clamp(.7rem, 1vw, .9rem);
         }
 
         .course-room {

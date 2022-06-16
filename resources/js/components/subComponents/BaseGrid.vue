@@ -11,35 +11,32 @@ const props = defineProps({
     required: true,
   }
 });
-
-const tasksOfDay = ref();
-const gridHours = ref([]);
-const gridLines = ref([])
-
-onMounted(() => {
-
-  watchEffect(() => {
-      props.courseToShow
-
-      for (let i = 0; i < gridLines.value.length; i++) {
-        gridLines.value[i].style.gridRowStart = i + 1
-      }
-  })
-});
 </script>
 
 <template>
   <div class="grid">
-    <div v-for="n in 25" :key="n" class="grid-hours" ref="gridHours">
+    <div v-for="n in 25" 
+      :key="n" 
+      class="grid-hours" 
+      ref="gridHours" 
+      :style="{ 
+        gridRowStart: `${n}`
+      }">
       <p v-if="n - 1 < 10" class="hour">0{{ n - 1 }}:00</p>
       <p v-if="n - 1 >= 10" class="hour">{{ n - 1 }}:00</p>
     </div>
-    <div v-for="n in 25" :key="n" class="grid-lines" ref="gridLines">
+    <div v-for="n in 25"
+      :key="n"
+      class="grid-lines"
+      ref="gridLines"
+      :style="{ 
+        gridRowStart: `${n}`
+      }">
       <hr v-if="n - 1 < 10" :class="`grid-hr-0${n - 1}`"/>
       <hr v-if="n - 1 >= 10" :class="`grid-hr-${n - 1}`"/>
     </div>
-    <the-tasks ref="tasksOfDay" @editTask="$emit('editTask', $event)"></the-tasks>
-    <!-- <base-course :lessonDay="selectedDate"> </base-course> -->
+    <the-tasks @editTask="$emit('editTask', $event)"></the-tasks>
+    <base-course :lessonDay="selectedDate"> </base-course>
   </div>
 </template>
 
@@ -63,6 +60,10 @@ onMounted(() => {
   height: 2rem;
 
 
+}
+
+.grid-lines hr {
+  width: 100%;
 }
 
 .hour {

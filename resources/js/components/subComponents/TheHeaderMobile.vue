@@ -1,17 +1,41 @@
 <script setup>
 import { ref } from 'vue'
 import BaseButton from './BaseButton.vue';
+import { isActive}  from "../../stores.js";
 
 
 
-const isActive = ref(false);
+const isMenuActive = ref(false);
 
 function menu() {
 
-  isActive.value = !isActive.value;
-
+  isMenuActive.value = !isMenuActive.value;
 
 }
+
+function horaireWeeklyMobile() {
+
+  if (isActive.value.monthly) {
+    isActive.value.monthly = false;
+    isActive.value.daily = false;
+    isActive.value.weekly = true;
+  }
+  if (isActive.value.daily) {
+    isActive.value.monthly = false;
+    isActive.value.daily = false;
+    isActive.value.weekly = true;
+  }
+    if (isActive.value.weekly) {
+    isActive.value.monthly = false;
+    isActive.value.daily = false;
+    isActive.value.weekly = true;
+  }
+
+  menu();
+
+}
+
+
 
 </script>
 
@@ -19,7 +43,7 @@ function menu() {
   <div>
 
     <div>
-      <div :class="!isActive ? 'active' : ''" class="menuBurger" @click="menu();">
+      <div :class="!isMenuActive ? 'active' : ''" class="menuBurger" @click="menu();">
         <span class="material-icons">menu</span>
         <span>
           <link
@@ -28,12 +52,12 @@ function menu() {
       </div>
     </div>
 
-    <div :class="isActive ? 'shadow' : ''" class="fond"></div>
+    <div :class="isMenuActive ? 'shadow' : ''" class="fond"></div>
 
-    <div :class="isActive ? 'active' : ''" class="menu">
+    <div :class="isMenuActive ? 'active' : ''" class="menu">
       <div>
         <div>
-          <img class="logo" src="../../../.././public/img/logo_organiz.svg" />
+          <img @click="horaireWeeklyMobile();" class="logo" src="../../../.././public/img/logo_organiz.svg" />
           <span class="material-icons close" @click="menu();">close</span>
           <span>
             <link
@@ -157,7 +181,7 @@ a {
   text-align: left;
   padding: 0.3em 0em 0 0em;
   margin: 1em 5%;
-  background-color: var(--beige);
+  background-color: var(--beige-transp);
   border-radius: 0.6rem;
   margin-bottom: 0%;
 

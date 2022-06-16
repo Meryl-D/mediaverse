@@ -4,15 +4,17 @@ import {
   selectedDate,
   selectedTasks,
   isMobile,
+   isActive,
+   goToWeeklyView,
+   goToMonthlyView
 } from "../../stores.js";
 import { watchEffect, ref, onMounted } from "vue";
 import BaseCourse from "./BaseCourse.vue";
 import TheTasks from "./TheTasks.vue";
 import BaseGrid from "./BaseGrid.vue";
 import TheAddTask from "./TheAddTask.vue";
-import BaseBackButton from "./BaseBackButton.vue";
-import switchViewButton from "./switchViewButton.vue";
-import TheEditTask from "./TheEditTask.vue";
+
+
 
 //-------------------------------------------------------------------------------------------------
 
@@ -147,6 +149,8 @@ function checkTask(d) {
 
 const monthToShow = ref(courseToShow.value.month);
 const yearToShow = ref(courseToShow.value.year);
+//-------------------------------------------------------------------------------------------------
+
 </script>
 
 <template>
@@ -173,11 +177,13 @@ const yearToShow = ref(courseToShow.value.year);
   <div id="file">
     <div v-if="!isMobile" class="daily-nav">
       <div class="mainTitle">
-        <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+        <div>
+          <h1>{{ monthToShow }} {{ yearToShow }}</h1>
+        </div>
         <div class="navMonth">
-          <p class="pLink">Horaire</p>
+          <p class="pLink" @click="goToWeeklyView()">Horaire</p>
           <p class="sLink">></p>
-          <p class="pLink">{{ monthToShow }} {{ yearToShow }}</p>
+          <p class="pLink" @click="goToMonthlyView()">{{ monthToShow }} {{ yearToShow }}</p>
           <p class="sLink">></p>
           <p class="pLink">{{ simpleCurrentDate }}</p>
         </div>
@@ -195,18 +201,18 @@ const yearToShow = ref(courseToShow.value.year);
             >add_circle</span
           >
         </div>
-        <switch-view-button
-          ><span
-            class="material-icons"
-            :class="isMobile ? 'sizeMobileIcone' : 'sizeDesktopIcone'"
+        <div @click="goToMonthlyView()"><span class="material-icons icalendar"
             >calendar_today</span
-          ></switch-view-button
-        >
+          ></div>
       </div>
     </div>
-    <div v-if="isMobile" class="titleMobileDay">
-      <base-back-button></base-back-button>
-      <switch-view-button>{{ monthToShow }}</switch-view-button>
+    <div v-if="isMobile" class="titleMobile">
+      <button class="go-back bold" @click="goToWeeklyView()">
+        &lt Horaires et tâches
+      </button>
+      <button class="bold switch" @click="goToMonthlyView()">
+        {{ monthToShow }}
+      </button>
     </div>
     <div id="calendar">
       <div
@@ -290,13 +296,6 @@ const yearToShow = ref(courseToShow.value.year);
   display: flex;
   flex-direction: row;
 } */
-.daily-nav {
-  display: flex;
-  justify-content: space-between;
-  width: 90%;
-  padding: 2rem 0;
-  align-items: center;
-}
 .mainTitle {
   display: flex;
   flex-direction: column;
@@ -333,18 +332,21 @@ const yearToShow = ref(courseToShow.value.year);
   justify-content: center;
 }
 
-.task-circle-day,
+.task-circle-day {
+  background-color: var(--brown);
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: 0 0.1rem 0.1rem 0.1rem;
+  border-radius: 5rem;
+}
 .course-circle-day {
   width: 0.7rem;
   height: 0.7rem;
   margin: 0 0.1rem 0.1rem 0.1rem;
-  background-color: var(--brown);
+  background-color: var(--beige);
   border-radius: 5rem;
 }
 
-.course-circle-day {
-  background-color: var(--beige);
-}
 #calendar {
   display: flex;
   flex-flow: row nowrap;
